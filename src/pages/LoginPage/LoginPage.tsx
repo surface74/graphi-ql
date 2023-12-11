@@ -7,10 +7,12 @@ import { schema } from '../../yup/schema';
 import { setData } from '../../store/slices/formSlice';
 import { Form } from '../../common-types/common-types';
 import errorMessages from '../../assets/errorMessages.json';
+import { useDataContext } from '../../DataContext/useDataContext';
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { language } = useDataContext();
 
   const {
     register,
@@ -24,7 +26,7 @@ const LoginPage: React.FC = () => {
   const onSubmit: SubmitHandler<Form> = async (data) => {
     const { name, email, password, passwordRepeat } = data;
 
-    if (data)
+    if (!Object.values(data).includes(undefined))
       dispatch(
         setData({
           name,
@@ -39,7 +41,7 @@ const LoginPage: React.FC = () => {
 
   return (
     <>
-      <h2 className={styles['tytle']}>Login Page</h2>
+      <h2 className={styles['title']}>Login Page</h2>
       <div className={styles['form__container']}>
         <div className={styles['form']}>
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -53,7 +55,7 @@ const LoginPage: React.FC = () => {
             </div>
             {errors.name && (
               <p className={styles['error-message']} role="alert">
-                {errorMessages.CHECK_NAME_FIRST_LETTER.en}
+                {errorMessages.CHECK_NAME_FIRST_LETTER[language]}
               </p>
             )}
 
@@ -87,7 +89,7 @@ const LoginPage: React.FC = () => {
             </div>
             {errors.passwordRepeat && (
               <p className={styles['error-message']} role="alert">
-                {errorMessages.CHECK_PASSWORD_MATCH.en}
+                {errorMessages.CHECK_PASSWORD_MATCH[language]}
               </p>
             )}
 

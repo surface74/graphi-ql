@@ -12,27 +12,27 @@ export const schema = yup
     name: yup
       .string()
       .matches(CHECK_NAME)
-      .test('name length', errorMessages.CHECK_NAME_LENGTH.en, (name) => {
+      .test('name length', errorMessages.CHECK_NAME_LENGTH.En, (name) => {
         if (name) return name?.length > 2;
       })
       .required('required'),
     email: yup
       .string()
-      .email(errorMessages.CHECK_EMAIL_FORMAT.en)
+      .email(errorMessages.CHECK_EMAIL_FORMAT.En)
       .matches(CHECK_EMAIL)
-      .required(errorMessages.CHECK_EMAIL_REQUIRED.en),
+      .required(errorMessages.CHECK_EMAIL_REQUIRED.En),
     password: yup
       .string()
       .test(
         'is strong password',
-        errorMessages.CHECK_PASSWORD_STRONG.en,
+        errorMessages.CHECK_PASSWORD_STRONG.En,
         (password) => {
           if (password) return password?.length > 8;
         }
       )
       .test(
         'password format',
-        errorMessages.CHECK_PASSWORD_FORMAT.en,
+        errorMessages.CHECK_PASSWORD_FORMAT.En,
         (password) => {
           if (password) return CHECK_PASSWORD.test(password);
         }

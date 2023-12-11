@@ -32,11 +32,11 @@ export default class ErrorBoundary extends React.Component<
         this.props.fallback
       ) : (
         <>
-          <h1>{errorMessages.ERROR_MESSAGE.en}</h1>
+          <h1>{errorMessages.ERROR_MESSAGE.En}</h1>
         </>
       );
     }
 
-    return this.props.children;
+    return this.props.children || null;
   }
 }

@@ -6,13 +6,20 @@ import ErrorBoundary from './Components/ErrorBoundary/ErrorBoundary';
 import { Provider } from 'react-redux';
 import { store } from './store/store.ts';
 import { BrowserRouter } from 'react-router-dom';
+import { ThemeProvider } from '@mui/material/styles';
+import theme from './ThemeProvider/ThemeProvider.tsx';
+import ErrorMessage from './Components/ErrorMessage/ErrorMessage.tsx';
+import { CssBaseline } from '@mui/material';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <ErrorBoundary>
+    <ErrorBoundary fallback={<ErrorMessage />}>
       <BrowserRouter>
         <Provider store={store}>
-          <App />
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <App />
+          </ThemeProvider>
         </Provider>
       </BrowserRouter>
     </ErrorBoundary>

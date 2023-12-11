@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { LoginFormState } from '../../store/types';
+import { AuthDataState } from '../store.types';
 
-const initialState: LoginFormState = {
+const initialState: AuthDataState = {
   data: {
     name: '',
     email: '',

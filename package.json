@@ -36,6 +36,7 @@
     "@typescript-eslint/eslint-plugin": "^6.7.5",
     "@typescript-eslint/parser": "^6.7.5",
     "@vitejs/plugin-react": "^4.1.1",
+    "cz-conventional-changelog": "^3.3.0",
     "eslint": "^8.51.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-import-resolver-typescript": "^3.6.1",
@@ -57,5 +58,10 @@
   "lint-staged": {
     "*.{tsx,ts,scss,module.scss}": "prettier --write src",
     "*.{tsx,ts}": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }

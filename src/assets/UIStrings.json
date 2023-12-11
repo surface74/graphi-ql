@@ -1,6 +1,22 @@
 {
   "Welcome": {
-    "ru": "Welcome",
-    "en": "Welcome"
+    "Ru": "Домой",
+    "En": "Welcome"
+  },
+  "Login": {
+    "Ru": "Логин",
+    "En": "Login"
+  },
+  "Editor": {
+    "Ru": "Редактор",
+    "En": "Editor"
+  },
+  "RuLanguage": {
+    "Ru": "Рус",
+    "En": "Ru"
+  },
+  "EnLanguage": {
+    "Ru": "Анг",
+    "En": "En"
   }
 }
