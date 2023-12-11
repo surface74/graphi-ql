@@ -10,21 +10,24 @@ const AuthForm: FC<FormProps> = ({ title, handleClick }) => {
   const [pass, setPass] = useState('');
 
   return (
-    <div>
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="email"
-      />
-      <input
-        type="password"
-        value={pass}
-        onChange={(e) => setPass(e.target.value)}
-        placeholder="password"
-      />
-      <button onClick={() => handleClick(email, pass)}>{title}</button>
-    </div>
+    <>
+      <h3>{title}</h3>
+      <div>
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="email"
+        />
+        <input
+          type="password"
+          value={pass}
+          onChange={(e) => setPass(e.target.value)}
+          placeholder="password"
+        />
+        <button onClick={() => handleClick(email, pass)}>{title}</button>
+      </div>
+    </>
   );
 };
 
