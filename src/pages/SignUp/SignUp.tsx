@@ -1,17 +1,20 @@
 import { useNavigate } from 'react-router-dom';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 
 import { setUser } from '../../store/slices/userSlice';
 import { useAppDispatch } from '../../hooks/store';
 import AuthForm from '../../Components/AuthForm/AuthForm';
 
-const LoginPage = () => {
+const SignUpPage = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const makeLogin = (email: string, password: string) => {
+    console.log('password: ', password);
+    console.log('email: ', email);
+
     const auth = getAuth();
-    signInWithEmailAndPassword(auth, email, password)
+    createUserWithEmailAndPassword(auth, email, password)
       .then(({ user }) => {
         console.log(user);
         dispatch(
@@ -28,7 +31,7 @@ const LoginPage = () => {
       .catch(() => alert('Invalid user!'));
   };
 
-  return <AuthForm title="Sign in" handleClick={makeLogin} />;
+  return <AuthForm title="Sign up" handleClick={makeLogin} />;
 };
 
-export default LoginPage;
+export default SignUpPage;

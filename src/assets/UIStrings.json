@@ -4,7 +4,7 @@
     "En": "Welcome"
   },
   "Login": {
-    "Ru": "Логин",
+    "Ru": "Вход",
     "En": "Login"
   },
   "Editor": {
@@ -37,7 +37,7 @@
   },
   "SignUp": {
     "Ru": "Зарегистрироваться",
-    "En": "Sign Up"
+    "En": "SignUp"
   },
   "SignOut": {
     "Ru": "Выйти",
