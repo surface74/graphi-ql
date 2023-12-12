@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { useState } from 'react';
 
 import { setUser } from '../../store/slices/userSlice';
 import { useAppDispatch } from '../../hooks/store';
@@ -7,8 +8,7 @@ import AuthForm from '../../Components/AuthForm/AuthForm';
 import { pageName } from '../../common-types/common-types';
 import ErrorMessages from '../../assets/errorMessages.json';
 import { useDataContext } from '../../DataContext/useDataContext';
-import UIContent from '../../assets/UIStrings.json';
-import { useState } from 'react';
+import UIStrings from '../../assets/UIStrings.json';
 
 const SignInPage = () => {
   const navigate = useNavigate();
@@ -48,7 +48,7 @@ const SignInPage = () => {
   return (
     <>
       <AuthForm
-        title={UIContent.SignIn[language]}
+        title={UIStrings.SignInPageTitle[language]}
         handleClick={makeLogin}
         message={message}
       />
