@@ -9,7 +9,7 @@ import Footer from '../Footer/Footer';
 import { useState } from 'react';
 import Language from '../../enum/language';
 import { DataContextProvider } from '../../DataContext/DataContextProvider';
-import SignUpPage from '../../pages/SignUp/SignUp';
+import SignUpPage from '../../pages/SignUpPage/SignUpPage';
 import { useAuth } from '../../hooks/auth';
 import ProtectiveRoute from '../ProtectiveRoute/ProtectiveRoute';
 import { pageName } from '../../common-types/common-types';

@@ -1,6 +1,7 @@
 import { useNavigate, Outlet } from 'react-router-dom';
 import { FC, useEffect } from 'react';
 import { useAuth } from '../../hooks/auth';
+import { pageName } from '../../common-types/common-types';
 
 const ProtectiveRoute: FC = () => {
   const { isLogin } = useAuth();
@@ -8,11 +9,11 @@ const ProtectiveRoute: FC = () => {
 
   useEffect(() => {
     if (!isLogin) {
-      navigate('/login');
+      navigate(`${pageName.login.En}`);
     }
   });
 
-  return <Outlet />;
+  return <>{isLogin ? <Outlet /> : null}</>;
 };
 
 export default ProtectiveRoute;
