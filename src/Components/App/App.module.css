@@ -4,21 +4,10 @@
   justify-content: space-between;
   align-items: normal;
   column-gap: 2rem;
-  /* background-color: #8ea784; */
-}
-
-.container::before {
-  content: '';
-  position: fixed; /* Фиксируем на одном месте */
-  left: 0;
-  right: 0; /* Вся ширин */
-  top: 0;
-  bottom: 0; /* Вся высота */
-  z-index: -1; /* Фон ниже текста */
-  /* Параметры фона */
-  filter: opacity(45%); /* Размытие */
 }
 
 .content {
   padding: 1rem;
+  /* flex: 1 0 auto; */
+  min-height: calc(100vh - 220px);
 }
