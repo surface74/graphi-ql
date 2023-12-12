@@ -2,6 +2,6 @@ export interface ChangeOnScrollProps {
   children: React.ReactElement;
 }
 
-export type MUIHeaderProps = {
+export type HeaderProps = {
   isLogin?: boolean;
 };
