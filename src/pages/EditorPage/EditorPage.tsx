@@ -1,7 +1,7 @@
 import Container from '@mui/material/Container';
 import { Box, Button, Typography } from '@mui/material';
 import { useDispatch } from 'react-redux';
-import { useAppSelector } from '../../store/slices/hooks';
+import { useAppSelector } from '../../hooks/store';
 import {
   graphqlHeading,
   wrapperDocsButton,

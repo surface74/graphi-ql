@@ -9,7 +9,6 @@ import Footer from '../Footer/Footer';
 import { useState } from 'react';
 import Language from '../../enum/language';
 import { DataContextProvider } from '../../DataContext/DataContextProvider';
-import Authority from '../Authority/Authority';
 import SignUpPage from '../../pages/SignUp/SignUp';
 import { useAuth } from '../../hooks/auth';
 import ProtectiveRoute from '../ProtectiveRoute/ProtectiveRoute';
@@ -25,15 +24,11 @@ function App() {
     setLanguage(language);
   };
 
-  const authority = new Authority();
-
   return (
     <DataContextProvider
       value={{
         language,
         setLanguage: switchLanguage,
-        pageName,
-        authority,
       }}
     >
       <div className={styles['container']}>

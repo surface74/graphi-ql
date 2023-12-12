@@ -13,7 +13,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Switch from '@mui/material/Switch';
 import UIStrings from '../../assets/UIStrings.json';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
@@ -32,6 +32,10 @@ import {
   rightMenuWrapper,
   switchLangWrapper,
 } from './styles.ts';
+import { useAuth } from '../../hooks/auth';
+import { pageName } from '../../common-types/common-types';
+import { useAppDispatch } from '../../hooks/store.ts';
+import { removeUser } from '../../store/slices/userSlice.ts';
 
 const ScrollHandler = (props: ChangeOnScrollProps) => {
   const trigger = useScrollTrigger({
@@ -55,15 +59,23 @@ const ChangeOnScroll = (props: ChangeOnScrollProps) => {
 
 const Header: React.FC<HeaderProps> = () => {
   const location = useLocation();
-  const { language, pageName, setLanguage, authority } = useDataContext();
+  const { language, setLanguage } = useDataContext();
+  const { isLogin } = useAuth();
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const pages = Object.values(pageName);
-
-  const isLogin = authority.isLogin();
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
+
+  const handleClickLogout = () => {
+    dispatch(removeUser());
+    navigate(`/${pageName.login.En}`);
+  };
+
+  const handleClickLogin = () => navigate(`/${pageName.login.En}`);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -160,7 +172,7 @@ const Header: React.FC<HeaderProps> = () => {
                     display: 'block',
                   }}
                 >
-                  <Link key={i + 1} to={`/${page.En.toLowerCase()}`}>
+                  <Link key={i + 1} to={`/${page.En}`}>
                     <div id={`${page.En}`}>
                       <Typography
                         textAlign="center"
@@ -203,13 +215,13 @@ const Header: React.FC<HeaderProps> = () => {
                 </Typography>
               </Box>
 
-              {!isLogin ? (
-                <IconButton>
-                  <LoginIcon sx={loginIcon} />
+              {isLogin ? (
+                <IconButton onClick={handleClickLogout}>
+                  <LogoutIcon sx={loginIcon} />
                 </IconButton>
               ) : (
-                <IconButton>
-                  <LogoutIcon sx={loginIcon} />
+                <IconButton onClick={handleClickLogin}>
+                  <LoginIcon sx={loginIcon} />
                 </IconButton>
               )}
 

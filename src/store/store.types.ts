@@ -4,9 +4,8 @@ export interface IUserState {
     token: string;
     id: string;
   };
-};
+}
 
 export type UIState = {
   docsIsOpen: boolean;
 };
-
