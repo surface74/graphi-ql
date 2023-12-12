@@ -18,5 +18,83 @@
   "EnLanguage": {
     "Ru": "Анг",
     "En": "En"
+  },
+  "WelcomeHeading": {
+    "Ru": "Добро пожаловать в GraphiQL",
+    "En": "Welcome to GraphiQL"
+  },
+  "WelcomeTextNotAuth": {
+    "Ru": "У вас уже есть аккаунт GraphiQL?",
+    "En": "Do you have GraphiQL account?"
+  },
+  "WelcomeTextAuth": {
+    "Ru": "Мы рады вашему возвращению в GraphiQL",
+    "En": "We are glad to see you again in GraphiQL"
+  },
+  "SignIn": {
+    "Ru": "Войти",
+    "En": "Sign In"
+  },
+  "SignUp": {
+    "Ru": "Зарегистрироваться",
+    "En": "Sign Up"
+  },
+  "SignOut": {
+    "Ru": "Выйти",
+    "En": "Sign Out"
+  },
+  "Email": {
+    "Ru": "эл. почта",
+    "En": "Email"
+  },
+  "Password": {
+    "Ru": "Пароль",
+    "En": "Password"
+  },
+  "ConfirmPassword": {
+    "Ru": "Подтвердите пароль",
+    "En": "Confirm password"
+  },
+  "LoginPage": {
+    "Ru": "Страница входа",
+    "En": "Login page"
+  },
+  "GetStarted": {
+    "Ru": "Начать",
+    "En": "Get started"
+  },
+  "CreateAccount": {
+    "Ru": "Создать аккаунт",
+    "En": "Create account"
+  },
+  "CreateAccountText": {
+    "Ru": "Создайте аккаунт GraphiQL",
+    "En": "Create GraphiQL account"
+  },
+  "CreateAccountContinue": {
+    "Ru": "Введите свои данные, чтобы продолжить",
+    "En": "Enter your details to continue"
+  },
+  "WelcomeAbout": {
+    "Ru": "GraphiQL - это инструмент для создания, редактирования и выполнения запросов к GraphQL-серверу. Он использует GraphQL-схему для автоматического и интерактивного создания интерфейса, который позволяет вам эффективно и легко работать с вашим сервером GraphQL. GraphiQL - это инструмент для создания, редактирования и выполнения запросов к GraphQL-серверу. Он использует GraphQL-схему для автоматического и интерактивного создания интерфейса, который позволяет вам эффективно и легко работать с вашим сервером GraphQL.",
+    "En": "GraphiQL is a tool for creating, editing, and running queries against GraphQL servers. It uses the GraphQL schema to automatically and dynamically create an interactive interface that allows you to efficiently and easily work with your GraphQL server. GraphiQL is a tool for creating, editing, and running queries against GraphQL servers. It uses the GraphQL schema to automatically and dynamically create an interactive interface that allows you to efficiently and easily work with your GraphQL server."
+  },
+  "WelcomeScholl": {
+    "Ru": "Этот проект был создан группой студентов-разработчиков из Rolling Scopes Scholl.",
+    "En": "This progect was created by a group of student developers from the Rolling Scopes Scholl."
+  },
+  "CardFields": {
+    "En": {
+      "name": "name",
+      "bio": "bio",
+      "location": "location",
+      "contribution": "contribution"
+    },
+    "Ru": {
+      "name": "имя",
+      "bio": "о себе",
+      "location": "местоположение",
+      "contribution": "вклад в проект"
+    }
   }
 }

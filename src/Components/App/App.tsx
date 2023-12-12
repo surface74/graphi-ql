@@ -5,6 +5,7 @@ import { Route, Routes } from 'react-router-dom';
 import PageNotFound from '../../pages/NotFoundPage/NotFoundPage';
 import LoginPage from '../../pages/LoginPage/LoginPage';
 import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
 import { useState } from 'react';
 import Language from '../../enum/language';
 import { DataContextProvider } from '../../DataContext/DataContextProvider';
@@ -56,6 +57,7 @@ function App() {
           </Routes>
         </div>
       </div>
+      <Footer />
     </DataContextProvider>
   );
 }
