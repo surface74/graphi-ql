@@ -5,15 +5,22 @@ import { setUser } from '../../store/slices/userSlice';
 import { useAppDispatch } from '../../hooks/store';
 import AuthForm from '../../Components/AuthForm/AuthForm';
 import { pageName } from '../../common-types/common-types';
+import ErrorMessages from '../../assets/errorMessages.json';
+import { useDataContext } from '../../DataContext/useDataContext';
+import UIContent from '../../assets/UIStrings.json';
+import { useState } from 'react';
 
 const SignInPage = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const [message, setMessage] = useState('');
+  const { language } = useDataContext();
 
   const makeLogin = (email: string, password: string) => {
     const auth = getAuth();
     signInWithEmailAndPassword(auth, email, password)
-      .then(({ user }) => {
+      .then((responce) => {
+        const { email, uid } = responce.user;
         if (auth.currentUser) {
           auth.currentUser
             .getIdToken(true)
@@ -21,23 +28,32 @@ const SignInPage = () => {
               dispatch(
                 setUser({
                   user: {
-                    email: user.email ?? '',
-                    id: user.uid,
+                    email: email ?? '',
+                    id: uid,
                     token: idToken,
                   },
                 })
               );
               navigate(`/${pageName.editor.En}`);
+              setMessage('');
             })
-            .catch(() => console.error('Error while get token!'));
+            .catch(() => setMessage(''));
         } else {
-          console.error('Error while get currentUser!');
+          setMessage(ErrorMessages.ERROR_AUTH_CURRENT_USER[language]);
         }
       })
-      .catch(() => console.error('Invalid user!'));
+      .catch(() => setMessage(ErrorMessages.ERROR_AUTH_INVALID_USER[language]));
   };
 
-  return <AuthForm title="Sign in" handleClick={makeLogin} />;
+  return (
+    <>
+      <AuthForm
+        title={UIContent.SignIn[language]}
+        handleClick={makeLogin}
+        message={message}
+      />
+    </>
+  );
 };
 
 export default SignInPage;

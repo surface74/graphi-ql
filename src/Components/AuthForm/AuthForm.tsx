@@ -1,17 +1,16 @@
 import { FC, useState } from 'react';
+import Typography from '@mui/material/Typography';
 
-interface FormProps {
-  title: string;
-  handleClick: (email: string, pass: string) => void;
-}
+import { IFormProps } from './AuthForm.types';
 
-const AuthForm: FC<FormProps> = ({ title, handleClick }) => {
+const AuthForm: FC<IFormProps> = ({ title, handleClick, message }) => {
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
 
   return (
     <>
       <h3>{title}</h3>
+      <Typography sx={{ color: 'red', padding: 0 }}>{message}&nbsp;</Typography>
       <div>
         <input
           type="email"

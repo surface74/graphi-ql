@@ -31,7 +31,7 @@ const SignUpPage = () => {
       .catch(() => alert('Invalid user!'));
   };
 
-  return <AuthForm title="Sign up" handleClick={makeLogin} />;
+  return <AuthForm title="Sign up" handleClick={makeLogin} message="" />;
 };
 
 export default SignUpPage;
