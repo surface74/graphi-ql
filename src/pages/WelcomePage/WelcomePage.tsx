@@ -84,8 +84,8 @@ const WelcomePage: React.FC = () => {
           {UIContent.WelcomeScholl[language]}
         </Typography>
 
-        {devCardsContent.map((dev) => (
-          <DevCard props={dev[language]} />
+        {devCardsContent.map((dev, i) => (
+          <DevCard key={i} props={dev[language]} />
         ))}
 
         <Link href="https://rs.school/react/">

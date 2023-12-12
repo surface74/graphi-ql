@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
-import loginFormReducer from './slices/formSlice';
+import AuthReducer from './slices/formSlice';
+import UIReducer from './slices/UISlice';
 import { setupListeners } from '@reduxjs/toolkit/query';
 
 export const store = configureStore({
   reducer: {
-    loginData: loginFormReducer,
+    loginData: AuthReducer,
+    UIData: UIReducer,
   },
 });
 

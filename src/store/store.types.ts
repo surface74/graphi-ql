@@ -6,3 +6,7 @@ export type AuthDataState = {
     passwordRepeat: string;
   };
 };
+
+export type UIState = {
+  docsIsOpen: boolean;
+};
