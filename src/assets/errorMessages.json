@@ -15,10 +15,6 @@
     "Ru": "Ошибка при получении данных текущего пользователя",
     "En": "Error while getting current user's data"
   },
-  "ERROR_AUTH_CURRENT_USER": {
-    "Ru": "Ошибка при получении токе на",
-    "En": "'Error while getting token"
-  },
   "ERROR_404": {
     "Ru": "Нет такой страницы!",
     "En": "Page not found!"

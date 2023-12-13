@@ -13,14 +13,16 @@ import SignUpPage from '../../pages/SignUpPage/SignUpPage';
 import { useAuth } from '../../hooks/auth';
 import ProtectiveRoute from '../ProtectiveRoute/ProtectiveRoute';
 import { pageName } from '../../common-types/common-types';
+import { recallLanguage, saveLanguage } from '../../utils/language';
 
 function App() {
-  const [language, setLanguage] = useState(Language.En);
+  const [language, setLanguage] = useState(recallLanguage());
 
   const { isLogin } = useAuth();
   console.log('isLogin: ', isLogin);
 
   const switchLanguage = (language: Language) => {
+    saveLanguage(language);
     setLanguage(language);
   };
 

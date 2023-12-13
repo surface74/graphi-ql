@@ -19,6 +19,7 @@ const userSlice = createSlice({
       state.user.email = email;
       state.user.token = token;
       state.user.id = id;
+      //TODO save token to cookie
     },
     removeUser(state) {
       state.user.email = '';

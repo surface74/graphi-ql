@@ -12,8 +12,12 @@ import UIStrings from '../../assets/UIStrings.json';
 
 import { IFormProps } from './AuthForm.types';
 import { useDataContext } from '../../DataContext/useDataContext';
+import { Grid, Link } from '@mui/material';
+import { pageName } from '../../common-types/common-types';
 
-const AuthForm: FC<IFormProps> = ({ title, handleClick }) => {
+const AuthForm: FC<IFormProps> = ({ title, handleClick, type, message }) => {
+  console.log('message: ', message);
+
   const { language } = useDataContext();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -75,6 +79,19 @@ const AuthForm: FC<IFormProps> = ({ title, handleClick }) => {
           </Button>
         </Box>
       </Box>
+      <Grid container>
+        <Grid item>
+          {type === 'login' ? (
+            <Link href={pageName.signup.En} variant="body2">
+              {UIStrings.SignUpPageTitle[language]}
+            </Link>
+          ) : (
+            <Link href={pageName.login.En} variant="body2">
+              {UIStrings.SignInPageTitle[language]}
+            </Link>
+          )}
+        </Grid>
+      </Grid>
     </Container>
   );
 };
