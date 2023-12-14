@@ -13,6 +13,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
+import PersonAdd from '@mui/icons-material/PersonAdd';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Switch from '@mui/material/Switch';
 import UIStrings from '../../assets/UIStrings.json';
@@ -76,6 +77,8 @@ const Header: React.FC<HeaderProps> = () => {
   };
 
   const handleClickLogin = () => navigate(`/${pageName.login.En}`);
+
+  const handleClickSignUp = () => navigate(`/${pageName.signup.En}`);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -220,9 +223,14 @@ const Header: React.FC<HeaderProps> = () => {
                   <LogoutIcon sx={loginIcon} />
                 </IconButton>
               ) : (
-                <IconButton onClick={handleClickLogin}>
-                  <LoginIcon sx={loginIcon} />
-                </IconButton>
+                <>
+                  <IconButton onClick={handleClickLogin}>
+                    <LoginIcon sx={loginIcon} />
+                  </IconButton>
+                  <IconButton onClick={handleClickSignUp}>
+                    <PersonAdd sx={loginIcon} />
+                  </IconButton>
+                </>
               )}
 
               <Avatar alt="Remy Sharp" src="" />
