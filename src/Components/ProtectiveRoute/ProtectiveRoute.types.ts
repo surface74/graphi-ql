@@ -1,4 +1,4 @@
 export interface IProtectiveRouteProps {
-  isLogin: boolean;
+  condition: boolean;
   redirectPath: string;
 }

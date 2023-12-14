@@ -1,19 +1,20 @@
 import { useNavigate, Outlet } from 'react-router-dom';
 import { FC, useEffect } from 'react';
-import { useAuth } from '../../hooks/auth';
-import { pageName } from '../../common-types/common-types';
+import { IProtectiveRouteProps } from './ProtectiveRoute.types';
 
-const ProtectiveRoute: FC = () => {
-  const { isLogin } = useAuth();
+const ProtectiveRoute: FC<IProtectiveRouteProps> = ({
+  condition,
+  redirectPath,
+}) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!isLogin) {
-      navigate(`${pageName.login.En}`);
+    if (!condition) {
+      navigate(redirectPath);
     }
   });
 
-  return <>{isLogin ? <Outlet /> : null}</>;
+  return <>{condition ? <Outlet /> : null}</>;
 };
 
 export default ProtectiveRoute;

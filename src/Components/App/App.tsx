@@ -39,9 +39,25 @@ function App() {
           <Routes>
             <Route path="/" element={<WelcomePage />} />
             <Route path={`/${pageName.welcome.En}`} element={<WelcomePage />} />
-            <Route path={`/${pageName.login.En}`} element={<SignInPage />} />
-            <Route path={`/${pageName.signup.En}`} element={<SignUpPage />} />
-            <Route element={<ProtectiveRoute />}>
+            <Route
+              element={
+                <ProtectiveRoute
+                  condition={!isLogin}
+                  redirectPath={`${pageName.editor.En}`}
+                />
+              }
+            >
+              <Route path={`/${pageName.login.En}`} element={<SignInPage />} />
+              <Route path={`/${pageName.signup.En}`} element={<SignUpPage />} />
+            </Route>
+            <Route
+              element={
+                <ProtectiveRoute
+                  condition={isLogin}
+                  redirectPath={`${pageName.login.En}`}
+                />
+              }
+            >
               <Route path={`/${pageName.editor.En}`} element={<EditorPage />} />
             </Route>
             <Route path="*" element={<PageNotFound />} />
