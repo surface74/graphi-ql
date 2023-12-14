@@ -15,7 +15,9 @@ import { useDataContext } from '../../DataContext/useDataContext';
 import { Grid, Link } from '@mui/material';
 import { pageName } from '../../common-types/common-types';
 
-const AuthForm: FC<IFormProps> = ({ title, handleClick, type }) => {
+const AuthForm: FC<IFormProps> = ({ title, handleClick, type, message }) => {
+  if (message) console.log('AuthForm message: ', message);
+
   const { language } = useDataContext();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {

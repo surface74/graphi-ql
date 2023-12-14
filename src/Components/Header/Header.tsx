@@ -35,8 +35,7 @@ import {
 } from './styles.ts';
 import { useAuth } from '../../hooks/auth';
 import { pageName } from '../../common-types/common-types';
-import { useAppDispatch } from '../../hooks/store.ts';
-import { removeUser } from '../../store/slices/userSlice.ts';
+import { logOut } from '../Authority/firebase.ts';
 
 const ScrollHandler = (props: ChangeOnScrollProps) => {
   const trigger = useScrollTrigger({
@@ -63,7 +62,6 @@ const Header: React.FC<HeaderProps> = () => {
   const { language, setLanguage } = useDataContext();
   const { isLogin } = useAuth();
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
 
   const pages = Object.values(pageName);
 
@@ -72,8 +70,7 @@ const Header: React.FC<HeaderProps> = () => {
   );
 
   const handleClickLogout = () => {
-    dispatch(removeUser());
-    navigate(`/${pageName.login.En}`);
+    logOut();
   };
 
   const handleClickLogin = () => navigate(`/${pageName.login.En}`);

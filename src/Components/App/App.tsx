@@ -10,15 +10,42 @@ import { useState } from 'react';
 import Language from '../../enum/language';
 import { DataContextProvider } from '../../DataContext/DataContextProvider';
 import SignUpPage from '../../pages/SignUpPage/SignUpPage';
-import { useAuth } from '../../hooks/auth';
 import ProtectiveRoute from '../ProtectiveRoute/ProtectiveRoute';
 import { pageName } from '../../common-types/common-types';
 import { recallLanguage, saveLanguage } from '../../utils/language';
+import useEnhancedEffect from '@mui/material/utils/useEnhancedEffect';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../Authority/firebase';
+import { clearUserState, storeUserState } from '../../store/slices/userSlice';
+import { useAppDispatch } from '../../hooks/store';
 
 function App() {
+  const dispatch = useAppDispatch();
   const [language, setLanguage] = useState(recallLanguage());
+  const [isLogin, setIsLogin] = useState(false);
 
-  const { isLogin } = useAuth();
+  useEnhancedEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        auth.currentUser?.getIdToken().then((token) => {
+          dispatch(
+            storeUserState({
+              user: {
+                email: user.email ?? '',
+                id: user.uid,
+                token,
+              },
+            })
+          );
+          setIsLogin(true);
+        });
+      } else {
+        dispatch(clearUserState());
+        setIsLogin(false);
+      }
+    });
+  }, []);
+
   console.log('isLogin: ', isLogin);
 
   const switchLanguage = (language: Language) => {

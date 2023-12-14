@@ -1,4 +1,6 @@
 import { initializeApp } from 'firebase/app';
+import { getAuth, signOut } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore/lite';
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_APP_FIREBASE_API_KEY,
@@ -9,4 +11,9 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_APP_FIREBASE_APP_ID,
 };
 
-initializeApp(firebaseConfig);
+export const authApp = initializeApp(firebaseConfig);
+export const auth = getAuth(authApp);
+export const db = getFirestore();
+export const logOut = async () => {
+  await signOut(auth);
+};

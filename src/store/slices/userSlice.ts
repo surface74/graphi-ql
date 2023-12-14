@@ -14,14 +14,13 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setUser(state, action: PayloadAction<IUserState>) {
+    storeUserState(state, action: PayloadAction<IUserState>) {
       const { email, token, id } = action.payload.user;
       state.user.email = email;
       state.user.token = token;
       state.user.id = id;
-      //TODO save token to cookie
     },
-    removeUser(state) {
+    clearUserState(state) {
       state.user.email = '';
       state.user.token = '';
       state.user.id = '';
@@ -29,5 +28,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { setUser, removeUser } = userSlice.actions;
+export const { storeUserState, clearUserState } = userSlice.actions;
 export default userSlice.reducer;
