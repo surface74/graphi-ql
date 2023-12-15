@@ -87,7 +87,7 @@ function App() {
               element={
                 <ProtectiveRoute
                   condition={isLogin}
-                  redirectPath={`${pageName.login.En}`}
+                  redirectPath={`${pageName.welcome.En}`}
                 />
               }
             >
