@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -14,10 +15,10 @@ import AdbIcon from '@mui/icons-material/Adb';
 import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
 import PersonAdd from '@mui/icons-material/PersonAdd';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Switch from '@mui/material/Switch';
-import UIStrings from '../../assets/UIStrings.json';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
+
+import UIStrings from '../../assets/UIStrings.json';
 import { ChangeOnScrollProps, HeaderProps } from './Header.types.ts';
 import Language from '../../enum/language.ts';
 import { useDataContext } from '../../DataContext/useDataContext.ts';

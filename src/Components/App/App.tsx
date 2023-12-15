@@ -18,6 +18,11 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../Authority/firebase';
 import { clearUserState, storeUserState } from '../../store/slices/userSlice';
 import { useAppDispatch } from '../../hooks/store';
+import { startWatchdog } from '../Authority/auth-cookie';
+import {
+  resetAccessTokenCookie,
+  setAccessTokenCookie,
+} from '../Authority/auth-cookie';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -25,9 +30,11 @@ function App() {
   const [isLogin, setIsLogin] = useState(false);
 
   useEnhancedEffect(() => {
+    startWatchdog();
     onAuthStateChanged(auth, (user) => {
       if (user) {
         auth.currentUser?.getIdToken().then((token) => {
+          setAccessTokenCookie(token);
           dispatch(
             storeUserState({
               user: {
@@ -40,13 +47,12 @@ function App() {
           setIsLogin(true);
         });
       } else {
+        resetAccessTokenCookie();
         dispatch(clearUserState());
         setIsLogin(false);
       }
     });
   }, []);
-
-  console.log('isLogin: ', isLogin);
 
   const switchLanguage = (language: Language) => {
     saveLanguage(language);
