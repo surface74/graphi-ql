@@ -2,11 +2,12 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { CircularProgress, Box } from '@mui/material';
 
 import { useDataContext } from '../../DataContext/useDataContext';
-import AuthForm from '../../Components/AuthForm/AuthForm';
 import UIStrings from '../../assets/UIStrings.json';
 import { useLogin } from '../../hooks/login';
 import { flexColomnCenter } from './styles';
 import { auth } from '../../Components/Authority/firebase';
+import LoginForm from '../../Components/LoginForm/LoginForm';
+import { LoginFormType } from '../../Components/LoginForm/LoginForm.types';
 
 const SignUpPage = () => {
   const { language } = useDataContext();
@@ -23,11 +24,11 @@ const SignUpPage = () => {
 
   return (
     <Box sx={flexColomnCenter}>
-      <AuthForm
+      <LoginForm
         title={UIStrings.SignUpPageTitle[language]}
-        handleClick={makeSignUp}
+        onSubmitForm={makeSignUp}
         message={isError}
-        type="singup"
+        type={LoginFormType.SIGNUP}
       />
       {isLoading && <CircularProgress color="inherit" />}
     </Box>

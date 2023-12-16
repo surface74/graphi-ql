@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -9,27 +8,36 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import UIStrings from '../../assets/UIStrings.json';
+import { useFormik } from 'formik';
 
-import { IFormProps } from './AuthForm.types';
 import { useDataContext } from '../../DataContext/useDataContext';
 import { Grid, Link } from '@mui/material';
 import { pageName } from '../../common-types/common-types';
+import { getSchema } from '../../yup/schema';
+import { ILoginFormProps, LoginFormType } from './LoginForm.types';
 
-const AuthForm: FC<IFormProps> = ({ title, handleClick, type, message }) => {
+const LoginForm: FC<ILoginFormProps> = ({
+  title,
+  onSubmitForm,
+  type,
+  message,
+}) => {
   if (message) console.log('AuthForm message: ', message);
 
   const { language } = useDataContext();
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    let email = data.get('email');
-    email = email === null ? '' : email?.toString() ?? '';
-    let password = data.get('password');
-    password = password === null ? '' : password?.toString() ?? '';
+  const schema = getSchema(language);
 
-    handleClick(email, password);
-  };
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+    },
+    validationSchema: schema,
+    onSubmit: ({ email, password }) => {
+      onSubmitForm(email, password);
+    },
+  });
 
   return (
     <Container component="main" maxWidth="xs">
@@ -37,37 +45,53 @@ const AuthForm: FC<IFormProps> = ({ title, handleClick, type, message }) => {
       <Box
         sx={{
           marginTop: 8,
+          padding: 10,
+          borderRadius: 1,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
+          backgroundColor: 'Background',
         }}
       >
         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" variant="h5" color="black">
           {title}
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+        <Box
+          component="form"
+          onSubmit={formik.handleSubmit}
+          noValidate
+          sx={{ mt: 1 }}
+        >
           <TextField
-            margin="normal"
-            required
             fullWidth
             id="email"
-            label={UIStrings.Email[language]}
             name="email"
+            label={UIStrings.Email[language]}
+            margin="normal"
             autoComplete="email"
             autoFocus
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.email && Boolean(formik.errors.email)}
+            helperText={formik.touched.email && formik.errors.email}
           />
           <TextField
-            margin="normal"
-            required
             fullWidth
+            id="password"
             name="password"
             label={UIStrings.Password[language]}
             type="password"
-            id="password"
+            margin="normal"
             autoComplete="current-password"
+            value={formik.values.password}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.password && Boolean(formik.errors.password)}
+            helperText={formik.touched.password && formik.errors.password}
           />
           <Button
             type="submit"
@@ -81,7 +105,7 @@ const AuthForm: FC<IFormProps> = ({ title, handleClick, type, message }) => {
       </Box>
       <Grid container>
         <Grid item>
-          {type === 'login' ? (
+          {type === LoginFormType.LOGIN ? (
             <Link href={pageName.signup.En} variant="body2">
               {UIStrings.SignUpPageTitle[language]}
             </Link>
@@ -96,4 +120,4 @@ const AuthForm: FC<IFormProps> = ({ title, handleClick, type, message }) => {
   );
 };
 
-export default AuthForm;
+export default LoginForm;
