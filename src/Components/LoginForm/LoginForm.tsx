@@ -14,16 +14,9 @@ import { Grid, Link } from '@mui/material';
 import { pageName } from '../../common-types/common-types';
 import { getSchema } from '../../yup/schema';
 import { ILoginFormProps, LoginFormType } from './LoginForm.types';
-import CustomTextField from '../CustomTextField/CustomTextField';
+import CustomTextField from './LoginFormTextField';
 
-const LoginForm: FC<ILoginFormProps> = ({
-  title,
-  onSubmitForm,
-  type,
-  message,
-}) => {
-  if (message) console.log('AuthForm message: ', message);
-
+const LoginForm: FC<ILoginFormProps> = ({ title, onSubmitForm, type }) => {
   const { language } = useDataContext();
 
   const schema = getSchema(language);
@@ -50,7 +43,6 @@ const LoginForm: FC<ILoginFormProps> = ({
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          // backgroundColor: 'Background',
         }}
       >
         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>

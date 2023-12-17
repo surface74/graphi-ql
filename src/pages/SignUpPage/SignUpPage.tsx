@@ -12,11 +12,9 @@ import { LoginFormType } from '../../Components/LoginForm/LoginForm.types';
 const SignUpPage = () => {
   const { language } = useDataContext();
 
-  const [signup, isLoading, isError] = useLogin(
-    async (emailProp, passwordProp) => {
-      await createUserWithEmailAndPassword(auth, emailProp, passwordProp);
-    }
-  );
+  const [signup, isLoading] = useLogin(async (emailProp, passwordProp) => {
+    await createUserWithEmailAndPassword(auth, emailProp, passwordProp);
+  });
 
   const makeSignUp = (email: string, password: string) => {
     signup(email, password);
@@ -27,7 +25,6 @@ const SignUpPage = () => {
       <LoginForm
         title={UIStrings.SignUpPageTitle[language]}
         onSubmitForm={makeSignUp}
-        message={isError}
         type={LoginFormType.SIGNUP}
       />
       {isLoading && <CircularProgress color="inherit" />}

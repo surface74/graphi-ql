@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useSnackbar } from 'notistack';
+
 import ErrorMessage from '../assets/errorMessages.json';
 import { useDataContext } from '../DataContext/useDataContext';
 
@@ -8,6 +10,7 @@ export const useLogin = (
   const { language } = useDataContext();
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState('');
+  const { enqueueSnackbar } = useSnackbar();
 
   const login = async (email: string, password: string) => {
     try {
@@ -17,6 +20,7 @@ export const useLogin = (
     } catch (error) {
       if (error instanceof Error) {
         setIsError(error.message);
+        enqueueSnackbar(error.message, { variant: 'error' });
       } else {
         throw new Error(ErrorMessage.ERROR_MESSAGE[language]);
       }
