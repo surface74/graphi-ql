@@ -2,7 +2,6 @@ import { FC } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
@@ -15,6 +14,7 @@ import { Grid, Link } from '@mui/material';
 import { pageName } from '../../common-types/common-types';
 import { getSchema } from '../../yup/schema';
 import { ILoginFormProps, LoginFormType } from './LoginForm.types';
+import CustomTextField from '../CustomTextField/CustomTextField';
 
 const LoginForm: FC<ILoginFormProps> = ({
   title,
@@ -50,13 +50,13 @@ const LoginForm: FC<ILoginFormProps> = ({
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          backgroundColor: 'Background',
+          // backgroundColor: 'Background',
         }}
       >
         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography component="h1" variant="h5" color="black">
+        <Typography component="h1" variant="h5" color="white">
           {title}
         </Typography>
         <Box
@@ -65,7 +65,7 @@ const LoginForm: FC<ILoginFormProps> = ({
           noValidate
           sx={{ mt: 1 }}
         >
-          <TextField
+          <CustomTextField
             fullWidth
             id="email"
             name="email"
@@ -79,7 +79,7 @@ const LoginForm: FC<ILoginFormProps> = ({
             error={formik.touched.email && Boolean(formik.errors.email)}
             helperText={formik.touched.email && formik.errors.email}
           />
-          <TextField
+          <CustomTextField
             fullWidth
             id="password"
             name="password"

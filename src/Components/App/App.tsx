@@ -23,33 +23,41 @@ import {
   resetAccessTokenCookie,
   setAccessTokenCookie,
 } from '../Authority/auth-cookie';
+import { useAuth } from '../../hooks/auth';
 
 function App() {
   const dispatch = useAppDispatch();
   const [language, setLanguage] = useState(recallLanguage());
-  const [isLogin, setIsLogin] = useState(false);
+  const { isLogin } = useAuth();
+
+  const clearUser = () => {
+    resetAccessTokenCookie();
+    dispatch(clearUserState());
+  };
 
   useEnhancedEffect(() => {
     startWatchdog();
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        auth.currentUser?.getIdToken().then((token) => {
-          setAccessTokenCookie(token);
-          dispatch(
-            storeUserState({
-              user: {
-                email: user.email ?? '',
-                id: user.uid,
-                token,
-              },
-            })
-          );
-          setIsLogin(true);
-        });
+        auth.currentUser
+          ?.getIdToken()
+          .then((token) => {
+            setAccessTokenCookie(token);
+            dispatch(
+              storeUserState({
+                user: {
+                  email: user.email ?? '',
+                  id: user.uid,
+                  token,
+                },
+              })
+            );
+          })
+          .catch(() => {
+            clearUser();
+          });
       } else {
-        resetAccessTokenCookie();
-        dispatch(clearUserState());
-        setIsLogin(false);
+        clearUser();
       }
     });
   }, []);

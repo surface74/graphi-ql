@@ -18,12 +18,8 @@ export const setAccessTokenCookie = (token: string) => {
 
 export const isAccessTokenCookieValid = () => {
   const cookies = document.cookie.split(COOKIES_DELIMITER);
-  for (const cookie of cookies) {
-    if (cookie.startsWith(`${AUTH_COOKIE}=`)) {
-      return true;
-    }
-  }
-  return false;
+
+  return cookies.some((cookie) => cookie.startsWith(`${AUTH_COOKIE}=`));
 };
 
 export const resetAccessTokenCookie = () => {
