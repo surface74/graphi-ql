@@ -7,7 +7,14 @@ const flexColomnCenter = {
   alignItems: 'center',
 };
 
-const flexRowCenter = {
+const flexRowRight = {
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'end',
+  alignItems: 'center',
+};
+
+export const flexRowCenter = {
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'center',
@@ -30,7 +37,8 @@ export const wrapperAuth: SxProps<Theme> = {
   gap: 10,
 };
 export const wrapperButtons: SxProps<Theme> = {
-  ...flexRowCenter,
+  ...flexRowRight,
+  width: '100%',
   gap: 20,
   pb: 30,
   pt: 30,

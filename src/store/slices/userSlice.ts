@@ -5,7 +5,6 @@ import { IUserState } from '../store.types';
 const initialState: IUserState = {
   user: {
     email: '',
-    token: '',
     id: '',
   },
 };
@@ -15,14 +14,12 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     storeUserState(state, action: PayloadAction<IUserState>) {
-      const { email, token, id } = action.payload.user;
+      const { email, id } = action.payload.user;
       state.user.email = email;
-      state.user.token = token;
       state.user.id = id;
     },
     clearUserState(state) {
       state.user.email = '';
-      state.user.token = '';
       state.user.id = '';
     },
   },

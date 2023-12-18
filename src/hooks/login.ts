@@ -4,30 +4,30 @@ import { useSnackbar } from 'notistack';
 import ErrorMessage from '../assets/errorMessages.json';
 import { useDataContext } from '../DataContext/useDataContext';
 
-export const useLogin = (
-  callback: (email: string, password: string) => Promise<void>
-): [(email: string, password: string) => Promise<void>, boolean, string] => {
+type ICallback = (email: string, password: string) => Promise<void>;
+
+export const useLogin = (callback: ICallback): [ICallback, boolean, string] => {
   const { language } = useDataContext();
   const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const { enqueueSnackbar } = useSnackbar();
 
   const login = async (email: string, password: string) => {
     try {
       setIsLoading(true);
       await callback(email, password);
-      setIsError('');
+      setErrorMessage('');
     } catch (error) {
       if (error instanceof Error) {
-        setIsError(error.message);
+        setErrorMessage(error.message);
         enqueueSnackbar(error.message, { variant: 'error' });
       } else {
-        throw new Error(ErrorMessage.ERROR_MESSAGE[language]);
+        setErrorMessage(ErrorMessage.ERROR_MESSAGE[language]);
       }
     } finally {
       setIsLoading(false);
     }
   };
 
-  return [login, isLoading, isError];
+  return [login, isLoading, errorMessage];
 };

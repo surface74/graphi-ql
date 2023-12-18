@@ -1,12 +1,11 @@
 import { useAppSelector } from './store';
 
 export function useAuth() {
-  const { email, token, id } = useAppSelector((state) => state.user.user);
+  const { email, id } = useAppSelector((state) => state.user.user);
 
   return {
-    isLogin: !!token,
+    isLogin: !!email,
     email,
-    token,
     id,
   };
 }

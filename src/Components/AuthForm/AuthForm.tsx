@@ -10,14 +10,17 @@ import UIStrings from '../../assets/UIStrings.json';
 import { useFormik } from 'formik';
 
 import { useDataContext } from '../../DataContext/useDataContext';
-import { Grid, Link } from '@mui/material';
+import { IconButton } from '@mui/material';
 import { pageName } from '../../common-types/common-types';
 import { getSchema } from '../../yup/schema';
-import { ILoginFormProps, LoginFormType } from './LoginForm.types';
-import CustomTextField from './LoginFormTextField';
+import { IAuthFormProps } from './AuthForm.types';
+import AuthFormTextField from './AuthFormTextField';
+import { useNavigate } from 'react-router-dom';
+import { AuthActionType } from '../../pages/AuthPage/AuthPage.types';
 
-const LoginForm: FC<ILoginFormProps> = ({ title, onSubmitForm, type }) => {
+const AuthForm: FC<IAuthFormProps> = ({ title, onSubmitForm, type }) => {
   const { language } = useDataContext();
+  const navigate = useNavigate();
 
   const schema = getSchema(language);
 
@@ -28,9 +31,22 @@ const LoginForm: FC<ILoginFormProps> = ({ title, onSubmitForm, type }) => {
     },
     validationSchema: schema,
     onSubmit: ({ email, password }) => {
-      onSubmitForm(email, password);
+      onSubmitForm(email.trim(), password);
     },
   });
+
+  const handleClick = () => {
+    navigate(
+      `/${
+        type === AuthActionType.LOGIN ? pageName.signup.En : pageName.login.En
+      }`
+    );
+  };
+
+  const linkText =
+    type === AuthActionType.LOGIN
+      ? UIStrings.SignUpPageTitle[language]
+      : UIStrings.SignInPageTitle[language];
 
   return (
     <Container component="main" maxWidth="xs">
@@ -56,7 +72,7 @@ const LoginForm: FC<ILoginFormProps> = ({ title, onSubmitForm, type }) => {
           noValidate
           sx={{ mt: 1 }}
         >
-          <CustomTextField
+          <AuthFormTextField
             fullWidth
             id="email"
             name="email"
@@ -70,7 +86,7 @@ const LoginForm: FC<ILoginFormProps> = ({ title, onSubmitForm, type }) => {
             error={formik.touched.email && Boolean(formik.errors.email)}
             helperText={formik.touched.email && formik.errors.email}
           />
-          <CustomTextField
+          <AuthFormTextField
             fullWidth
             id="password"
             name="password"
@@ -94,21 +110,12 @@ const LoginForm: FC<ILoginFormProps> = ({ title, onSubmitForm, type }) => {
           </Button>
         </Box>
       </Box>
-      <Grid container>
-        <Grid item>
-          {type === LoginFormType.LOGIN ? (
-            <Link href={pageName.signup.En} variant="body2">
-              {UIStrings.SignUpPageTitle[language]}
-            </Link>
-          ) : (
-            <Link href={pageName.login.En} variant="body2">
-              {UIStrings.SignInPageTitle[language]}
-            </Link>
-          )}
-        </Grid>
-      </Grid>
+
+      <IconButton onClick={handleClick} size="small" color="primary">
+        {linkText}
+      </IconButton>
     </Container>
   );
 };
 
-export default LoginForm;
+export default AuthForm;

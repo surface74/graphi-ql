@@ -41,7 +41,6 @@ function App() {
                 user: {
                   email: user.email ?? '',
                   id: user.uid,
-                  token,
                 },
               })
             );

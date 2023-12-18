@@ -64,6 +64,10 @@ const Header: React.FC<HeaderProps> = () => {
   const { isLogin } = useAuth();
   const navigate = useNavigate();
 
+  const [langChecked, setLangChecked] = React.useState(
+    language === Language.En
+  );
+
   const pages = Object.values(pageName).filter(
     (name) => name.En === pageName.welcome.En || name.En === pageName.main.En
   );
@@ -89,6 +93,7 @@ const Header: React.FC<HeaderProps> = () => {
 
   const changeLang = () => {
     setLanguage(language === Language.En ? Language.Ru : Language.En);
+    setLangChecked(!langChecked);
   };
 
   const AuthIcon = isLogin ? LogoutIcon : LoginIcon;
@@ -206,7 +211,7 @@ const Header: React.FC<HeaderProps> = () => {
                 </Typography>
 
                 <Switch
-                  defaultChecked
+                  checked={langChecked}
                   size="medium"
                   color="default"
                   onChange={changeLang}

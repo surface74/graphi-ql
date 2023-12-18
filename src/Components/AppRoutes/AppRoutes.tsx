@@ -3,12 +3,12 @@ import { Route, Routes } from 'react-router-dom';
 
 import ProtectiveRoute from '../ProtectiveRoute/ProtectiveRoute';
 import WelcomePage from '../../pages/WelcomePage/WelcomePage';
-import SignInPage from '../../pages/SignInPage/SignInPage';
-import SignUpPage from '../../pages/SignUpPage/SignUpPage';
 import EditorPage from '../../pages/EditorPage/EditorPage';
 import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';
 import { pageName } from '../../common-types/common-types';
 import { useAuth } from '../../hooks/auth';
+import AuthPage from '../../pages/AuthPage/AuthPage';
+import { AuthActionType } from '../../pages/AuthPage/AuthPage.types';
 
 export const AppRoutes: FC = () => {
   const { isLogin } = useAuth();
@@ -25,8 +25,14 @@ export const AppRoutes: FC = () => {
           />
         }
       >
-        <Route path={`/${pageName.login.En}`} element={<SignInPage />} />
-        <Route path={`/${pageName.signup.En}`} element={<SignUpPage />} />
+        <Route
+          path={`/${pageName.login.En}`}
+          element={<AuthPage authActionType={AuthActionType.LOGIN} />}
+        />
+        <Route
+          path={`/${pageName.signup.En}`}
+          element={<AuthPage authActionType={AuthActionType.SIGNUP} />}
+        />
       </Route>
       <Route
         element={

@@ -10,7 +10,6 @@ export const getSchema = (language: Language) => {
       email: yup
         .string()
         .required(errorMessages.CHECK_EMAIL_REQUIRED[language])
-        .email(errorMessages.CHECK_EMAIL_FORMAT[language])
         .matches(
           ValidationRule.EMAIL,
           errorMessages.CHECK_EMAIL_FORMAT[language]

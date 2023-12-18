@@ -65,9 +65,7 @@ const WelcomePage: React.FC = () => {
             data-testid="sign-in"
             variant="contained"
             title={
-              !isLogin
-                ? UIContent.SignIn[language]
-                : UIContent.GetStarted[language]
+              !isLogin ? UIContent.SignIn[language] : UIContent.Main[language]
             }
             onClick={!isLogin ? handleSignIn : handleGetStarted}
           />
