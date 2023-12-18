@@ -15,7 +15,6 @@ import { DataContextProvider } from '../../DataContext/DataContextProvider';
 import SignUpPage from '../../pages/SignUpPage/SignUpPage';
 import ProtectiveRoute from '../ProtectiveRoute/ProtectiveRoute';
 import { pageName } from '../../common-types/common-types';
-import { recallLanguage, saveLanguage } from '../../utils/language';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../Authority/firebase';
 import { clearUserState, storeUserState } from '../../store/slices/userSlice';
@@ -27,10 +26,11 @@ import {
 } from '../Authority/auth-cookie';
 import { useAuth } from '../../hooks/auth';
 import CustomSnackbar from '../CustomSnackbar/CustomSnackbar';
+import Storage from '../../utils/Storage/Storage';
 
 function App() {
   const dispatch = useAppDispatch();
-  const [language, setLanguage] = useState(recallLanguage());
+  const [language, setLanguage] = useState(Storage.recallLanguage());
   const { isLogin } = useAuth();
 
   const clearUser = () => {
@@ -66,7 +66,7 @@ function App() {
   }, []);
 
   const switchLanguage = (language: Language) => {
-    saveLanguage(language);
+    Storage.saveLanguage(language);
     setLanguage(language);
   };
 
