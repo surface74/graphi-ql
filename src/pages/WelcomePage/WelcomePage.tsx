@@ -46,7 +46,7 @@ const WelcomePage: React.FC = () => {
   }
 
   function handleGetStarted() {
-    navigator(`/${pageName.editor.En}`);
+    navigator(`/${pageName.main.En}`);
   }
   return (
     <>

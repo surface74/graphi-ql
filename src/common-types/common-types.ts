@@ -1,12 +1,5 @@
 import UIStrings from '../assets/UIStrings.json';
 
-export interface Form {
-  name?: string;
-  email?: string;
-  password?: string;
-  passwordRepeat?: string;
-}
-
 export const pageName = {
   welcome: {
     Ru: UIStrings.Welcome.Ru,
@@ -20,8 +13,8 @@ export const pageName = {
     Ru: UIStrings.SignUp.Ru,
     En: UIStrings.SignUp.En,
   },
-  editor: {
-    Ru: UIStrings.Editor.Ru,
-    En: UIStrings.Editor.En,
+  main: {
+    Ru: UIStrings.Main.Ru,
+    En: UIStrings.Main.En,
   },
 };

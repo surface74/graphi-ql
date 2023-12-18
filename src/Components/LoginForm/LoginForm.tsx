@@ -38,7 +38,6 @@ const LoginForm: FC<ILoginFormProps> = ({ title, onSubmitForm, type }) => {
       <Box
         sx={{
           marginTop: 8,
-          padding: 10,
           borderRadius: 1,
           display: 'flex',
           flexDirection: 'column',

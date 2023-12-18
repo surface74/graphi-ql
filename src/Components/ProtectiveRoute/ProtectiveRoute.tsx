@@ -14,7 +14,7 @@ const ProtectiveRoute: FC<IProtectiveRouteProps> = ({
     }
   });
 
-  return <>{condition ? <Outlet /> : null}</>;
+  return condition ? <Outlet /> : null;
 };
 
 export default ProtectiveRoute;

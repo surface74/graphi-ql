@@ -64,17 +64,16 @@ const Header: React.FC<HeaderProps> = () => {
   const { isLogin } = useAuth();
   const navigate = useNavigate();
 
-  const pages = Object.values(pageName);
+  const pages = Object.values(pageName).filter(
+    (name) => name.En === pageName.welcome.En || name.En === pageName.main.En
+  );
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
 
-  const handleClickLogout = () => {
-    logOut();
-  };
-
-  const handleClickLogin = () => navigate(`/${pageName.login.En}`);
+  const handleClickAuth = () =>
+    isLogin ? logOut() : navigate(`/${pageName.login.En}`);
 
   const handleClickSignUp = () => navigate(`/${pageName.signup.En}`);
 
@@ -91,6 +90,8 @@ const Header: React.FC<HeaderProps> = () => {
   const changeLang = () => {
     setLanguage(language === Language.En ? Language.Ru : Language.En);
   };
+
+  const AuthIcon = isLogin ? LogoutIcon : LoginIcon;
 
   return (
     <ChangeOnScroll>
@@ -216,19 +217,14 @@ const Header: React.FC<HeaderProps> = () => {
                 </Typography>
               </Box>
 
-              {isLogin ? (
-                <IconButton onClick={handleClickLogout}>
-                  <LogoutIcon sx={loginIcon} />
+              <IconButton onClick={handleClickAuth}>
+                <AuthIcon sx={loginIcon} />
+              </IconButton>
+
+              {!isLogin && (
+                <IconButton onClick={handleClickSignUp}>
+                  <PersonAdd sx={loginIcon} />
                 </IconButton>
-              ) : (
-                <>
-                  <IconButton onClick={handleClickLogin}>
-                    <LoginIcon sx={loginIcon} />
-                  </IconButton>
-                  <IconButton onClick={handleClickSignUp}>
-                    <PersonAdd sx={loginIcon} />
-                  </IconButton>
-                </>
               )}
 
               <Avatar alt="Remy Sharp" src="" />

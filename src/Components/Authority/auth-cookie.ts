@@ -1,13 +1,13 @@
 import { watchdog } from '../../utils/watchdog';
 import { logOut } from './firebase';
 
+const AUTH_LIFETIME = 1200; // in seconds
 const AUTH_COOKIE = encodeURIComponent('accessToken');
-const AUTH_LIFETIME = 3600; // in seconds
 const WATCHDOG_INTERVAL = 10; // in seconds
 const COOKIES_DELIMITER = '; ';
 
 export const setAccessTokenCookie = (token: string) => {
-  const lifetime = import.meta.env.VITE_AUTH_COOKIE_LIFETIME || AUTH_LIFETIME;
+  const lifetime = AUTH_LIFETIME;
 
   const cookieData: string[] = [`${AUTH_COOKIE}=${token}`];
   cookieData.push(`path='/'`);
