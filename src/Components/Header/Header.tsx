@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -13,10 +14,11 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { Link, useLocation } from 'react-router-dom';
+import PersonAdd from '@mui/icons-material/PersonAdd';
 import Switch from '@mui/material/Switch';
-import UIStrings from '../../assets/UIStrings.json';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
+
+import UIStrings from '../../assets/UIStrings.json';
 import { ChangeOnScrollProps, HeaderProps } from './Header.types.ts';
 import Language from '../../enum/language.ts';
 import { useDataContext } from '../../DataContext/useDataContext.ts';
@@ -32,6 +34,9 @@ import {
   rightMenuWrapper,
   switchLangWrapper,
 } from './styles.ts';
+import { useAuth } from '../../hooks/auth';
+import { pageName } from '../../common-types/common-types';
+import { logOut } from '../Authority/firebase.ts';
 
 const ScrollHandler = (props: ChangeOnScrollProps) => {
   const trigger = useScrollTrigger({
@@ -55,15 +60,26 @@ const ChangeOnScroll = (props: ChangeOnScrollProps) => {
 
 const Header: React.FC<HeaderProps> = () => {
   const location = useLocation();
-  const { language, pageName, setLanguage, authority } = useDataContext();
+  const { language, setLanguage } = useDataContext();
+  const { isLogin } = useAuth();
+  const navigate = useNavigate();
 
-  const pages = Object.values(pageName);
+  const [langChecked, setLangChecked] = React.useState(
+    language === Language.En
+  );
 
-  const isLogin = authority.isLogin();
+  const pages = Object.values(pageName).filter(
+    (name) => name.En === pageName.welcome.En || name.En === pageName.main.En
+  );
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
+
+  const handleClickAuth = () =>
+    isLogin ? logOut() : navigate(`/${pageName.login.En}`);
+
+  const handleClickSignUp = () => navigate(`/${pageName.signup.En}`);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -77,7 +93,10 @@ const Header: React.FC<HeaderProps> = () => {
 
   const changeLang = () => {
     setLanguage(language === Language.En ? Language.Ru : Language.En);
+    setLangChecked(!langChecked);
   };
+
+  const AuthIcon = isLogin ? LogoutIcon : LoginIcon;
 
   return (
     <ChangeOnScroll>
@@ -160,7 +179,7 @@ const Header: React.FC<HeaderProps> = () => {
                     display: 'block',
                   }}
                 >
-                  <Link key={i + 1} to={`/${page.En.toLowerCase()}`}>
+                  <Link key={i + 1} to={`/${page.En}`}>
                     <div id={`${page.En}`}>
                       <Typography
                         textAlign="center"
@@ -192,7 +211,7 @@ const Header: React.FC<HeaderProps> = () => {
                 </Typography>
 
                 <Switch
-                  defaultChecked
+                  checked={langChecked}
                   size="medium"
                   color="default"
                   onChange={changeLang}
@@ -203,13 +222,13 @@ const Header: React.FC<HeaderProps> = () => {
                 </Typography>
               </Box>
 
-              {!isLogin ? (
-                <IconButton>
-                  <LoginIcon sx={loginIcon} />
-                </IconButton>
-              ) : (
-                <IconButton>
-                  <LogoutIcon sx={loginIcon} />
+              <IconButton onClick={handleClickAuth}>
+                <AuthIcon sx={loginIcon} />
+              </IconButton>
+
+              {!isLogin && (
+                <IconButton onClick={handleClickSignUp}>
+                  <PersonAdd sx={loginIcon} />
                 </IconButton>
               )}
 

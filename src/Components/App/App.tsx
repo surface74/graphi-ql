@@ -1,64 +1,92 @@
-import EditorPage from '../../pages/EditorPage/EditorPage';
-import WelcomePage from '../../pages/WelcomePage/WelcomePage';
 import styles from './App.module.css';
-import { Route, Routes } from 'react-router-dom';
-import PageNotFound from '../../pages/NotFoundPage/NotFoundPage';
-import LoginPage from '../../pages/LoginPage/LoginPage';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import { useState } from 'react';
+import useEnhancedEffect from '@mui/material/utils/useEnhancedEffect';
+import { SnackbarProvider } from 'notistack';
 import Language from '../../enum/language';
 import { DataContextProvider } from '../../DataContext/DataContextProvider';
-import UIStrings from '../../assets/UIStrings.json';
-import Authority from '../Authority/Authority';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../Authority/firebase';
+import { clearUserState, storeUserState } from '../../store/slices/userSlice';
+import { useAppDispatch } from '../../hooks/store';
+import { startWatchdog } from '../Authority/auth-cookie';
+import {
+  resetAccessTokenCookie,
+  setAccessTokenCookie,
+} from '../Authority/auth-cookie';
+import CustomSnackbar from '../CustomSnackbar/CustomSnackbar';
+import Storage from '../../utils/Storage/Storage';
+import { AppRoutes } from '../AppRoutes/AppRoutes';
 
 function App() {
-  const [language, setLanguage] = useState(Language.En);
+  const dispatch = useAppDispatch();
+  const [language, setLanguage] = useState(Storage.recallLanguage());
+
+  const clearUser = () => {
+    resetAccessTokenCookie();
+    dispatch(clearUserState());
+  };
+
+  useEnhancedEffect(() => {
+    startWatchdog();
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        auth.currentUser
+          ?.getIdToken()
+          .then((token) => {
+            setAccessTokenCookie(token);
+            dispatch(
+              storeUserState({
+                user: {
+                  email: user.email ?? '',
+                  id: user.uid,
+                },
+              })
+            );
+          })
+          .catch(() => {
+            clearUser();
+          });
+      } else {
+        clearUser();
+      }
+    });
+  }, []);
 
   const switchLanguage = (language: Language) => {
+    Storage.saveLanguage(language);
     setLanguage(language);
   };
 
-  const pageName = {
-    welcome: {
-      Ru: UIStrings.Welcome.Ru,
-      En: UIStrings.Welcome.En,
-    },
-    login: {
-      Ru: UIStrings.Login.Ru,
-      En: UIStrings.Login.En,
-    },
-    editor: {
-      Ru: UIStrings.Editor.Ru,
-      En: UIStrings.Editor.En,
-    },
-  };
-
-  const authority = new Authority();
-
   return (
-    <DataContextProvider
-      value={{
-        language,
-        setLanguage: switchLanguage,
-        pageName,
-        authority,
+    <SnackbarProvider
+      maxSnack={3}
+      autoHideDuration={3000}
+      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      Components={{
+        success: CustomSnackbar,
+        info: CustomSnackbar,
+        error: CustomSnackbar,
+        default: CustomSnackbar,
+        warning: CustomSnackbar,
       }}
     >
-      <div className={styles['container']}>
-        <Header />
-        <div className={styles['content']}>
-          <Routes>
-            <Route path="/" element={<WelcomePage />} />
-            <Route path={`/${pageName.welcome.En}`} element={<WelcomePage />} />
-            <Route path={`/${pageName.login.En}`} element={<LoginPage />} />
-            <Route path={`/${pageName.editor.En}`} element={<EditorPage />} />
-            <Route path="*" element={<PageNotFound />} />
-          </Routes>
+      <DataContextProvider
+        value={{
+          language,
+          setLanguage: switchLanguage,
+        }}
+      >
+        <div className={styles['container']}>
+          <Header />
+          <div className={styles['content']}>
+            <AppRoutes />
+          </div>
         </div>
-      </div>
-      <Footer />
-    </DataContextProvider>
+        <Footer />
+      </DataContextProvider>
+    </SnackbarProvider>
   );
 }
 

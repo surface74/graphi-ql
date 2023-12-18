@@ -3,10 +3,17 @@
     "Ru": "Закрыть",
     "En": "Close"
   },
-
   "ERROR_MESSAGE": {
     "Ru": "Что-то пошло не так :(",
     "En": "Something went wrong :("
+  },
+  "ERROR_AUTH_INVALID_USER": {
+    "Ru": "Пользователь с указанными учетными данными не найден!",
+    "En": "There's no user with such login & password"
+  },
+  "ERROR_AUTH_CURRENT_USER": {
+    "Ru": "Ошибка при получении данных текущего пользователя",
+    "En": "Error while getting current user's data"
   },
   "ERROR_404": {
     "Ru": "Нет такой страницы!",
@@ -16,7 +23,6 @@
     "Ru": "Имя должно начинаться с заглавной буквы",
     "En": "validate for first uppercased letter"
   },
-
   "CHECK_NAME_LENGTH": {
     "Ru": "Имя слишком короткое",
     "En": "name is too short"
@@ -26,16 +32,20 @@
     "En": "name is too short"
   },
   "CHECK_EMAIL_FORMAT": {
-    "Ru": "почтовый адрес должен быть формата xxx@xx.xx",
+    "Ru": "почтовый адрес должен быть в формате xxx@xx.xx",
     "En": "email format need to be xxx@xx.xx"
   },
   "CHECK_PASSWORD_STRONG": {
     "Ru": "пароль слишком слабый",
     "En": "password is too weak"
   },
+  "CHECK_PASSWORD_LENGHT": {
+    "Ru": "длина пароля не менее 8 символов",
+    "En": "password must have at least 8 symbols"
+  },
   "CHECK_PASSWORD_FORMAT": {
-    "Ru": "пароль должен содержать 1 цифру, 1 строчную бакву, 1 заглавную букву, 1 спецсимвол",
-    "En": "should match, display the password strength: 1 number, 1 uppercased letter, 1 lowercased letter, 1 special character"
+    "Ru": "пароль должен содержать 1 цифру, 1 букву, 1 спецсимвол",
+    "En": "password must contains at least 1 number, 1 letter, 1 special character"
   },
   "CHECK_PASSWORD_MATCH": {
     "Ru": "пароли не совпадают",
@@ -46,7 +56,7 @@
     "En": "password is required"
   },
   "CHECK_EMAIL_REQUIRED": {
-    "Ru": "введите потовый адрес",
+    "Ru": "введите почтовый адрес",
     "En": "email is required"
   }
 }

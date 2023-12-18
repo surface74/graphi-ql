@@ -1,15 +1,15 @@
 {
   "Welcome": {
-    "Ru": "Домой",
+    "Ru": "Добро пожаловать",
     "En": "Welcome"
   },
   "Login": {
-    "Ru": "Логин",
+    "Ru": "Вход",
     "En": "Login"
   },
-  "Editor": {
-    "Ru": "Редактор",
-    "En": "Editor"
+  "Main": {
+    "Ru": "Главная",
+    "En": "Main"
   },
   "RuLanguage": {
     "Ru": "Рус",
@@ -35,16 +35,28 @@
     "Ru": "Войти",
     "En": "Sign In"
   },
+  "SignInPageTitle": {
+    "Ru": "Вход",
+    "En": "Sign In"
+  },
   "SignUp": {
     "Ru": "Зарегистрироваться",
+    "En": "SignUp"
+  },
+  "SignUpPageTitle": {
+    "Ru": "Регистрация",
     "En": "Sign Up"
+  },
+  "ButtonOk": {
+    "Ru": "OK",
+    "En": "OK"
   },
   "SignOut": {
     "Ru": "Выйти",
     "En": "Sign Out"
   },
   "Email": {
-    "Ru": "эл. почта",
+    "Ru": "Электронная почта",
     "En": "Email"
   },
   "Password": {
@@ -64,7 +76,7 @@
     "En": "Get started"
   },
   "CreateAccount": {
-    "Ru": "Создать аккаунт",
+    "Ru": "Зарегистрироваться",
     "En": "Create account"
   },
   "CreateAccountText": {

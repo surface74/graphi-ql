@@ -1,10 +1,11 @@
 import { SxProps, Theme } from '@mui/material';
 
-export const flexRowCenter = {
+export const flexRowCenter: SxProps<Theme> = {
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'center',
   alignItems: 'center',
+  paddingX: 5,
 };
 
 export const wrapperAppBar: SxProps<Theme> = {

@@ -14,11 +14,13 @@ import {
   wrapperButtons,
   wrapperMainSection,
 } from './styles';
+import { pageName } from '../../common-types/common-types';
+import { useAuth } from '../../hooks/auth';
 
 const WelcomePage: React.FC = () => {
   const navigator = useNavigate();
-  const { language, authority } = useDataContext();
-  const isLogin = authority.isLogin();
+  const { language } = useDataContext();
+  const { isLogin } = useAuth();
 
   const devCardsContent = [
     {
@@ -35,12 +37,16 @@ const WelcomePage: React.FC = () => {
     },
   ];
 
-  function handleSignIn() {}
+  function handleSignIn() {
+    navigator(`/${pageName.login.En}`);
+  }
 
-  function handleSignUp() {}
+  function handleSignUp() {
+    navigator(`/${pageName.signup.En}`);
+  }
 
   function handleGetStarted() {
-    navigator('/editor');
+    navigator(`/${pageName.main.En}`);
   }
   return (
     <>
@@ -59,9 +65,7 @@ const WelcomePage: React.FC = () => {
             data-testid="sign-in"
             variant="contained"
             title={
-              !isLogin
-                ? UIContent.SignIn[language]
-                : UIContent.GetStarted[language]
+              !isLogin ? UIContent.SignIn[language] : UIContent.Main[language]
             }
             onClick={!isLogin ? handleSignIn : handleGetStarted}
           />

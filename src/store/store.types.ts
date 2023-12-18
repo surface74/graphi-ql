@@ -1,11 +1,9 @@
-export type AuthDataState = {
-  data: {
-    name: string;
+export interface IUserState {
+  user: {
     email: string;
-    password: string;
-    passwordRepeat: string;
+    id: string;
   };
-};
+}
 
 export type UIState = {
   docsIsOpen: boolean;
