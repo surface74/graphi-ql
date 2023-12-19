@@ -108,5 +108,13 @@
       "location": "местоположение",
       "contribution": "вклад в проект"
     }
+  },
+  "Variables": {
+    "Ru": "Переменные",
+    "En": "Variables"
+  },
+  "Headers": {
+    "Ru": "Заголовки",
+    "En": "Headers"
   }
 }

@@ -9,14 +9,14 @@ import { Button, ButtonProps } from '@mui/material';
 //   color?: 'primary' | 'secondary';
 // };
 
-function CustomButton({
+const CustomButton = ({
   startIcon,
   title,
   onClick,
   sx,
   color,
   ...props
-}: ButtonProps) {
+}: ButtonProps) => {
   return (
     <Button
       variant="contained"
@@ -29,6 +29,6 @@ function CustomButton({
       {title}
     </Button>
   );
-}
+};
 
 export default CustomButton;

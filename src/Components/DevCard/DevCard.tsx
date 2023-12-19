@@ -16,7 +16,7 @@ type DevCardProps = {
   };
 };
 
-function DevCard({ props }: DevCardProps) {
+const DevCard = ({ props }: DevCardProps) => {
   const { language } = useDataContext();
   const MobileM = useMediaQuery('(min-width:600px)');
   const { name, bio, location, imgSrc, gitHub, contribution } = props;
@@ -43,6 +43,6 @@ function DevCard({ props }: DevCardProps) {
       </Box>
     </Box>
   );
-}
+};
 
 export default DevCard;
