@@ -116,5 +116,35 @@
   "Headers": {
     "Ru": "Заголовки",
     "En": "Headers"
+  },
+
+  "Schema": {
+    "Ru": "Схема",
+    "En": "Schema"
+  },
+
+  "ARGUMENTS": {
+    "Ru": "АРГУМЕНТЫ",
+    "En": "ARGUMENTS"
+  },
+
+  "TYPE DETAILS": {
+    "Ru": "ТИПЫ ПОЛЕЙ",
+    "En": "TYPE DETAILS"
+  },
+
+  "Queries:": {
+    "Ru": "ЗАПРОСЫ:",
+    "En": "QUERIES:"
+  },
+
+  "Mutation:": {
+    "Ru": "ЗАПРОСЫ:",
+    "En": "MUTATION:"
+  },
+
+  "Subscription:": {
+    "Ru": "ПОДПИСКИ:",
+    "En": "SUBSCRIPTIONS:"
   }
 }

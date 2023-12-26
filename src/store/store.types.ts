@@ -8,3 +8,7 @@ export interface IUserState {
 export type UIState = {
   docsIsOpen: boolean;
 };
+
+export type ApiState = {
+  baseUrl: string;
+};

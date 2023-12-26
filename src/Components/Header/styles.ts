@@ -71,3 +71,13 @@ export const switchLangWrapper: SxProps<Theme> = {
 export const loginIcon: SxProps<Theme> = {
   color: 'white',
 };
+
+export const menu: SxProps<Theme> = {
+  display: { xs: 'block', md: 'none' },
+};
+
+export const pageButton: SxProps<Theme> = {
+  my: 2,
+  color: 'black',
+  display: 'block',
+};
