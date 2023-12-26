@@ -29,14 +29,18 @@ import {
   logoIconMobile,
   logoTitle,
   logoTitleMobile,
+  menu,
   mobileMenuWrapper,
   navWrapper,
+  pageButton,
   rightMenuWrapper,
   switchLangWrapper,
 } from './styles.ts';
 import { useAuth } from '../../hooks/auth';
 import { pageName } from '../../common-types/common-types';
 import { logOut } from '../Authority/firebase.ts';
+import { useDispatch } from 'react-redux';
+import { setBaseUrl } from '../../store/slices/apiSlice.ts';
 
 const ScrollHandler = (props: ChangeOnScrollProps) => {
   const trigger = useScrollTrigger({
@@ -63,6 +67,7 @@ const Header: React.FC<HeaderProps> = () => {
   const { language, setLanguage } = useDataContext();
   const { isLogin } = useAuth();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [langChecked, setLangChecked] = React.useState(
     language === Language.En
@@ -76,8 +81,10 @@ const Header: React.FC<HeaderProps> = () => {
     null
   );
 
-  const handleClickAuth = () =>
+  const handleClickAuth = () => {
     isLogin ? logOut() : navigate(`/${pageName.login.En}`);
+    isLogin ? dispatch(setBaseUrl('')) : null;
+  };
 
   const handleClickSignUp = () => navigate(`/${pageName.signup.En}`);
 
@@ -134,9 +141,7 @@ const Header: React.FC<HeaderProps> = () => {
                 }}
                 open={Boolean(anchorElNav)}
                 onClose={handleCloseNavMenu}
-                sx={{
-                  display: { xs: 'block', md: 'none' },
-                }}
+                sx={menu}
               >
                 {pages.map((page, i) => (
                   <MenuItem key={i} onClick={handleCloseNavMenu}>
@@ -173,11 +178,7 @@ const Header: React.FC<HeaderProps> = () => {
                 <Button
                   key={`button-${page.En}`}
                   onClick={handleCloseNavMenu}
-                  sx={{
-                    my: 2,
-                    color: 'black',
-                    display: 'block',
-                  }}
+                  sx={pageButton}
                 >
                   <Link key={i + 1} to={`/${page.En}`}>
                     <div id={`${page.En}`}>
@@ -200,13 +201,7 @@ const Header: React.FC<HeaderProps> = () => {
 
             <Box sx={rightMenuWrapper}>
               <Box sx={switchLangWrapper}>
-                <Typography
-                  textAlign="center"
-                  sx={{
-                    color: 'white',
-                    fontFamily: 'menlo',
-                  }}
-                >
+                <Typography textAlign="center">
                   {UIStrings.RuLanguage[language]}
                 </Typography>
 

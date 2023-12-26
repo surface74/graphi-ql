@@ -28,7 +28,7 @@ export const wrapperGraphQL: SxProps<Theme> = {
 
 export const wrapperEndpoint: SxProps<Theme> = {
   ...wrapperComponent,
-  gridColumn: '1/8',
+  gridColumn: '1/9',
   gridRow: '1/2',
 };
 
@@ -70,13 +70,14 @@ export const wrapperHeadersEditor: SxProps<Theme> = {
 
 export const wrapperDocumentation: SxProps<Theme> = {
   position: 'absolute',
-  zIndex: 2,
+  zIndex: 10000,
   backfaceVisibility: 'hidden',
   padding: '1rem',
   transform: 'translateZ(0)',
   transition: 'opacity 1s',
-  height: '70vh',
-  top: '250px',
+  top: '260px',
   right: '0',
+  maxWidth: '90%',
   background: '#bbb9b9',
+  overflowX: 'auto',
 };
