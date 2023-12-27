@@ -1,30 +1,36 @@
 import { Box } from '@mui/material';
 import { sectionRespContainer } from './styles';
 import CodeEditor from '../CodeEditor/CodeEditor';
-import { useCallback, useState } from 'react';
-import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { useLazyFetchGrathQlQuery } from '../../api/rtk-api';
 
-const endpoint = 'https://graphql-pokemon2.vercel.app';
-const query = `{pokemons(first: 1) {id name} pokemon(id: "UG9rZW1vbjowMDE=") {name}}`;
-const proxy = 'http://localhost:8080/proxy';
-const body = JSON.stringify({ endpoint, query });
+const baseUrl = 'https://graphql-pokemon2.vercel.app';
+// const query = `query GetPoke(@id: INT!) {pokemons(first: ) {id name} pokemon(id: "UG9rZW1vbjowMDE=") {name}}`;
+const query = `query fn($varId: Int!) {pokemons(first: $varId) {name id}}`;
+const variables = `{ "varId": 1 }`;
 
 const ResponseSection: React.FC = () => {
   const [value, setValue] = useState('');
 
-  const getData = useCallback(async () => {
-    try {
-      const response = await axios.post(proxy, body, {
-        headers: {
-          'content-type': 'application/json',
-        },
-      });
+  // https://redux-toolkit.js.org/rtk-query/api/created-api/hooks#uselazyquery
+  const [trigger, result] = useLazyFetchGrathQlQuery();
 
-      setValue(JSON.stringify(response.data, null, 2));
-    } catch (e) {
-      setValue(e.message);
+  console.log('result: ', result);
+
+  useEffect(() => {
+    const { data, status } = result;
+    if (status === 'fulfilled') {
+      setValue(JSON.stringify(data, null, 2));
     }
-  }, []);
+  }, [result]);
+
+  const getData = () => {
+    trigger({
+      baseUrl,
+      query,
+      variables,
+    });
+  };
 
   return (
     <Box sx={sectionRespContainer}>
