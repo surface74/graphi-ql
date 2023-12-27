@@ -111,7 +111,7 @@ const Endpoint: React.FC = () => {
         <Fab
           sx={openDocsButton}
           onClick={handleDocsMenu}
-          disabled={!!!schema.data || isError || error}
+          disabled={!!!schema.data || isError || !!error}
         >
           {UIContent.Schema[language]}
         </Fab>

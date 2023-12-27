@@ -68,5 +68,10 @@
   "CHECK_BASE_URL_REQUIRED": {
     "Ru": "введите адрес API",
     "En": "API URL is required"
+  },
+
+  "CORS_ERROR": {
+    "Ru": "API не поддерживает CORS",
+    "En": "CORS ERROR"
   }
 }
