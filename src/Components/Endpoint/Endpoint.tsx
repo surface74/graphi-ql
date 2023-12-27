@@ -15,6 +15,11 @@ import { useAppSelector } from '../../hooks/store';
 import Loader from '../Loader/Loader';
 import { useDataContext } from '../../DataContext/useDataContext';
 import UIContent from '../../assets/UIStrings.json';
+import { useSnackbar } from 'notistack';
+import errorMessages from '../../assets/errorMessages.json';
+
+import { useFormik } from 'formik';
+import { endpointSchema } from '../../yup/endpointSchema';
 
 // const endpoints = [
 //   'https://graphql-pokemon2.vercel.app/',
@@ -30,18 +35,43 @@ const Endpoint: React.FC = () => {
   const dispatch = useDispatch();
   const baseUrl = useAppSelector((store) => store.ApiData.baseUrl);
   const schema = useFetchSchemaQuery(baseUrl);
-  const { isLoading, isError } = useFetchSchemaQuery(baseUrl);
+  const { isLoading, isError, error } = useFetchSchemaQuery(baseUrl);
   const docsIsOpen = useAppSelector((state) => state.UIData.docsIsOpen);
+  const { enqueueSnackbar } = useSnackbar();
+  const baseUrlSchemaValidation = endpointSchema(language);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    let baseUrl = formData.get('baseUrl');
-    baseUrl = baseUrl === null ? '' : baseUrl?.toString() ?? '';
+  const formik = useFormik({
+    initialValues: {
+      baseUrl: '',
+    },
+    validationSchema: baseUrlSchemaValidation,
+    onSubmit: ({ baseUrl }) => {
+      myhandleSubmit(baseUrl);
+    },
+  });
+
+  const myhandleSubmit = (baseUrl: string) => {
+    console.log('baseUrl', baseUrl);
+    // baseUrl = baseUrl === null ? '' : baseUrl?.toString() ?? '';
 
     dispatch(setBaseUrl(baseUrl));
     dispatch(setDocsIsOpen(false));
-    //todo isError сообщение
+
+    if (error) {
+      if ('status' in error) {
+        const message =
+          'error' in error ? error.error : JSON.stringify(error.data);
+        // console.log('myError', message);
+
+        message === 'null'
+          ? null
+          : enqueueSnackbar(message, { variant: 'error' });
+      } else {
+        enqueueSnackbar(errorMessages.ERROR_MESSAGE[language], {
+          variant: 'error',
+        });
+      }
+    }
   };
 
   const handleDocsMenu = () => {
@@ -52,7 +82,8 @@ const Endpoint: React.FC = () => {
     <Box
       sx={wrapperBaseUrl}
       component="form"
-      onSubmit={handleSubmit}
+      // onSubmit={handleSubmit}
+      onSubmit={formik.handleSubmit}
       noValidate
     >
       <TextField
@@ -62,9 +93,14 @@ const Endpoint: React.FC = () => {
         fullWidth
         id="baseUrl"
         name="baseUrl"
+        value={formik.values.baseUrl}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+        error={formik.touched.baseUrl && Boolean(formik.errors.baseUrl)}
+        helperText={formik.touched.baseUrl && formik.errors.baseUrl}
         autoFocus
       />
-      <Fab sx={submitButton} type="submit">
+      <Fab sx={submitButton} type="submit" disabled={!formik.isValid}>
         <ReplayIcon />
       </Fab>
       {isLoading ? (
