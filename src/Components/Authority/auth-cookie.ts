@@ -7,9 +7,9 @@ const WATCHDOG_INTERVAL = 10; // in seconds
 const COOKIES_DELIMITER = '; ';
 
 export const setAccessTokenCookie = (token: string) => {
-  const lifetime = AUTH_LIFETIME;
+  const lifetime = import.meta.env.VITE_AUTH_COOKIE_LIFETIME ?? AUTH_LIFETIME;
 
-  const cookieData: string[] = [`${AUTH_COOKIE}=${token}`];
+  const cookieData = [`${AUTH_COOKIE}=${token}`];
   cookieData.push(`path='/'`);
   cookieData.push(`max-age=${lifetime}`);
 
@@ -23,7 +23,7 @@ export const isAccessTokenCookieValid = () => {
 };
 
 export const resetAccessTokenCookie = () => {
-  const cookieData: string[] = [`${AUTH_COOKIE}=''`];
+  const cookieData = [`${AUTH_COOKIE}=''`];
   cookieData.push(`max-age=0`);
 
   document.cookie = cookieData.join(';');
