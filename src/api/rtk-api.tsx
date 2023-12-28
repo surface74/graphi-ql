@@ -32,13 +32,12 @@ export const rtkqApi = createApi({
           'Content-Type': 'application/json',
           ...parsedHeaders,
         };
-        console.log('headers: ', headers);
 
         return {
           url: `${baseUrl}`,
           method: 'POST',
           headers,
-          body: { query, variables, requestHeaders },
+          body: { query, variables },
         };
       },
     }),
