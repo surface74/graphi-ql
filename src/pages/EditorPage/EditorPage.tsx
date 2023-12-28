@@ -10,7 +10,6 @@ import {
   wrapperRequestEditor,
   wrapperResponseSection,
 } from './styles';
-// import Documentation from '../../Components/Documentation/Documentation';
 import ResponseSection from '../../Components/ResponseSection/ResponseSection';
 import RequestEditor from '../../Components/RequestEditor/RequestEditor';
 import Endpoint from '../../Components/Endpoint/Endpoint';
@@ -48,6 +47,7 @@ const EditorPage: React.FC = () => {
         </Box>
         <Box sx={wrapperDocumentation}>
           {docsIsOpen && (
+            // todo вместе с useLazyFetchSchemaQuery перестал работать Suspense
             <Suspense fallback={<Loader />}>
               <Documentation />
             </Suspense>

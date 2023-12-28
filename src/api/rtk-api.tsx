@@ -3,11 +3,12 @@ import { ApiRequest } from '../common-types/schema.types';
 import INTROSPECION_QUERY from '../Components/Endpoint/Introspection';
 import { setApiErrorMessage } from '../store/slices/apiSlice';
 import errorMessages from '../assets/errorMessages.json';
+import { IRequestData } from '../common-types/request-data';
+import { IRequestHeaders } from './rtk-api.types';
 
 export const rtkqApi = createApi({
   reducerPath: 'graphiQl',
-  baseQuery: fetchBaseQuery({ baseUrl: '' }),
-
+  baseQuery: fetchBaseQuery(),
   endpoints: (builder) => ({
     fetchSchema: builder.query<ApiRequest, string>({
       query: (baseUrl) => ({
@@ -23,10 +24,11 @@ export const rtkqApi = createApi({
       }),
 
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
-        // console.log('starting!');
         let message: string;
         queryFulfilled
           .then((request) => {
+            message = JSON.stringify(errorMessages.NO_ERROR_MESSAGE);
+            dispatch(setApiErrorMessage(message));
             return request;
           })
           .catch((error) => {
@@ -40,35 +42,8 @@ export const rtkqApi = createApi({
               dispatch(setApiErrorMessage(message));
               // }
             }
+            // message = JSON.stringify(errorMessages.ERROR_FETCH_DATA);
           });
-
-        // // let message;
-        // try {
-        //   const request = await queryFulfilled;
-        //   console.log('success!', request);
-
-        //   if (!request) {
-        //     // todo ничего не возвращает
-        //     message = JSON.stringify(errorMessages.ACCSESS_DENIED);
-        //     dispatch(setApiErrorMessage(message));
-        //   }
-        // } catch (error) {
-        //   if (error instanceof Error && 'status' in error) {
-        //     // if (Object.hasOwn(error, 'status')) {
-        //     console.log('ok');
-        //     if (error.status === '404') {
-        //       console.log('404');
-        //       message = JSON.stringify(errorMessages.ERROR_404);
-        //     }
-        //     if (error.status === '403') {
-        //       console.log('403');
-        //       message = JSON.stringify(errorMessages.ACCSESS_DENIED);
-        //     }
-        //     dispatch(setApiErrorMessage(message));
-        //     console.log('error... ', error);
-        //     // }
-        //   }
-        // }
       },
     }),
 
@@ -89,20 +64,31 @@ export const rtkqApi = createApi({
       }),
     }),
 
-    fetchGrathQl: builder.query<
-      ApiRequest,
-      { baseUrl: string; queryString: string }
-    >({
-      query: ({ baseUrl, queryString }) => ({
-        url: `${baseUrl}`,
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json',
-        },
-        body: queryString,
-      }),
+    fetchGrathQl: builder.query<ApiRequest, IRequestData>({
+      query: ({ baseUrl, query, variables, requestHeaders }) => {
+        const parsedHeaders = JSON.parse(
+          requestHeaders || '{}'
+        ) as IRequestHeaders;
+
+        const headers = {
+          'Content-Type': 'application/json',
+          ...parsedHeaders,
+        };
+
+        return {
+          url: `${baseUrl}`,
+          method: 'POST',
+          headers,
+          body: { query, variables },
+        };
+      },
     }),
   }),
 });
 
-export const { useFetchSchemaQuery, useFetchGrathQlQuery } = rtkqApi;
+export const {
+  useFetchSchemaQuery,
+  useFetchGrathQlQuery,
+  useLazyFetchGrathQlQuery,
+  useLazyFetchSchemaQuery,
+} = rtkqApi;

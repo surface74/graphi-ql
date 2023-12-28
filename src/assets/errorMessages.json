@@ -77,5 +77,15 @@
   "ACCSESS_DENIED": {
     "Ru": "Доступ запрещен",
     "En": "AccessDenied"
+  },
+
+  "ERROR_FETCH_DATA": {
+    "Ru": "Ошибка при выполнении запроса",
+    "En": "Error while fetching data"
+  },
+
+  "NO_ERROR_MESSAGE": {
+    "Ru": "",
+    "En": ""
   }
 }

@@ -8,9 +8,9 @@ import {
 } from './styles';
 import { setBaseUrl } from '../../store/slices/apiSlice';
 import { useDispatch } from 'react-redux';
-import { useFetchSchemaQuery } from '../../api/rtk-api';
+import { useLazyFetchSchemaQuery } from '../../api/rtk-api';
 import ReplayIcon from '@mui/icons-material/Replay';
-import { setDocsIsOpen } from '../../store/slices/UISlice';
+import { setDocsIsOpen, setIsLoadingSchema } from '../../store/slices/UISlice';
 import { useAppSelector } from '../../hooks/store';
 import Loader from '../Loader/Loader';
 import { useDataContext } from '../../DataContext/useDataContext';
@@ -18,6 +18,7 @@ import UIContent from '../../assets/UIStrings.json';
 import { useSnackbar } from 'notistack';
 import { useFormik } from 'formik';
 import { endpointSchema } from '../../yup/endpointSchema';
+import { useEffect, useState } from 'react';
 
 // const endpoints = [
 //   'https://graphql-pokemon2.vercel.app/',
@@ -29,12 +30,17 @@ import { endpointSchema } from '../../yup/endpointSchema';
 // ];
 
 const Endpoint: React.FC = () => {
+  const [urlInputValue, setUrlInputValue] = useState('');
+  const [docsButtonDisabled, setDocsButtonDisabled] = useState(false);
+  const [trigger, result] = useLazyFetchSchemaQuery();
+  const isLoadingSchema = useAppSelector(
+    (state) => state.UIData.isLoadingSchema
+  );
   const { language } = useDataContext();
   const dispatch = useDispatch();
+
   const baseUrl = useAppSelector((store) => store.ApiData.baseUrl);
   const errorApiMessage = useAppSelector((store) => store.ApiData.errorMessage);
-  const schema = useFetchSchemaQuery(baseUrl);
-  const { isLoading, isError, error } = useFetchSchemaQuery(baseUrl);
   const docsIsOpen = useAppSelector((state) => state.UIData.docsIsOpen);
   const { enqueueSnackbar } = useSnackbar();
   const baseUrlSchemaValidation = endpointSchema(language);
@@ -45,7 +51,9 @@ const Endpoint: React.FC = () => {
     },
     validationSchema: baseUrlSchemaValidation,
     onSubmit: ({ baseUrl }) => {
+      // console.log('baseUrl', baseUrl);
       handleSubmit(baseUrl);
+      trigger(baseUrl);
     },
     validateOnChange: true,
   });
@@ -53,32 +61,15 @@ const Endpoint: React.FC = () => {
   const handleSubmit = (baseUrl: string) => {
     dispatch(setBaseUrl(baseUrl));
     dispatch(setDocsIsOpen(false));
+  };
 
-    if (errorApiMessage) {
+  useEffect(() => {
+    if (errorApiMessage && JSON.parse(errorApiMessage)[language].length > 0) {
       enqueueSnackbar(JSON.parse(errorApiMessage)[language], {
         variant: 'error',
       });
     }
-
-    // if (error) {
-    //   if ('status' in error) {
-    //     // if (Object.hasOwn(error, 'status')) {
-    //     const message =
-    //       'error' in error ? error.error : JSON.stringify(error.data);
-    //     message === 'null'
-    //       ? null
-    //       : enqueueSnackbar(message, { variant: 'error' });
-    //   } else {
-    //     enqueueSnackbar(errorMessages.ERROR_MESSAGE[language], {
-    //       variant: 'error',
-    //     });
-    //   }
-    // }
-  };
-
-  // if (status) {
-  //   console.log('status', status);
-  // }
+  }, [errorApiMessage, enqueueSnackbar, language]);
 
   const handleDocsMenu = () => {
     dispatch(setDocsIsOpen(!docsIsOpen));
@@ -88,17 +79,31 @@ const Endpoint: React.FC = () => {
     event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
     formik.handleChange(event);
+    dispatch(setDocsIsOpen(false));
+
+    setUrlInputValue(event.target.value);
     dispatch(setBaseUrl(''));
+
+    // todo тригерриться на пустую строку - 404
+    //todo как сбросить data в rtk query
+
+    if (baseUrl.length > 0) trigger(baseUrl);
   };
 
+  useEffect(() => {
+    const { data, isError, error, isLoading } = result;
+    if (!!!data || isError || !!error || !baseUrl) {
+      setDocsButtonDisabled(true);
+    } else {
+      setDocsButtonDisabled(false);
+      // console.log('data', data);
+    }
+
+    isLoading ? setIsLoadingSchema(true) : setIsLoadingSchema(false);
+  }, [result, baseUrl, result.isLoading]);
+
   return (
-    <Box
-      sx={wrapperBaseUrl}
-      component="form"
-      // onSubmit={handleSubmit}
-      onSubmit={formik.handleSubmit}
-      // noValidate
-    >
+    <Box sx={wrapperBaseUrl} component="form" onSubmit={formik.handleSubmit}>
       <TextField
         sx={endpointField}
         margin="normal"
@@ -106,8 +111,8 @@ const Endpoint: React.FC = () => {
         fullWidth
         id="baseUrl"
         name="baseUrl"
-        value={formik.values.baseUrl}
-        onChange={(event) => handleChangeUrl(event)}
+        value={urlInputValue}
+        onChange={handleChangeUrl}
         onBlur={formik.handleBlur}
         error={formik.touched.baseUrl && Boolean(formik.errors.baseUrl)}
         helperText={formik.touched.baseUrl && formik.errors.baseUrl}
@@ -116,13 +121,13 @@ const Endpoint: React.FC = () => {
       <Fab sx={submitButton} type="submit" disabled={!formik.isValid}>
         <ReplayIcon />
       </Fab>
-      {isLoading ? (
+      {isLoadingSchema ? (
         <Loader />
       ) : (
         <Fab
           sx={openDocsButton}
           onClick={handleDocsMenu}
-          disabled={!!!schema.data || isError || !!error}
+          disabled={!formik.isValid || docsButtonDisabled}
         >
           {UIContent.Schema[language]}
         </Fab>
