@@ -51,7 +51,6 @@ const Endpoint: React.FC = () => {
     },
     validationSchema: baseUrlSchemaValidation,
     onSubmit: ({ baseUrl }) => {
-      // console.log('baseUrl', baseUrl);
       handleSubmit(baseUrl);
       trigger(baseUrl);
     },
@@ -84,9 +83,6 @@ const Endpoint: React.FC = () => {
     setUrlInputValue(event.target.value);
     dispatch(setBaseUrl(''));
 
-    // todo тригерриться на пустую строку - 404
-    //todo как сбросить data в rtk query
-
     if (baseUrl.length > 0) trigger(baseUrl);
   };
 
@@ -96,7 +92,6 @@ const Endpoint: React.FC = () => {
       setDocsButtonDisabled(true);
     } else {
       setDocsButtonDisabled(false);
-      // console.log('data', data);
     }
 
     isLoading ? setIsLoadingSchema(true) : setIsLoadingSchema(false);

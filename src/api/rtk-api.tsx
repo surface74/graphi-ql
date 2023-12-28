@@ -40,15 +40,10 @@ export const rtkqApi = createApi({
                 message = JSON.stringify(errorMessages.ACCSESS_DENIED);
               }
               dispatch(setApiErrorMessage(message));
-              // }
             }
-            // message = JSON.stringify(errorMessages.ERROR_FETCH_DATA);
           });
       },
     }),
-
-    // https://redux-toolkit.js.org/rtk-query/usage/customizing-queries#customizing-queries-with-queryfn
-    // https://codesandbox.io/p/sandbox/rtk-query-onquerystarted-example-nr8cm?file=%2Fsrc%2Fapi.ts%3A16%2C6-30%2C8
 
     mutateGrathQl: builder.mutation<
       ApiRequest,
