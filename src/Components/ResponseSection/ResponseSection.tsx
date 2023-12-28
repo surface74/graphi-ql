@@ -9,6 +9,7 @@ import { useAppSelector } from '../../hooks/store';
 import { useDataContext } from '../../DataContext/useDataContext';
 import FetchingStatus from '../../common-types/fetching-status';
 import ErrorMessages from '../../assets/errorMessages.json';
+import UIStrings from '../../assets/UIStrings.json';
 
 // const baseUrl = 'https://graphql-pokemon2.vercel.app';
 // const query = `query fn($varId: Int!) {pokemons(first: $varId) {name id}}`;
@@ -61,10 +62,10 @@ const ResponseSection: React.FC = () => {
 
   const isHeadersValid = (headersString: string) => {
     try {
-      JSON.parse(headersString);
+      JSON.parse(headersString || '{}');
       return true;
     } catch (error: Error) {
-      enqueueSnackbar(`${error.message}`, {
+      enqueueSnackbar(`${UIStrings.Headers[language]}: ${error.message}`, {
         variant: 'error',
       });
       return false;
