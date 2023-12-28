@@ -3,6 +3,7 @@ import { ApiState } from '../store.types';
 
 const initialState: ApiState = {
   baseUrl: '',
+  errorMessage: '',
 };
 
 const ApiSlice = createSlice({
@@ -12,8 +13,11 @@ const ApiSlice = createSlice({
     setBaseUrl: (state, action) => {
       state.baseUrl = action.payload;
     },
+    setApiErrorMessage: (state, action) => {
+      state.errorMessage = action.payload;
+    },
   },
 });
 
-export const { setBaseUrl } = ApiSlice.actions;
+export const { setBaseUrl, setApiErrorMessage } = ApiSlice.actions;
 export default ApiSlice.reducer;

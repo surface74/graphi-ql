@@ -11,4 +11,5 @@ export type UIState = {
 
 export type ApiState = {
   baseUrl: string;
+  errorMessage: string;
 };

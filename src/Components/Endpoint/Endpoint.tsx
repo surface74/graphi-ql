@@ -16,7 +16,6 @@ import Loader from '../Loader/Loader';
 import { useDataContext } from '../../DataContext/useDataContext';
 import UIContent from '../../assets/UIStrings.json';
 import { useSnackbar } from 'notistack';
-import errorMessages from '../../assets/errorMessages.json';
 import { useFormik } from 'formik';
 import { endpointSchema } from '../../yup/endpointSchema';
 
@@ -33,6 +32,7 @@ const Endpoint: React.FC = () => {
   const { language } = useDataContext();
   const dispatch = useDispatch();
   const baseUrl = useAppSelector((store) => store.ApiData.baseUrl);
+  const errorApiMessage = useAppSelector((store) => store.ApiData.errorMessage);
   const schema = useFetchSchemaQuery(baseUrl);
   const { isLoading, isError, error } = useFetchSchemaQuery(baseUrl);
   const docsIsOpen = useAppSelector((state) => state.UIData.docsIsOpen);
@@ -45,29 +45,40 @@ const Endpoint: React.FC = () => {
     },
     validationSchema: baseUrlSchemaValidation,
     onSubmit: ({ baseUrl }) => {
-      myHandleSubmit(baseUrl);
+      handleSubmit(baseUrl);
     },
     validateOnChange: true,
   });
 
-  const myHandleSubmit = (baseUrl: string) => {
+  const handleSubmit = (baseUrl: string) => {
     dispatch(setBaseUrl(baseUrl));
     dispatch(setDocsIsOpen(false));
 
-    if (error) {
-      if ('status' in error) {
-        const message =
-          'error' in error ? error.error : JSON.stringify(error.data);
-        message === 'null'
-          ? null
-          : enqueueSnackbar(message, { variant: 'error' });
-      } else {
-        enqueueSnackbar(errorMessages.ERROR_MESSAGE[language], {
-          variant: 'error',
-        });
-      }
+    if (errorApiMessage) {
+      enqueueSnackbar(JSON.parse(errorApiMessage)[language], {
+        variant: 'error',
+      });
     }
+
+    // if (error) {
+    //   if ('status' in error) {
+    //     // if (Object.hasOwn(error, 'status')) {
+    //     const message =
+    //       'error' in error ? error.error : JSON.stringify(error.data);
+    //     message === 'null'
+    //       ? null
+    //       : enqueueSnackbar(message, { variant: 'error' });
+    //   } else {
+    //     enqueueSnackbar(errorMessages.ERROR_MESSAGE[language], {
+    //       variant: 'error',
+    //     });
+    //   }
+    // }
   };
+
+  // if (status) {
+  //   console.log('status', status);
+  // }
 
   const handleDocsMenu = () => {
     dispatch(setDocsIsOpen(!docsIsOpen));

@@ -73,5 +73,9 @@
   "CORS_ERROR": {
     "Ru": "API не поддерживает CORS",
     "En": "CORS ERROR"
+  },
+  "ACCSESS_DENIED": {
+    "Ru": "Доступ запрещен",
+    "En": "AccessDenied"
   }
 }
