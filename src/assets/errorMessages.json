@@ -58,5 +58,9 @@
   "CHECK_EMAIL_REQUIRED": {
     "Ru": "введите почтовый адрес",
     "En": "email is required"
+  },
+  "ERROR_FETCH_DATA": {
+    "Ru": "Ошибка при выполнении запроса",
+    "En": "Error while fetching data"
   }
 }
