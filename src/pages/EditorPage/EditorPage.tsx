@@ -9,7 +9,6 @@ import {
 import { useAppSelector } from '../../hooks/store';
 import {
   graphqlHeading,
-  graphqlHeadingMobile,
   wrapperDocumentation,
   wrapperEndpoint,
   wrapperGraphQL,
@@ -41,49 +40,26 @@ const EditorPage: React.FC = () => {
 
   return (
     <Container maxWidth="xl">
-      <Typography
-        variant={isMobileView ? 'h5' : 'h4'}
-        sx={
-          isMobileView
-            ? { ...graphqlHeading, ...graphqlHeadingMobile }
-            : graphqlHeading
-        }
-      >
+      <Typography variant={isMobileView ? 'h5' : 'h4'} sx={graphqlHeading}>
         GraphiQL
       </Typography>
-      <Box
-        sx={
-          isMobileView
-            ? { ...wrapperGraphQL, ...wrapperGraphQLMobile }
-            : wrapperGraphQL
-        }
-      >
+      <Box sx={isMobileView ? wrapperGraphQLMobile : wrapperGraphQL}>
         <Box sx={wrapperEndpoint}>
           <Endpoint />
         </Box>
         <Box
-          sx={
-            isMobileView
-              ? { ...wrapperRequestEditor, ...wrapperRequestEditorMobile }
-              : wrapperRequestEditor
-          }
+          sx={isMobileView ? wrapperRequestEditorMobile : wrapperRequestEditor}
         >
           <RequestEditor />
         </Box>
         <Box
-          sx={
-            isMobileView
-              ? { ...wrapperHelpersEditor, ...wrapperHelpersEditorMobile }
-              : wrapperHelpersEditor
-          }
+          sx={isMobileView ? wrapperHelpersEditorMobile : wrapperHelpersEditor}
         >
           <CustomTabPanel tabsLabels={tabsLabels[language]} tabsPanels={tabs} />
         </Box>
         <Box
           sx={
-            isMobileView
-              ? { ...wrapperResponseSection, ...wrapperResponseSectionMobile }
-              : wrapperResponseSection
+            isMobileView ? wrapperResponseSectionMobile : wrapperResponseSection
           }
         >
           <ResponseSection />

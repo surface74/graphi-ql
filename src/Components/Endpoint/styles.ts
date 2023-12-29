@@ -12,7 +12,7 @@ export const flexRowCenter: SxProps<Theme> = {
 export const wrapperBaseUrl: SxProps<Theme> = {
   ...flexRowCenter,
   width: '100%',
-  gap: '2rem',
+  gap: '1rem',
 };
 
 export const endpointField: SxProps<Theme> = {
