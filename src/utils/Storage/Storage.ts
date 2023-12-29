@@ -20,7 +20,7 @@ const Storage = {
     }
 
     for (const [key, value] of Object.entries(Language)) {
-      if (storedValue === value) {
+      if (storedValue === value.toString()) {
         return Language[key as Language];
       }
     }

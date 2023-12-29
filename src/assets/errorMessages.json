@@ -15,6 +15,10 @@
     "Ru": "Ошибка при получении данных текущего пользователя",
     "En": "Error while getting current user's data"
   },
+  "ERROR_LOGOUT_USER": {
+    "Ru": "Ошибка при выходе из системы. Пожалуйста, попробуйте еще раз.",
+    "En": "Logout failed. Please try again later."
+  },
   "ERROR_404": {
     "Ru": "Нет такой страницы!",
     "En": "Page not found!"

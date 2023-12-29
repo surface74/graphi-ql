@@ -1,6 +1,9 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, signOut } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore/lite';
+import { enqueueSnackbar } from 'notistack';
+import ErrorMessages from '../../assets/errorMessages.json';
+import Storage from '../../utils/Storage/Storage';
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_APP_FIREBASE_API_KEY,
@@ -14,6 +17,12 @@ const firebaseConfig = {
 export const authApp = initializeApp(firebaseConfig);
 export const auth = getAuth(authApp);
 export const db = getFirestore();
-export const logOut = async () => {
-  await signOut(auth);
+export const logOut = () => {
+  const language = Storage.recallLanguage();
+  const error = ErrorMessages.ERROR_LOGOUT_USER as { Ru: string; En: string };
+  signOut(auth).catch(() => {
+    enqueueSnackbar(error[language], {
+      variant: 'error',
+    });
+  });
 };

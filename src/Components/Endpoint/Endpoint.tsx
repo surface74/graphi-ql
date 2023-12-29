@@ -19,6 +19,7 @@ import { useFormik } from 'formik';
 import { endpointSchema } from '../../yup/endpointSchema';
 import { useEffect, useState } from 'react';
 import ErrorMessages from '../../assets/errorMessages.json';
+import { ErrorResponse, ErrorFetch } from '../../common-types/error-types';
 
 // const endpoints = [
 //   'https://graphql-pokemon2.vercel.app/',
@@ -49,9 +50,9 @@ const Endpoint: React.FC = () => {
       baseUrl: '',
     },
     validationSchema: baseUrlSchemaValidation,
-    onSubmit: ({ baseUrl }) => {
+    onSubmit: async ({ baseUrl }) => {
       handleSubmit(baseUrl);
-      trigger(baseUrl);
+      await trigger(baseUrl);
     },
     validateOnChange: true,
   });
@@ -74,27 +75,33 @@ const Endpoint: React.FC = () => {
     setUrlInputValue(event.target.value);
     dispatch(setBaseUrl(''));
 
-    if (baseUrl.length > 0) trigger(baseUrl);
+    if (baseUrl.length > 0)
+      trigger(baseUrl).catch((error: Error) =>
+        enqueueSnackbar(error.message, {
+          variant: 'error',
+        })
+      );
   };
 
   useEffect(() => {
     const { data, isError, error, isLoading, isFetching } = result;
 
-    if (error) {
+    if (isError) {
       if (Object.hasOwn(error, 'status')) {
-        if (error.error.status === 404) {
+        if ((error as ErrorResponse).status === 404) {
           enqueueSnackbar(ErrorMessages.ERROR_404[language], {
             variant: 'error',
           });
         }
-        if (error.error.status === 'FETCH_ERROR') {
+        if ((error as ErrorFetch).status === 'FETCH_ERROR') {
           enqueueSnackbar(ErrorMessages.ACCSESS_DENIED[language], {
             variant: 'error',
           });
+        } else {
+          enqueueSnackbar((error as ErrorFetch).error, {
+            variant: 'error',
+          });
         }
-        enqueueSnackbar(error.error, {
-          variant: 'error',
-        });
       }
     }
 
