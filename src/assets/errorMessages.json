@@ -35,6 +35,11 @@
     "Ru": "почтовый адрес должен быть в формате xxx@xx.xx",
     "En": "email format need to be xxx@xx.xx"
   },
+
+  "CHECK_BASE_URL_FORMAT": {
+    "Ru": "Адрес API должен быть в формате http://host:port/endpoint/",
+    "En": "BASE URL format need to be http://host:port/endpoint/"
+  },
   "CHECK_PASSWORD_STRONG": {
     "Ru": "пароль слишком слабый",
     "En": "password is too weak"
@@ -59,8 +64,28 @@
     "Ru": "введите почтовый адрес",
     "En": "email is required"
   },
+
+  "CHECK_BASE_URL_REQUIRED": {
+    "Ru": "введите адрес API",
+    "En": "API URL is required"
+  },
+
+  "CORS_ERROR": {
+    "Ru": "API не поддерживает CORS",
+    "En": "CORS ERROR"
+  },
+  "ACCSESS_DENIED": {
+    "Ru": "Доступ запрещен",
+    "En": "AccessDenied"
+  },
+
   "ERROR_FETCH_DATA": {
     "Ru": "Ошибка при выполнении запроса",
     "En": "Error while fetching data"
+  },
+
+  "NO_ERROR_MESSAGE": {
+    "Ru": "",
+    "En": ""
   }
 }

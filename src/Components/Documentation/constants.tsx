@@ -11,16 +11,16 @@ export const DEFAULT_CURRENT_FIELD = {
   },
 };
 
-export enum DocsHeaders {
-  'Documentation' = 'Documentation',
-  'Type_details' = 'TYPE DETAILS',
-  'Arguments' = 'ARGUMENTS',
-  'Mutation' = 'Mutation:',
-  'Subscription' = 'Subscription:',
-  'Queries' = 'Queries:',
-}
-
 export enum DocsFiedsTypes {
   'OBJECT' = 'OBJECT',
   'SCALAR' = 'SCALAR',
 }
+
+export const DOCS_HEADERS = {
+  Documentation: 'Documentation',
+  Type_details: 'TYPE DETAILS',
+  Arguments: 'ARGUMENTS',
+  Mutation: 'Mutation:',
+  Subscription: 'Subscription:',
+  Queries: 'Queries:',
+} as const;

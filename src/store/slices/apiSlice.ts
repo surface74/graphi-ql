@@ -3,6 +3,7 @@ import { ApiState } from '../store.types';
 
 const initialState: ApiState = {
   baseUrl: '',
+  errorMessage: '',
 };
 
 const ApiSlice = createSlice({

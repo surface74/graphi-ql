@@ -22,6 +22,20 @@ export const rtkqApi = createApi({
       }),
     }),
 
+    mutateGrathQl: builder.mutation<
+      ApiRequest,
+      { baseUrl: string; queryString: string }
+    >({
+      query: ({ baseUrl, queryString }) => ({
+        url: `${baseUrl}`,
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: queryString,
+      }),
+    }),
+
     fetchGrathQl: builder.query<ApiRequest, IRequestData>({
       query: ({ baseUrl, query, variables, requestHeaders }) => {
         const parsedHeaders = JSON.parse(
@@ -48,4 +62,5 @@ export const {
   useFetchSchemaQuery,
   useFetchGrathQlQuery,
   useLazyFetchGrathQlQuery,
+  useLazyFetchSchemaQuery,
 } = rtkqApi;

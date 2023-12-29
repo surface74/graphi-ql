@@ -6,10 +6,13 @@ import { setDocsIsOpen } from '../../store/slices/UISlice';
 import { useDispatch } from 'react-redux';
 import { useFetchSchemaQuery } from '../../api/rtk-api';
 import { useAppSelector } from '../../hooks/store';
-import { DocsHeaders } from './constants';
+import { DOCS_HEADERS } from './constants';
+import { useDataContext } from '../../DataContext/useDataContext';
+import UIContent from '../../assets/UIStrings.json';
 
 const Documentation: React.FC = () => {
   const dispatch = useDispatch();
+  const { language } = useDataContext();
   const docsIsOpen = useAppSelector((state) => state.UIData.docsIsOpen);
   const baseUrl = useAppSelector((store) => store.ApiData.baseUrl);
   const { data, isError } = useFetchSchemaQuery(baseUrl);
@@ -26,26 +29,26 @@ const Documentation: React.FC = () => {
     isError || (
       <Box>
         <Typography variant="h4" sx={schemaTitle} onClick={handleDocsMenu}>
-          {DocsHeaders.Documentation}
+          {UIContent[DOCS_HEADERS.Documentation][language]}
         </Typography>
         <Box sx={wrapperDocsContent}>
           {mutationType ? (
             <DocsSection
-              heading={DocsHeaders.Mutation.toString()}
+              heading={UIContent[DOCS_HEADERS.Mutation][language]}
               types={mutationType}
             />
           ) : null}
 
           {subscriptionType ? (
             <DocsSection
-              heading={DocsHeaders.Subscription.toString()}
+              heading={UIContent[DOCS_HEADERS.Subscription][language]}
               types={subscriptionType}
             />
           ) : null}
 
           {types ? (
             <DocsSection
-              heading={DocsHeaders.Queries.toString()}
+              heading={UIContent[DOCS_HEADERS.Queries][language]}
               types={types}
             />
           ) : null}

@@ -146,5 +146,10 @@
   "Subscription:": {
     "Ru": "ПОДПИСКИ:",
     "En": "SUBSCRIPTIONS:"
+  },
+
+  "Documentation": {
+    "Ru": "ДОКУМЕНТАЦИЯ:",
+    "En": "DOCUMENTATION:"
   }
 }
