@@ -1,8 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { ApiRequest } from '../common-types/schema.types';
 import INTROSPECION_QUERY from '../Components/Endpoint/Introspection';
-import { setApiErrorMessage } from '../store/slices/apiSlice';
-import errorMessages from '../assets/errorMessages.json';
 import { IRequestData } from '../common-types/request-data';
 import { IRequestHeaders } from './rtk-api.types';
 
@@ -22,27 +20,6 @@ export const rtkqApi = createApi({
           query: INTROSPECION_QUERY,
         },
       }),
-
-      async onQueryStarted(_, { dispatch, queryFulfilled }) {
-        let message: string;
-        queryFulfilled
-          .then((request) => {
-            message = JSON.stringify(errorMessages.NO_ERROR_MESSAGE);
-            dispatch(setApiErrorMessage(message));
-            return request;
-          })
-          .catch((error) => {
-            if (Object.hasOwn(error.error, 'status')) {
-              if (error.error.status === 404) {
-                message = JSON.stringify(errorMessages.ERROR_404);
-              }
-              if (error.error.status === 'FETCH_ERROR') {
-                message = JSON.stringify(errorMessages.ACCSESS_DENIED);
-              }
-              dispatch(setApiErrorMessage(message));
-            }
-          });
-      },
     }),
 
     mutateGrathQl: builder.mutation<

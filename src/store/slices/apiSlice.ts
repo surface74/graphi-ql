@@ -13,11 +13,8 @@ const ApiSlice = createSlice({
     setBaseUrl: (state, action) => {
       state.baseUrl = action.payload;
     },
-    setApiErrorMessage: (state, action) => {
-      state.errorMessage = action.payload;
-    },
   },
 });
 
-export const { setBaseUrl, setApiErrorMessage } = ApiSlice.actions;
+export const { setBaseUrl } = ApiSlice.actions;
 export default ApiSlice.reducer;

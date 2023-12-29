@@ -1,5 +1,5 @@
 import Container from '@mui/material/Container';
-import { Box, Typography } from '@mui/material';
+import { Box, CircularProgress, Typography } from '@mui/material';
 import { useAppSelector } from '../../hooks/store';
 import {
   graphqlHeading,
@@ -16,7 +16,6 @@ import Endpoint from '../../Components/Endpoint/Endpoint';
 import { useDataContext } from '../../DataContext/useDataContext';
 import { tabs, tabsLabels } from '../../utils/const';
 import CustomTabPanel from '../../Components/CustomTabPanel/CustomTabPanel';
-import Loader from '../../Components/Loader/Loader';
 import { Suspense, lazy } from 'react';
 
 const Documentation = lazy(
@@ -48,7 +47,7 @@ const EditorPage: React.FC = () => {
         <Box sx={wrapperDocumentation}>
           {docsIsOpen && (
             // todo вместе с useLazyFetchSchemaQuery перестал работать Suspense
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<CircularProgress color="inherit" />}>
               <Documentation />
             </Suspense>
           )}

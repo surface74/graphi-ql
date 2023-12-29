@@ -7,7 +7,7 @@ export interface IUserState {
 
 export type UIState = {
   docsIsOpen: boolean;
-  isLoadingSchema: false;
+  isLoadingSchema: boolean;
 };
 
 export type ApiState = {
