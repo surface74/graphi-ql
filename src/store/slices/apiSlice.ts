@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { ApiState } from '../store.types';
 
 const initialState: ApiState = {
@@ -10,7 +10,7 @@ const ApiSlice = createSlice({
   name: 'UI',
   initialState,
   reducers: {
-    setBaseUrl: (state, action) => {
+    setBaseUrl: (state, action: PayloadAction<string>) => {
       state.baseUrl = action.payload;
     },
   },

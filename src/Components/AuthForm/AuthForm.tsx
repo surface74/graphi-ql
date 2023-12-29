@@ -30,8 +30,8 @@ const AuthForm: FC<IAuthFormProps> = ({ title, onSubmitForm, type }) => {
       password: '',
     },
     validationSchema: schema,
-    onSubmit: ({ email, password }) => {
-      onSubmitForm(email.trim(), password);
+    onSubmit: async ({ email, password }) => {
+      await onSubmitForm(email.trim(), password);
     },
   });
 

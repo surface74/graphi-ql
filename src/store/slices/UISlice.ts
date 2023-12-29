@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { UIState } from '../store.types';
 
 const initialState: UIState = {
@@ -10,10 +10,10 @@ const UISlice = createSlice({
   name: 'UI',
   initialState,
   reducers: {
-    setDocsIsOpen: (state, action) => {
+    setDocsIsOpen: (state, action: PayloadAction<boolean>) => {
       state.docsIsOpen = action.payload;
     },
-    setIsLoadingSchema: (state, action) => {
+    setIsLoadingSchema: (state, action: PayloadAction<boolean>) => {
       state.isLoadingSchema = action.payload;
     },
   },
