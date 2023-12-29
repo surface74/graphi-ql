@@ -15,6 +15,9 @@ export const graphqlHeading = {
   textAlign: 'center',
   pb: 10,
 };
+export const graphqlHeadingMobile = {
+  pb: 5,
+};
 
 export const wrapperGraphQL: SxProps<Theme> = {
   display: 'grid',
@@ -24,6 +27,11 @@ export const wrapperGraphQL: SxProps<Theme> = {
   border: '1px solid white',
   padding: '1rem',
   height: '69vh',
+};
+
+export const wrapperGraphQLMobile: SxProps<Theme> = {
+  gridTemplateRows: 'repeat(17, 1fr)',
+  height: '120vh',
 };
 
 export const wrapperEndpoint: SxProps<Theme> = {
@@ -43,8 +51,12 @@ export const wrapperRequestEditor: SxProps<Theme> = {
   gridColumn: '1/5',
   gridRow: '2/9',
   gridAutoFlow: 'row',
-  overflowY: 'scroll',
   background: '#2e3440',
+};
+
+export const wrapperRequestEditorMobile: SxProps<Theme> = {
+  gridColumn: '1/9',
+  gridRow: '2/9',
 };
 
 export const wrapperResponseSection: SxProps<Theme> = {
@@ -52,7 +64,11 @@ export const wrapperResponseSection: SxProps<Theme> = {
   gridColumn: '5/9',
   gridRow: '2/10',
   background: '#2e3440',
-  overflowY: 'scroll',
+};
+
+export const wrapperResponseSectionMobile: SxProps<Theme> = {
+  gridColumn: '1/9',
+  gridRow: '10/18',
 };
 
 export const wrapperHelpersEditor: SxProps<Theme> = {
@@ -62,10 +78,18 @@ export const wrapperHelpersEditor: SxProps<Theme> = {
   border: '',
 };
 
+export const wrapperHelpersEditorMobile: SxProps<Theme> = {
+  gridColumn: '1/9',
+};
+
 export const wrapperHeadersEditor: SxProps<Theme> = {
   ...wrapperComponent,
   gridColumn: '3/5',
   gridRow: '7/10',
+};
+
+export const wrapperHeadersEditorMobile: SxProps<Theme> = {
+  gridColumn: '6/9',
 };
 
 export const wrapperDocumentation: SxProps<Theme> = {

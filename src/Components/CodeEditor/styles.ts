@@ -6,5 +6,5 @@ export const wrappwerTextEditor: SxProps<Theme> = {
   width: '100%',
   height: '100%',
   textAlign: 'left',
-  overflowY: 'scroll',
+  overflowY: 'auto',
 };
