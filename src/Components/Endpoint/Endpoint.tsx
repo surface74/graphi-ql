@@ -6,7 +6,7 @@ import {
   submitButton,
   wrapperBaseUrl,
 } from './styles';
-import { setBaseUrl } from '../../store/slices/apiSlice';
+import { setApiErrorMessage, setBaseUrl } from '../../store/slices/apiSlice';
 import { useDispatch } from 'react-redux';
 import { useLazyFetchSchemaQuery } from '../../api/rtk-api';
 import ReplayIcon from '@mui/icons-material/Replay';
@@ -33,15 +33,15 @@ const Endpoint: React.FC = () => {
   const [urlInputValue, setUrlInputValue] = useState('');
   const [docsButtonDisabled, setDocsButtonDisabled] = useState(false);
   const [trigger, result] = useLazyFetchSchemaQuery();
-  const isLoadingSchema = useAppSelector(
-    (state) => state.UIData.isLoadingSchema
-  );
   const { language } = useDataContext();
   const dispatch = useDispatch();
 
-  const baseUrl = useAppSelector((store) => store.ApiData.baseUrl);
-  const errorApiMessage = useAppSelector((store) => store.ApiData.errorMessage);
-  const docsIsOpen = useAppSelector((state) => state.UIData.docsIsOpen);
+  const { baseUrl, errorMessage: errorApiMessage } = useAppSelector(
+    (store) => store.ApiData
+  );
+  const { docsIsOpen, isLoadingSchema } = useAppSelector(
+    (state) => state.UIData
+  );
   const { enqueueSnackbar } = useSnackbar();
   const baseUrlSchemaValidation = endpointSchema(language);
 
@@ -67,8 +67,9 @@ const Endpoint: React.FC = () => {
       enqueueSnackbar(JSON.parse(errorApiMessage)[language], {
         variant: 'error',
       });
+      dispatch(setApiErrorMessage(''));
     }
-  }, [errorApiMessage, enqueueSnackbar, language]);
+  }, [dispatch, errorApiMessage, enqueueSnackbar, language]);
 
   const handleDocsMenu = () => {
     dispatch(setDocsIsOpen(!docsIsOpen));
@@ -88,13 +89,11 @@ const Endpoint: React.FC = () => {
 
   useEffect(() => {
     const { data, isError, error, isLoading } = result;
-    if (!!!data || isError || !!error || !baseUrl) {
-      setDocsButtonDisabled(true);
-    } else {
-      setDocsButtonDisabled(false);
-    }
 
-    isLoading ? setIsLoadingSchema(true) : setIsLoadingSchema(false);
+    const isButtonDisabled = !!!data || isError || !!error || !baseUrl;
+    setDocsButtonDisabled(isButtonDisabled);
+
+    setIsLoadingSchema(isLoading);
   }, [result, baseUrl, result.isLoading]);
 
   return (

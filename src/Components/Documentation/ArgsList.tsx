@@ -6,7 +6,7 @@ import {
   wrapperNextDocsSection,
 } from './styles';
 import { ArgsListProps } from './Documentation.types';
-import { DocsHeaders } from './constants';
+import { DOCS_HEADERS } from './constants';
 import UIContent from '../../assets/UIStrings.json';
 import { useDataContext } from '../../DataContext/useDataContext';
 import { getFieldTypeName } from '../../utils/getFieldTypeName';
@@ -18,7 +18,7 @@ const ArgsList: React.FC<ArgsListProps> = ({ currentFiled }) => {
       {currentFiled.args.length > 0 && (
         <Box sx={wrapperNextDocsSection}>
           <Typography sx={sectionHeading} variant="h4">
-            {UIContent[DocsHeaders.Arguments][language]}
+            {UIContent[DOCS_HEADERS.Arguments][language]}
           </Typography>
           {currentFiled.hasOwnProperty('args') && currentFiled.args.length > 0
             ? currentFiled.args.map((arg, j) => {

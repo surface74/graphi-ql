@@ -14,8 +14,8 @@ import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { useState } from 'react';
 import {
   DEFAULT_CURRENT_FIELD,
+  DOCS_HEADERS,
   DocsFiedsTypes,
-  DocsHeaders,
 } from './constants';
 import ArgsList from './ArgsList';
 import { FieldsListProps } from './Documentation.types';
@@ -47,7 +47,7 @@ const FieldsList: React.FC<FieldsListProps> = ({
         <Box sx={flexColumnCenter}>
           <Box sx={wrapperNextDocsSection}>
             <Typography sx={sectionHeading} variant="h4">
-              {UIContent[DocsHeaders.Type_details][language]}
+              {UIContent[DOCS_HEADERS.Type_details][language]}
             </Typography>
 
             <Typography sx={sectionSubHeading}>

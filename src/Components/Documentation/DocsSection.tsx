@@ -38,8 +38,7 @@ const DocsSection: React.FC<DocsSectionProps> = ({ heading, types }) => {
       {fields && (
         <Box sx={wrapperNextDocsSection}>
           <Typography sx={sectionHeading} variant="h4">
-            {heading.toUpperCase()}
-            {/* {UIContent[heading][language]} */}
+            {heading}
           </Typography>
 
           {fields.map((field: Field, k: number) => {
