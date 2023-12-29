@@ -55,8 +55,20 @@ export interface Arg {
 
 export interface OfType {
   kind: string;
-  name?: string | commonType;
-  ofType?: OfType | commonType;
+  name?: string;
+  ofType?: OfType2;
+}
+
+export interface OfType2 {
+  kind: string;
+  name: commonType;
+  ofType: OfType3;
+}
+
+export interface OfType3 {
+  kind: string;
+  name: string;
+  ofType: commonType;
 }
 
 export interface InputField {
