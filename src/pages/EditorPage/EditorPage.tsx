@@ -1,14 +1,24 @@
 import Container from '@mui/material/Container';
-import { Box, CircularProgress, Typography } from '@mui/material';
+import {
+  Box,
+  CircularProgress,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import { useAppSelector } from '../../hooks/store';
 import {
   graphqlHeading,
   wrapperDocumentation,
   wrapperEndpoint,
   wrapperGraphQL,
+  wrapperGraphQLMobile,
   wrapperHelpersEditor,
+  wrapperHelpersEditorMobile,
   wrapperRequestEditor,
+  wrapperRequestEditorMobile,
   wrapperResponseSection,
+  wrapperResponseSectionMobile,
 } from './styles';
 import ResponseSection from '../../Components/ResponseSection/ResponseSection';
 import RequestEditor from '../../Components/RequestEditor/RequestEditor';
@@ -25,23 +35,33 @@ const Documentation = lazy(
 const EditorPage: React.FC = () => {
   const { language } = useDataContext();
   const docsIsOpen = useAppSelector((state) => state.UIData.docsIsOpen);
+  const theme = useTheme();
+  const isMobileView = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
     <Container maxWidth="xl">
-      <Typography variant="h4" sx={graphqlHeading}>
+      <Typography variant={isMobileView ? 'h5' : 'h4'} sx={graphqlHeading}>
         GraphiQL
       </Typography>
-      <Box sx={wrapperGraphQL}>
+      <Box sx={isMobileView ? wrapperGraphQLMobile : wrapperGraphQL}>
         <Box sx={wrapperEndpoint}>
           <Endpoint />
         </Box>
-        <Box sx={wrapperRequestEditor}>
+        <Box
+          sx={isMobileView ? wrapperRequestEditorMobile : wrapperRequestEditor}
+        >
           <RequestEditor />
         </Box>
-        <Box sx={wrapperHelpersEditor}>
+        <Box
+          sx={isMobileView ? wrapperHelpersEditorMobile : wrapperHelpersEditor}
+        >
           <CustomTabPanel tabsLabels={tabsLabels[language]} tabsPanels={tabs} />
         </Box>
-        <Box sx={wrapperResponseSection}>
+        <Box
+          sx={
+            isMobileView ? wrapperResponseSectionMobile : wrapperResponseSection
+          }
+        >
           <ResponseSection />
         </Box>
         <Box sx={wrapperDocumentation}>

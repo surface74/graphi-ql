@@ -6,28 +6,37 @@ export const wrapperComponent = {
   justifyContent: 'center',
   alignItems: 'start',
   gap: 10,
-  border: '1px solid white',
+  borderRadius: '0.5rem',
   padding: '1rem',
 };
 
 export const graphqlHeading = {
   color: 'primary',
   textAlign: 'center',
-  pb: 10,
+  marginBottom: '1rem',
+};
+
+export const wrapperGraphQLBasic: SxProps<Theme> = {
+  display: 'grid',
+  gridTemplateColumns: 'repeat(8, 1fr)',
+  gap: 10,
+  height: '70vh',
 };
 
 export const wrapperGraphQL: SxProps<Theme> = {
-  display: 'grid',
-  gridTemplateColumns: 'repeat(8, 1fr)',
+  ...wrapperGraphQLBasic,
   gridTemplateRows: 'repeat(9, 1fr)',
-  gap: 10,
-  border: '1px solid white',
-  padding: '1rem',
-  height: '69vh',
+};
+
+export const wrapperGraphQLMobile: SxProps<Theme> = {
+  ...wrapperGraphQLBasic,
+  gridTemplateRows: 'repeat(17, 1fr)',
+  height: '120vh',
 };
 
 export const wrapperEndpoint: SxProps<Theme> = {
   ...wrapperComponent,
+  padding: '0',
   gridColumn: '1/9',
   gridRow: '1/2',
 };
@@ -38,35 +47,70 @@ export const wrapperDocsButton: SxProps<Theme> = {
   gridRow: '1/2',
 };
 
-export const wrapperRequestEditor: SxProps<Theme> = {
+export const wrapperRequestEditorBasic: SxProps<Theme> = {
   ...wrapperComponent,
-  gridColumn: '1/5',
-  gridRow: '2/9',
   gridAutoFlow: 'row',
-  overflowY: 'scroll',
   background: '#2e3440',
+  gridRow: '2/9',
 };
 
-export const wrapperResponseSection: SxProps<Theme> = {
-  ...wrapperComponent,
-  gridColumn: '5/9',
-  gridRow: '2/10',
-  background: '#2e3440',
+export const wrapperRequestEditor: SxProps<Theme> = {
+  ...wrapperRequestEditorBasic,
+  gridColumn: '1/5',
+};
 
+export const wrapperRequestEditorMobile: SxProps<Theme> = {
+  ...wrapperRequestEditorBasic,
+  gridColumn: '1/9',
+};
+
+export const wrapperResponseSectionBasic: SxProps<Theme> = {
+  ...wrapperComponent,
+  background: '#2e3440',
   position: 'relative',
 };
 
-export const wrapperHelpersEditor: SxProps<Theme> = {
+export const wrapperResponseSection: SxProps<Theme> = {
+  ...wrapperResponseSectionBasic,
+  gridColumn: '5/9',
+  gridRow: '2/10',
+};
+
+export const wrapperResponseSectionMobile: SxProps<Theme> = {
+  ...wrapperResponseSectionBasic,
+  gridColumn: '1/9',
+  gridRow: '10/18',
+};
+
+export const wrapperHelpersEditorBasic: SxProps<Theme> = {
   ...wrapperComponent,
   background: '#2e3440',
-  gridColumn: '1/5',
   border: '',
 };
 
-export const wrapperHeadersEditor: SxProps<Theme> = {
+export const wrapperHelpersEditor: SxProps<Theme> = {
+  ...wrapperHelpersEditorBasic,
+  gridColumn: '1/5',
+};
+
+export const wrapperHelpersEditorMobile: SxProps<Theme> = {
+  ...wrapperHelpersEditorBasic,
+  gridColumn: '1/9',
+};
+
+export const wrapperHeadersEditorBasic: SxProps<Theme> = {
   ...wrapperComponent,
-  gridColumn: '3/5',
   gridRow: '7/10',
+};
+
+export const wrapperHeadersEditor: SxProps<Theme> = {
+  ...wrapperHeadersEditorBasic,
+  gridColumn: '3/5',
+};
+
+export const wrapperHeadersEditorMobile: SxProps<Theme> = {
+  ...wrapperHeadersEditorBasic,
+  gridColumn: '6/9',
 };
 
 export const wrapperDocumentation: SxProps<Theme> = {
