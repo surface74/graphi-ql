@@ -32,15 +32,6 @@ export const prettifyBtn: SxProps<Theme> = {
   },
 };
 
-export const runBtn: SxProps<Theme> = {
-  ...baseBtn,
-  background: theme.palette.text.primary,
-
-  '&:hover': {
-    bgcolor: '#f1ebe5',
-  },
-};
-
 export const cleanBtn: SxProps<Theme> = {
   ...baseBtn,
   background: theme.palette.secondary.light,
@@ -52,11 +43,11 @@ export const cleanBtn: SxProps<Theme> = {
 
 export const btnsWrapper: SxProps<Theme> = {
   display: 'flex',
-  flexDirection: 'column',
   justifyContent: 'start',
-  alignItems: 'center',
+  alignItems: 'flex-start',
   gap: 5,
   height: '100%',
   position: 'absolute',
-  right: '0.5rem',
+  right: '1.3rem',
+  top: 0,
 };

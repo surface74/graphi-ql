@@ -2,7 +2,7 @@ import { Button, SxProps, Theme } from '@mui/material';
 
 type CustomButtonPros = {
   variant?: 'text' | 'outlined' | 'contained';
-  title: string;
+  title?: string;
   startIcon?: JSX.Element;
   onClick?: () => void | Promise<void>;
   sx?: SxProps<Theme> | undefined;

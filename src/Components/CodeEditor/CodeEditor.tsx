@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import CodeMirror, { Extension } from '@uiw/react-codemirror';
+import CodeMirror, { EditorView, Extension } from '@uiw/react-codemirror';
 import { nord } from '@uiw/codemirror-theme-nord';
 import { wrappwerTextEditor } from './styles';
 
@@ -24,7 +24,11 @@ const CodeEditor = ({
     <Box sx={wrappwerTextEditor} id="editor">
       <CodeMirror
         readOnly={readOnly}
-        extensions={extensions}
+        extensions={
+          extensions && extensions.length > 0
+            ? [...extensions, EditorView.lineWrapping]
+            : [EditorView.lineWrapping]
+        }
         basicSetup={{ highlightActiveLine: false }}
         width="100%"
         minHeight={minHeight ?? '100%'}

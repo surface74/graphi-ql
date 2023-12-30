@@ -19,6 +19,11 @@ const CustomTabPanel = ({ tabsPanels, tabsLabels }: TabPanelProps) => {
     setTab(newValue);
   };
 
+  const hendlerTabClick = () => {
+    if (open) return;
+    setOpen(true);
+  };
+
   return (
     <Box sx={{ width: '100%', typography: 'body1' }}>
       <TabContext value={tab}>
@@ -33,6 +38,7 @@ const CustomTabPanel = ({ tabsPanels, tabsLabels }: TabPanelProps) => {
               return (
                 <Tab
                   key={label}
+                  onClick={hendlerTabClick}
                   label={label}
                   value={index + ''}
                   id={`tab-${index}`}

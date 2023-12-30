@@ -1,11 +1,12 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import Storage from '../../utils/Storage/Storage';
 
 const querySlice = createSlice({
   name: 'query',
   initialState: {
-    value: '',
-    headers: '',
-    variables: '',
+    value: Storage.recallRequest() || '',
+    headers: Storage.recallHeaders() || '',
+    variables: Storage.recallVariables() || '',
   },
   reducers: {
     updateQuery(state, action: PayloadAction<string>) {

@@ -67,6 +67,7 @@ export const wrapperRequestEditorMobile: SxProps<Theme> = {
 export const wrapperResponseSectionBasic: SxProps<Theme> = {
   ...wrapperComponent,
   background: '#2e3440',
+  position: 'relative',
 };
 
 export const wrapperResponseSection: SxProps<Theme> = {

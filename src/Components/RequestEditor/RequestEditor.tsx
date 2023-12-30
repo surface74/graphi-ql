@@ -1,52 +1,58 @@
 import { FC, useState } from 'react';
-import { Box, Fab } from '@mui/material';
-import PlayCircleOutlineOutlinedIcon from '@mui/icons-material/PlayCircleOutlineOutlined';
+import { Box } from '@mui/material';
 import AutoFixHighOutlinedIcon from '@mui/icons-material/AutoFixHighOutlined';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
-import {
-  btnsWrapper,
-  cleanBtn,
-  prettifyBtn,
-  runBtn,
-  sectionContainer,
-} from './styles';
-import { useAppDispatch } from '../../hooks/store';
+import { btnsWrapper, cleanBtn, prettifyBtn, sectionContainer } from './styles';
+import { useAppDispatch, useAppSelector } from '../../hooks/store';
 import { updateQuery } from '../../store/slices/querySlice';
 import formatGraphQLQuery from '../../utils/formatGraphQLQuery';
 import CodeEditor from '../CodeEditor/CodeEditor';
+import CustomIconButton from '../CustomIconButton/CustomIconButton';
+import Storage from '../../utils/Storage/Storage';
 
 const RequestEditor: FC = () => {
   const dispatch = useAppDispatch();
-  const [codeValue, setCodeValue] = useState('');
+  const { isSchema } = useAppSelector((state) => state.ApiData);
+  const { value } = useAppSelector((state) => state.querySlice);
+  const [codeValue, setCodeValue] = useState(value);
 
-  function onSave(value: string) {
-    dispatch(updateQuery(value));
-    const formatedValue = formatGraphQLQuery(value);
+  function onSave(query: string) {
+    dispatch(updateQuery(query));
+    const formatedValue = formatGraphQLQuery(query);
     setCodeValue(formatedValue);
+    Storage.saveRequest(formatedValue);
   }
 
   function onClean() {
     dispatch(updateQuery(''));
     setCodeValue('');
+    Storage.saveRequest('');
   }
 
-  function onChange(value: string) {
-    setCodeValue(value);
+  function onChange(queryValue: string) {
+    dispatch(updateQuery(queryValue));
+    Storage.saveRequest(queryValue);
+    setCodeValue(queryValue);
   }
 
   return (
     <Box sx={sectionContainer} width="100%">
-      <CodeEditor readOnly={false} codeValue={codeValue} onChange={onChange} />
+      <CodeEditor
+        readOnly={!isSchema}
+        codeValue={codeValue}
+        onChange={onChange}
+      />
       <Box sx={btnsWrapper}>
-        <Fab sx={runBtn} onClick={() => onSave(codeValue)}>
-          <PlayCircleOutlineOutlinedIcon />
-        </Fab>
-        <Fab sx={prettifyBtn} onClick={() => onSave(codeValue)}>
-          <AutoFixHighOutlinedIcon />
-        </Fab>
-        <Fab sx={cleanBtn} onClick={onClean}>
-          <DeleteForeverOutlinedIcon />
-        </Fab>
+        <CustomIconButton
+          sx={prettifyBtn}
+          onClick={() => onSave(codeValue)}
+          icon={<AutoFixHighOutlinedIcon />}
+        />
+        <CustomIconButton
+          sx={cleanBtn}
+          onClick={onClean}
+          icon={<DeleteForeverOutlinedIcon />}
+        />
       </Box>
     </Box>
   );
