@@ -1,8 +1,8 @@
 import { Box } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useSnackbar } from 'notistack';
-
-import { sectionRespContainer } from './styles';
+import PlayCircleOutlineOutlinedIcon from '@mui/icons-material/PlayCircleOutlineOutlined';
+import { sectionRespContainer, runBtn } from './styles';
 import CodeEditor from '../CodeEditor/CodeEditor';
 import { useLazyFetchGrathQlQuery } from '../../api/rtk-api';
 import { useAppSelector } from '../../hooks/store';
@@ -11,21 +11,13 @@ import FetchingStatus from '../../common-types/fetching-status';
 import ErrorMessages from '../../assets/errorMessages.json';
 import UIStrings from '../../assets/UIStrings.json';
 import { ErrorResponse } from '../../common-types/error-types';
-import CustomButton from '../CustomButton/CustomButton';
-
-// const baseUrl = 'https://graphql-pokemon2.vercel.app';
-// const query = `query fn($varId: Int!) {pokemons(first: $varId) {name id}}`;
-// const variables = `{ "varId": 1 }`;
-// const headers = `{
-//   "Type": "text/html; charset=utf-8"
-// }`;
+import CustomIconButton from '../CustomIconButton/CustomIconButton';
 
 const ResponseSection: React.FC = () => {
   const { enqueueSnackbar } = useSnackbar();
   const [responseValue, setResponseValue] = useState('');
   const { language } = useDataContext();
 
-  // https://redux-toolkit.js.org/rtk-query/api/created-api/hooks#uselazyquery
   const [trigger, result] = useLazyFetchGrathQlQuery();
   const {
     value: query,
@@ -79,10 +71,16 @@ const ResponseSection: React.FC = () => {
   };
 
   return (
-    <Box sx={sectionRespContainer}>
-      <CodeEditor readOnly={true} codeValue={responseValue} />
-      <CustomButton onClick={getData} title="get data" />
-    </Box>
+    <>
+      <CustomIconButton
+        sx={runBtn}
+        onClick={getData}
+        icon={<PlayCircleOutlineOutlinedIcon />}
+      />
+      <Box sx={sectionRespContainer}>
+        <CodeEditor readOnly={true} codeValue={responseValue} />
+      </Box>
+    </>
   );
 };
 

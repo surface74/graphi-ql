@@ -52,7 +52,8 @@ export const wrapperResponseSection: SxProps<Theme> = {
   gridColumn: '5/9',
   gridRow: '2/10',
   background: '#2e3440',
-  overflowY: 'scroll',
+
+  position: 'relative',
 };
 
 export const wrapperHelpersEditor: SxProps<Theme> = {
