@@ -12,7 +12,6 @@ import Storage from '../../utils/Storage/Storage';
 
 const RequestEditor: FC = () => {
   const dispatch = useAppDispatch();
-  const { isSchema } = useAppSelector((state) => state.ApiData);
   const { value } = useAppSelector((state) => state.querySlice);
   const [codeValue, setCodeValue] = useState(value);
 
@@ -37,11 +36,7 @@ const RequestEditor: FC = () => {
 
   return (
     <Box sx={sectionContainer} width="100%">
-      <CodeEditor
-        readOnly={!isSchema}
-        codeValue={codeValue}
-        onChange={onChange}
-      />
+      <CodeEditor readOnly={false} codeValue={codeValue} onChange={onChange} />
       <Box sx={btnsWrapper}>
         <CustomIconButton
           sx={prettifyBtn}

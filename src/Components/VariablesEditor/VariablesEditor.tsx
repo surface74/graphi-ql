@@ -9,7 +9,6 @@ import Storage from '../../utils/Storage/Storage';
 const VariablesEditor: FC = () => {
   const dispatch = useAppDispatch();
   const { variables } = useAppSelector((state) => state.querySlice);
-  const { isSchema } = useAppSelector((state) => state.ApiData);
 
   const handlerChange = (value: string) => {
     Storage.saveVariables(value);
@@ -19,7 +18,7 @@ const VariablesEditor: FC = () => {
   return (
     <CodeEditor
       extensions={[json(), linter(jsonParseLinter())]}
-      readOnly={!isSchema}
+      readOnly={false}
       codeValue={variables}
       height={'15vh'}
       minHeight={'15vh'}

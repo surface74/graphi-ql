@@ -1,4 +1,5 @@
 import { SxProps, Theme } from '@mui/material';
+import theme from '../../ThemeProvider/ThemeProvider';
 
 const flexColomnCenter = {
   display: 'flex',
@@ -28,7 +29,7 @@ export const welcomeHeading = {
 };
 
 export const welcomeTitle: SxProps<Theme> = {
-  color: '#eee',
+  color: theme.palette.text.primary,
   textAlign: 'center',
 };
 
@@ -48,12 +49,12 @@ export const wrapperMainSection: SxProps<Theme> = {
   ...flexColomnCenter,
   borderRadius: 5,
   border: 2,
-  borderColor: '#eee',
+  borderColor: theme.palette.text.primary,
   gap: 20,
-  p: 30,
+  p: { xs: 10, md: 30, sm: 20 },
 };
 
 export const welcomeSubTitle: SxProps<Theme> = {
-  color: '#eee',
+  color: theme.palette.text.primary,
   textAlign: 'left',
 };

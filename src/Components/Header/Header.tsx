@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
+// import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
@@ -24,6 +24,8 @@ import Language from '../../enum/language.ts';
 import { useDataContext } from '../../DataContext/useDataContext.ts';
 import {
   flexRowCenter,
+  iconBtnStyle,
+  langStyle,
   loginIcon,
   logoIcon,
   logoIconMobile,
@@ -50,8 +52,8 @@ const ScrollHandler = (props: ChangeOnScrollProps) => {
 
   return React.cloneElement(props.children, {
     style: {
-      height: trigger ? 90 : 100,
-      backgroundColor: trigger ? '#a0a0a081' : '#1a1a1a',
+      height: trigger ? 60 : 100,
+      backgroundColor: '#1a1a1a',
       transition: trigger ? '0.5s' : '0.5s',
       boxShadow: 'none',
     },
@@ -73,9 +75,11 @@ const Header: React.FC<HeaderProps> = () => {
     language === Language.En
   );
 
-  const pages = Object.values(pageName).filter(
-    (name) => name.En === pageName.welcome.En || name.En === pageName.main.En
-  );
+  const pages = Object.values(pageName)
+    .filter(
+      (name) => name.En === pageName.welcome.En || name.En === pageName.main.En
+    )
+    .filter((name) => (isLogin ? name : name.En !== pageName.main.En));
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
@@ -169,7 +173,7 @@ const Header: React.FC<HeaderProps> = () => {
             </Box>
 
             <AdbIcon sx={logoIconMobile} />
-            <Typography variant="h5" noWrap sx={logoTitleMobile}>
+            <Typography variant="h6" noWrap sx={logoTitleMobile}>
               GraphiQL
             </Typography>
 
@@ -201,33 +205,32 @@ const Header: React.FC<HeaderProps> = () => {
 
             <Box sx={rightMenuWrapper}>
               <Box sx={switchLangWrapper}>
-                <Typography textAlign="center">
+                <Typography sx={langStyle}>
                   {UIStrings.RuLanguage[language]}
                 </Typography>
-
                 <Switch
                   checked={langChecked}
                   size="medium"
-                  color="default"
+                  color="secondary"
                   onChange={changeLang}
                 />
 
-                <Typography textAlign="center">
+                <Typography sx={langStyle}>
                   {UIStrings.EnLanguage[language]}
                 </Typography>
               </Box>
 
-              <IconButton onClick={handleClickAuth}>
+              <IconButton sx={iconBtnStyle} onClick={handleClickAuth}>
                 <AuthIcon sx={loginIcon} />
               </IconButton>
 
               {!isLogin && (
-                <IconButton onClick={handleClickSignUp}>
+                <IconButton sx={iconBtnStyle} onClick={handleClickSignUp}>
                   <PersonAdd sx={loginIcon} />
                 </IconButton>
               )}
 
-              <Avatar alt="Remy Sharp" src="" />
+              {/* <Avatar alt="Remy Sharp" src="" /> */}
             </Box>
           </Toolbar>
         </Container>

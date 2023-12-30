@@ -1,5 +1,3 @@
-import theme from '../../ThemeProvider/ThemeProvider';
-
 export const cardWrapper = (size: boolean) => {
   return {
     display: 'flex',
@@ -8,10 +6,7 @@ export const cardWrapper = (size: boolean) => {
     p: 20,
     borderRadius: 4,
     transition: '0.3s',
-    bgcolor: theme.palette.grey[900],
-    '&:hover': {
-      bgcolor: theme.palette.grey[800],
-    },
+    bgcolor: '#373535',
   };
 };
 

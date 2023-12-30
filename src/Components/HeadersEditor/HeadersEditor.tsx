@@ -9,7 +9,6 @@ import Storage from '../../utils/Storage/Storage';
 const HeadersEditor: FC = () => {
   const dispatch = useAppDispatch();
   const { headers } = useAppSelector((state) => state.querySlice);
-  const { isSchema } = useAppSelector((state) => state.ApiData);
 
   const handlerChange = (value: string) => {
     Storage.saveHeaders(value);
@@ -19,7 +18,7 @@ const HeadersEditor: FC = () => {
   return (
     <CodeEditor
       extensions={[json(), linter(jsonParseLinter())]}
-      readOnly={!isSchema}
+      readOnly={false}
       codeValue={headers}
       height={'15vh'}
       minHeight={'15vh'}

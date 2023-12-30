@@ -1,11 +1,12 @@
 import { SxProps, Theme } from '@mui/material';
+import theme from '../../ThemeProvider/ThemeProvider';
 
 export const flexRowCenter: SxProps<Theme> = {
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'center',
   alignItems: 'center',
-  paddingX: 5,
+  paddingX: 10,
 };
 
 export const wrapperAppBar: SxProps<Theme> = {
@@ -15,12 +16,14 @@ export const wrapperAppBar: SxProps<Theme> = {
 
 export const logoIcon: SxProps<Theme> = {
   display: { xs: 'none', md: 'flex' },
+  color: theme.palette.text.primary,
   mr: 1,
 };
 
 export const logoIconMobile: SxProps<Theme> = {
   display: { xs: 'flex', md: 'none' },
   mr: 1,
+  color: theme.palette.text.primary,
 };
 
 export const logoTitle: SxProps<Theme> = {
@@ -29,22 +32,23 @@ export const logoTitle: SxProps<Theme> = {
   fontWeight: 700,
   letterSpacing: '.3rem',
   textDecoration: 'none',
+  color: theme.palette.text.primary,
 };
 
 export const logoTitleMobile: SxProps<Theme> = {
   mr: 2,
-  display: { xs: 'flex', md: 'none' },
+  display: { sm: 'flex', xs: 'none', md: 'none' },
   flexGrow: 1,
   fontFamily: 'menlo',
   fontWeight: 700,
   letterSpacing: '.3rem',
-  color: 'inherit',
   textDecoration: 'none',
+  color: theme.palette.text.primary,
 };
 
 export const mobileMenuWrapper: SxProps<Theme> = {
-  flexGrow: 1,
   display: { xs: 'flex', md: 'none' },
+  color: theme.palette.text.primary,
 };
 
 export const navWrapper: SxProps<Theme> = {
@@ -68,16 +72,26 @@ export const switchLangWrapper: SxProps<Theme> = {
   alignItems: 'center',
 };
 
+export const iconBtnStyle: SxProps<Theme> = {
+  p: '0',
+};
+
 export const loginIcon: SxProps<Theme> = {
-  color: 'white',
+  color: theme.palette.text.primary,
 };
 
 export const menu: SxProps<Theme> = {
   display: { xs: 'block', md: 'none' },
+  color: theme.palette.text.primary,
 };
 
 export const pageButton: SxProps<Theme> = {
   my: 2,
   color: 'black',
   display: 'block',
+};
+
+export const langStyle: SxProps<Theme> = {
+  color: theme.palette.text.primary,
+  textAlign: 'center',
 };
