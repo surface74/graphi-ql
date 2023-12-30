@@ -13,13 +13,13 @@ export const wrapperComponent = {
 export const graphqlHeading = {
   color: 'primary',
   textAlign: 'center',
+  marginBottom: '1rem',
 };
 
 export const wrapperGraphQLBasic: SxProps<Theme> = {
   display: 'grid',
   gridTemplateColumns: 'repeat(8, 1fr)',
   gap: 10,
-  padding: '1rem',
   height: '70vh',
 };
 
