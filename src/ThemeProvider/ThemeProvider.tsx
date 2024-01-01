@@ -54,7 +54,7 @@ const theme = createTheme({
           },
         },
         track: {
-          backgroundColor: '#F1DAC4',
+          backgroundColor: '#535bf2',
         },
       },
     },

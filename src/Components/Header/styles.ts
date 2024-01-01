@@ -67,9 +67,10 @@ export const rightMenuWrapper: SxProps<Theme> = {
 };
 
 export const switchLangWrapper: SxProps<Theme> = {
-  display: { xs: 'flex' },
+  // display: { xs: 'flex' },
   justifyContent: 'center',
   alignItems: 'center',
+  display: { xs: 'none', sm: 'none', md: 'flex' },
 };
 
 export const iconBtnStyle: SxProps<Theme> = {

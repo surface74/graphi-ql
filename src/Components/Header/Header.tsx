@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
-// import Avatar from '@mui/material/Avatar';
+import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
@@ -169,6 +169,14 @@ const Header: React.FC<HeaderProps> = () => {
                     </Link>
                   </MenuItem>
                 ))}
+                <MenuItem>
+                  <Switch
+                    checked={langChecked}
+                    size="medium"
+                    color="secondary"
+                    onChange={changeLang}
+                  />
+                </MenuItem>
               </Menu>
             </Box>
 
@@ -230,7 +238,7 @@ const Header: React.FC<HeaderProps> = () => {
                 </IconButton>
               )}
 
-              {/* <Avatar alt="Remy Sharp" src="" /> */}
+              <Avatar alt="Remy Sharp" src="" />
             </Box>
           </Toolbar>
         </Container>
