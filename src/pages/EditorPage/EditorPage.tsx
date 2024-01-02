@@ -9,6 +9,7 @@ import {
 import { useAppSelector } from '../../hooks/store';
 import {
   graphqlHeading,
+  mainWrapper,
   wrapperDocumentation,
   wrapperEndpoint,
   wrapperGraphQL,
@@ -39,7 +40,7 @@ const EditorPage: React.FC = () => {
   const isMobileView = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
-    <Container maxWidth="xl">
+    <Container maxWidth="xl" sx={mainWrapper}>
       <Typography variant={isMobileView ? 'h5' : 'h4'} sx={graphqlHeading}>
         GraphiQL
       </Typography>

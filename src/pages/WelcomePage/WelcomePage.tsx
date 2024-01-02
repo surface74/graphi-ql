@@ -7,6 +7,7 @@ import CardsContent from '../../assets/CardsContent.json';
 import { useDataContext } from '../../DataContext/useDataContext';
 import UIContent from '../../assets/UIStrings.json';
 import {
+  mainWrapper,
   welcomeHeading,
   welcomeSubTitle,
   welcomeTitle,
@@ -49,7 +50,7 @@ const WelcomePage: React.FC = () => {
     navigator(`/${pageName.main.En}`);
   }
   return (
-    <Container maxWidth="xl">
+    <Container maxWidth="xl" sx={mainWrapper}>
       <Typography variant="h4" sx={welcomeHeading}>
         {UIContent.WelcomeHeading[language]}
       </Typography>

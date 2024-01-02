@@ -58,3 +58,8 @@ export const welcomeSubTitle: SxProps<Theme> = {
   textAlign: 'justify',
   color: theme.palette.text.primary,
 };
+
+export const mainWrapper: SxProps<Theme> = {
+  p: { xs: 10, md: 30, sm: 20 },
+  flex: '1 1 auto',
+};

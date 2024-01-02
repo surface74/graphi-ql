@@ -1,4 +1,3 @@
-import styles from './App.module.css';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import { useState } from 'react';
@@ -78,12 +77,8 @@ function App() {
           setLanguage: switchLanguage,
         }}
       >
-        <div className={styles['container']}>
-          <Header />
-          <div className={styles['content']}>
-            <AppRoutes />
-          </div>
-        </div>
+        <Header />
+        <AppRoutes />
         <Footer />
       </DataContextProvider>
     </SnackbarProvider>

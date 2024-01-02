@@ -26,10 +26,10 @@ const Footer: React.FC = () => {
                 />
               </Icon>
             </Link>
+            <Typography sx={yearTitle}>Up&GoTeam {actualYear}&copy;</Typography>
             <Link href="https://github.com/MakaevaElena/graphiql-app">
               <GitHubIcon sx={githubIcon} />
             </Link>
-            <Typography sx={yearTitle}>{actualYear}&copy; Up&GoTeam</Typography>
           </Box>
         </Container>
       </AppBar>

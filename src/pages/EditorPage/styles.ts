@@ -75,6 +75,10 @@ export const wrapperResponseSection: SxProps<Theme> = {
   gridColumn: '5/9',
   gridRow: '2/10',
 };
+export const mainWrapper: SxProps<Theme> = {
+  p: { xs: 10, md: 30, sm: 20 },
+  flex: '1 1 auto',
+};
 
 export const wrapperResponseSectionMobile: SxProps<Theme> = {
   ...wrapperResponseSectionBasic,
