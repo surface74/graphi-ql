@@ -21,6 +21,6 @@ export const arrowBtn: SxProps<Theme> = {
 };
 
 export const icon: SxProps<Theme> = {
-  fontSize: '16px',
+  fontSize: '1.6rem',
   color: '#fff',
 };

@@ -33,7 +33,7 @@ const DevCard = ({ props }: DevCardProps) => {
             <GitHubIcon sx={{ color: theme.palette.text.primary }} />
           </Link>
         </Box>
-        <Typography>{bio}</Typography>
+        <Typography sx={{ textAlign: 'justify' }}>{bio}</Typography>
         <Typography>
           {UIStrings.CardFields[language].location}: {location}
         </Typography>

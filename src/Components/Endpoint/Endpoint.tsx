@@ -77,12 +77,12 @@ const Endpoint: React.FC = () => {
     setUrlInputValue(event.target.value);
     dispatch(setBaseUrl(''));
 
-    if (baseUrl.length > 0)
-      trigger(baseUrl).catch((error: Error) =>
-        enqueueSnackbar(error.message, {
-          variant: 'error',
-        })
-      );
+    // if (baseUrl.length > 0)
+    //   trigger(baseUrl).catch((error: Error) =>
+    //     enqueueSnackbar(error.message, {
+    //       variant: 'error',
+    //     })
+    //   );
   };
 
   useEffect(() => {

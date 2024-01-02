@@ -1,17 +1,17 @@
 import { createTheme } from '@mui/material/styles';
 
-const theme = createTheme({
+let theme = createTheme({
   typography: {
-    fontFamily: ['Menlo'].join(','),
+    fontFamily: ['Menlo', 'sans-serif'].join(','),
     htmlFontSize: 10,
   },
   spacing: 1,
   palette: {
     primary: {
-      main: '#535bf2',
+      main: '#535BF2',
     },
     secondary: {
-      main: '#bfeb61',
+      main: '#BFEB61',
     },
     background: {
       default: '#1A1A1A',
@@ -21,7 +21,26 @@ const theme = createTheme({
       secondary: '#2E2E2E',
     },
   },
+});
+
+theme = createTheme(theme, {
   components: {
+    MuiInputLabel: {
+      styleOverrides: {
+        shrink: {
+          transform: 'translate(14px, -9px)',
+          paddingRight: '1rem',
+          background: theme.palette.background.default,
+        },
+      },
+    },
+    MuiFormHelperText: {
+      styleOverrides: {
+        root: {
+          fontSize: '1.4rem',
+        },
+      },
+    },
     MuiButton: {
       styleOverrides: {
         root: {
@@ -61,34 +80,49 @@ const theme = createTheme({
   },
 });
 
-theme.typography.h3 = {
-  fontSize: '1.2rem',
-  '@media (min-width:600px)': {
+theme.typography.body1 = {
+  fontFamily: 'Menlo',
+  [theme.breakpoints.up('xs')]: {
     fontSize: '1.4rem',
   },
-  [theme.breakpoints.up('md')]: {
-    fontSize: '2.4rem',
-  },
-};
-
-theme.typography.h2 = {
-  fontSize: '1.8rem',
-  '@media (min-width:600px)': {
+  [theme.breakpoints.up('sm')]: {
     fontSize: '1.6rem',
   },
   [theme.breakpoints.up('md')]: {
-    fontSize: '2.8rem',
+    fontSize: '2rem',
   },
 };
 
-theme.typography.h1 = {
-  fontSize: '2.4rem',
-  '@media (min-width:600px)': {
-    fontSize: '1.8rem',
-  },
-  [theme.breakpoints.up('md')]: {
-    fontSize: '3.2rem',
-  },
-};
+// theme.typography.h3 = {
+//   fontSize: '1.8rem',
+//   [theme.breakpoints.up('sm')]: {
+//     fontSize: '2rem',
+//   },
+//   [theme.breakpoints.up('md')]: {
+//     fontSize: '2.2rem',
+//   },
+// };
+
+// theme.typography.h2 = {
+//   fontSize: '2rem',
+//   [theme.breakpoints.up('sm')]: {
+//     fontSize: '2.2rem',
+//   },
+//   [theme.breakpoints.up('md')]: {
+//     fontSize: '3rem',
+//   },
+// };
+
+// theme.typography.h1 = {
+//   fontSize: '2.2rem',
+//   [theme.breakpoints.up('sm')]: {
+//     fontSize: '2.4rem',
+//   },
+//   [theme.breakpoints.up('md')]: {
+//     fontSize: '3.4rem',
+//   },
+// };
+
+// theme = responsiveFontSizes(theme);
 
 export default theme;

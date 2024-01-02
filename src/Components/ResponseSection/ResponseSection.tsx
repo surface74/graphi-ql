@@ -1,8 +1,13 @@
-import { Box } from '@mui/material';
+import { Box, useMediaQuery, useTheme } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useSnackbar } from 'notistack';
 import PlayCircleOutlineOutlinedIcon from '@mui/icons-material/PlayCircleOutlineOutlined';
-import { sectionRespContainer, runBtn } from './styles';
+import {
+  sectionRespContainer,
+  runBtn,
+  buttonWrapper,
+  buttonWrapperMobile,
+} from './styles';
 import CodeEditor from '../CodeEditor/CodeEditor';
 import { useLazyFetchGrathQlQuery } from '../../api/rtk-api';
 import { useAppSelector } from '../../hooks/store';
@@ -17,6 +22,8 @@ const ResponseSection: React.FC = () => {
   const { enqueueSnackbar } = useSnackbar();
   const [responseValue, setResponseValue] = useState('');
   const { language } = useDataContext();
+  const theme = useTheme();
+  const isMobileView = useMediaQuery(theme.breakpoints.down('sm'));
 
   const [trigger, result] = useLazyFetchGrathQlQuery();
   const {
@@ -72,11 +79,13 @@ const ResponseSection: React.FC = () => {
 
   return (
     <>
-      <CustomIconButton
-        sx={runBtn}
-        onClick={getData}
-        icon={<PlayCircleOutlineOutlinedIcon />}
-      />
+      <Box sx={isMobileView ? buttonWrapperMobile : buttonWrapper}>
+        <CustomIconButton
+          sx={runBtn}
+          onClick={getData}
+          icon={<PlayCircleOutlineOutlinedIcon />}
+        />
+      </Box>
       <Box sx={sectionRespContainer}>
         <CodeEditor readOnly={true} codeValue={responseValue} />
       </Box>

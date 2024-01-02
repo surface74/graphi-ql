@@ -39,7 +39,6 @@ export const logoTitleMobile: SxProps<Theme> = {
   mr: 2,
   display: { sm: 'flex', xs: 'none', md: 'none' },
   flexGrow: 1,
-  fontFamily: 'menlo',
   fontWeight: 700,
   letterSpacing: '.3rem',
   textDecoration: 'none',

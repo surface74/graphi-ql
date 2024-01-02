@@ -1,4 +1,4 @@
-import { Box, Icon, Link, Typography } from '@mui/material';
+import { Box, Container, Icon, Link, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import DevCard from '../../Components/DevCard/DevCard';
 import styles from './style.module.scss';
@@ -49,7 +49,7 @@ const WelcomePage: React.FC = () => {
     navigator(`/${pageName.main.En}`);
   }
   return (
-    <>
+    <Container maxWidth="xl">
       <Typography variant="h4" sx={welcomeHeading}>
         {UIContent.WelcomeHeading[language]}
       </Typography>
@@ -102,7 +102,7 @@ const WelcomePage: React.FC = () => {
           </Icon>
         </Link>
       </Box>
-    </>
+    </Container>
   );
 };
 

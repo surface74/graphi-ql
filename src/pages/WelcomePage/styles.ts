@@ -55,6 +55,6 @@ export const wrapperMainSection: SxProps<Theme> = {
 };
 
 export const welcomeSubTitle: SxProps<Theme> = {
+  textAlign: 'justify',
   color: theme.palette.text.primary,
-  textAlign: 'left',
 };
