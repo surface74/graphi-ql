@@ -3,8 +3,8 @@ import theme from '../../ThemeProvider/ThemeProvider';
 
 const baseBtn: SxProps<Theme> = {
   borderRadius: '0.5rem',
-  width: '4rem',
-  height: '4rem',
+  width: { md: '4rem', sm: '3rem', xs: '2.4rem' },
+  height: { md: '4rem', sm: '3rem', xs: '2.4rem' },
   padding: '0.0',
 };
 
@@ -48,6 +48,6 @@ export const btnsWrapper: SxProps<Theme> = {
   gap: 5,
   height: '100%',
   position: 'absolute',
-  right: '1.3rem',
+  right: 0,
   top: 0,
 };
