@@ -1,4 +1,4 @@
-# GraphiQL_React-2023_Q4
+# GraphiQL
 
 > **GraphiQL is a playground/IDE for graphQL requests.**
 
@@ -12,14 +12,17 @@
 
 - [**Makaeva Elena** ](https://github.com/MakaevaElena 'Elena`s GitHub')
 - [**Siarhei Muliarenka**](https://github.com/surface74 'Siarhei`s GitHub')
-- [**Valeriia**](https://github.com/MaleryValery 'Valeriia`s GitHub')
+- [**Valeriia Melnikova**](https://github.com/MaleryValery 'Valeriia`s GitHub')
 
 # Technology Overview
 
 ## Stack
 
+- **Framework :** [React](https://react.dev/)
 - **Language:** [Typescript](https://www.typescriptlang.org/)
 - **Bundler:** [Vite](https://vitejs.dev/)
+- **Authentication:** [Firebase](https://firebase.google.com/)
+- **UI Component library:** [Material UI](https://mui.com/material-ui/)
 - **Format code:** [Prettier](https://prettier.io/docs/en/index.html)
 - **Improving code quality:** [ESLint](https://eslint.org/docs/latest/use/getting-started)
 - **Git hook managment:** [Husky](https://github.com/typicode/husky#readme)
