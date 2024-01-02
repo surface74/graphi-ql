@@ -8,7 +8,6 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
@@ -43,6 +42,8 @@ import { pageName } from '../../common-types/common-types';
 import { logOut } from '../Authority/firebase.ts';
 import { useDispatch } from 'react-redux';
 import { setBaseUrl } from '../../store/slices/apiSlice.ts';
+import CustomAvatar from '../CustomAvatar/CustomAvatar.tsx';
+import { useAppSelector } from '../../hooks/store.ts';
 
 const ScrollHandler = (props: ChangeOnScrollProps) => {
   const trigger = useScrollTrigger({
@@ -65,6 +66,7 @@ const ChangeOnScroll = (props: ChangeOnScrollProps) => {
 };
 
 const Header: React.FC<HeaderProps> = () => {
+  const { email } = useAppSelector((state) => state.user.user);
   const location = useLocation();
   const { language, setLanguage } = useDataContext();
   const { isLogin } = useAuth();
@@ -237,8 +239,7 @@ const Header: React.FC<HeaderProps> = () => {
                   <PersonAdd sx={loginIcon} />
                 </IconButton>
               )}
-
-              <Avatar alt="Remy Sharp" src="" />
+              <CustomAvatar userName={isLogin ? email : ''} />
             </Box>
           </Toolbar>
         </Container>

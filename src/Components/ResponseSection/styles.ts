@@ -16,7 +16,7 @@ export const buttonWrapperBasic: SxProps<Theme> = {
 
 export const buttonWrapper: SxProps<Theme> = {
   ...buttonWrapperBasic,
-  left: 0,
+  right: '5rem',
 };
 
 export const buttonWrapperMobile: SxProps<Theme> = {

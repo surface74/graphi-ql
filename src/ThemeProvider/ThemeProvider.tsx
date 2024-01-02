@@ -28,7 +28,7 @@ theme = createTheme(theme, {
     MuiInputLabel: {
       styleOverrides: {
         shrink: {
-          transform: 'translate(14px, -9px)',
+          transform: 'translate(14px, -15px)',
           paddingRight: '1rem',
           background: theme.palette.background.default,
         },
@@ -92,37 +92,5 @@ theme.typography.body1 = {
     fontSize: '2rem',
   },
 };
-
-// theme.typography.h3 = {
-//   fontSize: '1.8rem',
-//   [theme.breakpoints.up('sm')]: {
-//     fontSize: '2rem',
-//   },
-//   [theme.breakpoints.up('md')]: {
-//     fontSize: '2.2rem',
-//   },
-// };
-
-// theme.typography.h2 = {
-//   fontSize: '2rem',
-//   [theme.breakpoints.up('sm')]: {
-//     fontSize: '2.2rem',
-//   },
-//   [theme.breakpoints.up('md')]: {
-//     fontSize: '3rem',
-//   },
-// };
-
-// theme.typography.h1 = {
-//   fontSize: '2.2rem',
-//   [theme.breakpoints.up('sm')]: {
-//     fontSize: '2.4rem',
-//   },
-//   [theme.breakpoints.up('md')]: {
-//     fontSize: '3.4rem',
-//   },
-// };
-
-// theme = responsiveFontSizes(theme);
 
 export default theme;
