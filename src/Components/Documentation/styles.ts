@@ -34,6 +34,13 @@ export const sectionHeading: SxProps<Theme> = {
   padding: '1rem',
 };
 
+export const returnTitle: SxProps<Theme> = {
+  ...sectionHeading,
+  color: '#535bf2',
+  borderBottom: 'none',
+  cursor: 'pointer',
+};
+
 export const sectionSubHeading: SxProps<Theme> = {
   width: '100%',
   fontSize: '2rem',
@@ -69,9 +76,7 @@ export const wrapperDocsSection: SxProps<Theme> = {
 };
 
 export const wrapperNextDocsSection: SxProps<Theme> = {
-  width: '30rem',
-  transform: 'translateZ(0)', // not applied
-  transition: 'opacity 1s', // not applied
+  width: '26rem',
   background: '#2e3440',
   border: `1px solid #eee`,
   padding: '0 0.5rem',
@@ -83,5 +88,12 @@ export const wrapperSubSection: SxProps<Theme> = {
 
 export const activePoint: SxProps<Theme> = {
   backgroundColor: '#bbb9b9',
-  color: '#2e3440', // not applied
+};
+
+export const hideBlock: SxProps<Theme> = {
+  display: 'none',
+};
+
+export const showBlock: SxProps<Theme> = {
+  display: 'block',
 };

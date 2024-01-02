@@ -1,9 +1,17 @@
-import { Box, IconButton, Typography } from '@mui/material';
+import {
+  Box,
+  IconButton,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import {
   activePoint,
   flexColumnCenter,
+  hideBlock,
   schemaHeading,
   sectionHeading,
+  showBlock,
   wrapperDocsSection,
   wrapperNextDocsSection,
 } from './styles';
@@ -13,12 +21,17 @@ import { useState } from 'react';
 import styles from './styles.module.scss';
 import FieldsList from './FieldsList';
 import ArgsList from './ArgsList';
-import { DEFAULT_CURRENT_FIELD, DocsFiedsTypes } from './constants';
+import {
+  DEFAULT_CURRENT_FIELD,
+  DocsFiedsTypes,
+  ROOT_QUERY_TYPE,
+} from './constants';
 import { DocsSectionProps } from './Documentation.types';
 import { getFieldTypeName } from '../../utils/getFieldTypeName';
 
 const DocsSection: React.FC<DocsSectionProps> = ({ heading, types }) => {
   const [activeDocsLink, setActiveDocsLink] = useState('');
+  const [sectionIsOpen, setSectionIsOpen] = useState(true);
   const [currentFiled, setCurrentField] = useState<Field>(
     DEFAULT_CURRENT_FIELD
   );
@@ -28,17 +41,31 @@ const DocsSection: React.FC<DocsSectionProps> = ({ heading, types }) => {
     setCurrentFieldType(currentFieldType);
     setCurrentField(field);
     setActiveDocsLink(field.name);
+    setSectionIsOpen(false);
   };
 
   const queries = Object.values(types as Type[]).find(
-    (el) => el.name === 'Query'
+    (el) => el.name === ROOT_QUERY_TYPE
   );
   const fields = queries?.fields;
+
+  const theme = useTheme();
+  const isMobileView = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
     <Box sx={wrapperDocsSection}>
       {fields && (
-        <Box sx={wrapperNextDocsSection}>
+        <Box
+          sx={
+            isMobileView
+              ? Object.assign(
+                  {},
+                  wrapperNextDocsSection,
+                  sectionIsOpen ? showBlock : hideBlock
+                )
+              : wrapperNextDocsSection
+          }
+        >
           <Typography sx={sectionHeading} variant="h4">
             {heading}
           </Typography>
@@ -78,7 +105,17 @@ const DocsSection: React.FC<DocsSectionProps> = ({ heading, types }) => {
       )}
 
       {currentFiledType && (
-        <Box sx={flexColumnCenter}>
+        <Box
+          sx={
+            isMobileView
+              ? Object.assign(
+                  {},
+                  flexColumnCenter,
+                  sectionIsOpen ? hideBlock : showBlock
+                )
+              : flexColumnCenter
+          }
+        >
           <FieldsList
             currentFiledType={currentFiledType}
             currentFiled={currentFiled}

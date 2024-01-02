@@ -118,9 +118,9 @@
     "En": "Headers"
   },
 
-  "Schema": {
-    "Ru": "Схема",
-    "En": "Schema"
+  "DOCS": {
+    "Ru": "ДОКА",
+    "En": "DOCS"
   },
 
   "ARGUMENTS": {
@@ -151,5 +151,10 @@
   "Documentation": {
     "Ru": "ДОКУМЕНТАЦИЯ:",
     "En": "DOCUMENTATION:"
+  },
+
+  "Back_to_queries": {
+    "Ru": "В НАЧАЛО:",
+    "En": "BACK TO QUERIES:"
   }
 }

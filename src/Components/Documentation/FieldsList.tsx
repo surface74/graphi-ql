@@ -1,14 +1,23 @@
-import { Box, IconButton, Typography } from '@mui/material';
+import {
+  Box,
+  IconButton,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import {
   activePoint,
   exampleText,
   flexColumnCenter,
+  hideBlock,
   schemaHeading,
   sectionHeading,
   sectionSubHeading,
+  showBlock,
   wrapperDocsSection,
   wrapperNextDocsSection,
 } from './styles';
+import styles from './styles.module.scss';
 import { Field, Type } from '../../common-types/schema.types';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { useState } from 'react';
@@ -29,6 +38,7 @@ const FieldsList: React.FC<FieldsListProps> = ({
   types,
 }) => {
   const { language } = useDataContext();
+  const [sectionIsOpen, setSectionIsOpen] = useState(true);
   const [activeDocsLink, setActiveDocsLink] = useState('');
   const [currentNextFiled, setCurrentField] = useState<Field>(
     DEFAULT_CURRENT_FIELD
@@ -39,73 +49,97 @@ const FieldsList: React.FC<FieldsListProps> = ({
     setCurrentNextFieldType(currentNextFieldType);
     setCurrentField(field);
     setActiveDocsLink(field.name);
+    setSectionIsOpen(false);
   };
+
+  const theme = useTheme();
+  const isMobileView = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
     <Box sx={wrapperDocsSection}>
       {currentFiledType && (
-        <Box sx={flexColumnCenter}>
-          <Box sx={wrapperNextDocsSection}>
-            <Typography sx={sectionHeading} variant="h4">
-              {UIContent[DOCS_HEADERS.Type_details][language]}
-            </Typography>
+        <Box
+          sx={
+            isMobileView
+              ? Object.assign(
+                  {},
+                  wrapperNextDocsSection,
+                  sectionIsOpen ? showBlock : hideBlock
+                )
+              : wrapperNextDocsSection
+          }
+        >
+          <Typography sx={sectionHeading} variant="h4">
+            {UIContent[DOCS_HEADERS.Type_details][language]}
+          </Typography>
 
-            <Typography sx={sectionSubHeading}>
-              {currentFiled.description}
-            </Typography>
+          <Typography sx={sectionSubHeading}>
+            {currentFiled.description}
+          </Typography>
 
-            <Typography
-              variant="subtitle1"
-              sx={exampleText}
-            >{`type ${currentFiledType} {`}</Typography>
+          <Typography
+            variant="subtitle1"
+            sx={exampleText}
+          >{`type ${currentFiledType} {`}</Typography>
 
-            {Object.values(types as Type[]).map((type) => {
-              if (
-                type.name.startsWith('__') ||
-                type.kind !== DocsFiedsTypes.OBJECT.toString()
-              ) {
-                return null;
-              }
-              if (type.name === currentFiledType) {
-                return type.fields?.map((field: Field, k: number) => {
-                  const fieldType = getFieldTypeName(field);
+          {Object.values(types as Type[]).map((type) => {
+            if (
+              type.name.startsWith('__') ||
+              type.kind !== DocsFiedsTypes.OBJECT.toString()
+            ) {
+              return null;
+            }
+            if (type.name === currentFiledType) {
+              return type.fields?.map((field: Field, k: number) => {
+                const fieldType = getFieldTypeName(field);
 
-                  return (
-                    <Box
-                      key={k}
-                      sx={Object.assign(
-                        {},
-                        wrapperDocsSection,
-                        activeDocsLink === field.name && activePoint
-                      )}
-                      onClick={() => {
-                        if (typeof fieldType === 'string')
-                          handlerOpenTypes(field, fieldType);
-                      }}
-                    >
-                      <Typography sx={schemaHeading} variant="h4">
-                        {`${field.name}: ${
-                          typeof fieldType === 'string' ? fieldType : 'unknown'
-                        }`}
-                      </Typography>
+                return (
+                  <Box
+                    key={k}
+                    sx={Object.assign(
+                      {},
+                      wrapperDocsSection,
+                      activeDocsLink === field.name && activePoint
+                    )}
+                    className={`${styles.queryLine}`}
+                    onClick={() => {
+                      if (typeof fieldType === 'string')
+                        handlerOpenTypes(field, fieldType);
+                    }}
+                  >
+                    <Typography sx={schemaHeading} variant="h4">
+                      {`${field.name}: ${
+                        typeof fieldType === 'string' ? fieldType : 'unknown'
+                      }`}
+                    </Typography>
 
-                      {(field.args.length > 0 || fieldType) && (
-                        <IconButton>
-                          <KeyboardArrowRightIcon />
-                        </IconButton>
-                      )}
-                    </Box>
-                  );
-                });
-              }
-            })}
-            <Typography variant="subtitle1" sx={exampleText}>{`}`}</Typography>
-          </Box>
+                    {(field.args.length > 0 || fieldType) && (
+                      <IconButton>
+                        <KeyboardArrowRightIcon />
+                      </IconButton>
+                    )}
+                  </Box>
+                );
+              });
+            }
+          })}
+          <Typography variant="subtitle1" sx={exampleText}>{`}`}</Typography>
         </Box>
       )}
 
       {currentNextFiledType && (
-        <Box sx={flexColumnCenter}>
+        <Box
+          sx={
+            isMobileView
+              ? Object.assign(
+                  {},
+                  flexColumnCenter,
+                  sectionIsOpen ? hideBlock : showBlock
+                )
+              : flexColumnCenter
+          }
+        >
+          {/* <Box sx={flexColumnCenter}> */}
           <FieldsList
             currentFiledType={currentNextFiledType}
             currentFiled={currentNextFiled}
@@ -113,6 +147,7 @@ const FieldsList: React.FC<FieldsListProps> = ({
           />
 
           <ArgsList currentFiled={currentNextFiled} />
+          {/* </Box> */}
         </Box>
       )}
     </Box>
