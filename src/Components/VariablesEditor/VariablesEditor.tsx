@@ -17,6 +17,7 @@ const VariablesEditor: FC = () => {
 
   return (
     <CodeEditor
+      data-testid="variables-editor"
       extensions={[json(), linter(jsonParseLinter())]}
       readOnly={false}
       codeValue={variables}

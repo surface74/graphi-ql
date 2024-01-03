@@ -42,6 +42,8 @@ describe('WelcomePage', () => {
   it('renders without crashing', () => {
     const { getByTestId } = render(<WelcomePageTest />);
     expect(getByTestId('sign-in')).toBeInTheDocument();
+    expect(getByTestId('welcome-heading')).toBeInTheDocument();
+    expect(getByTestId('welcome-title')).toBeInTheDocument();
   });
 
   it('navigates to sign in page when sign in button is clicked', () => {

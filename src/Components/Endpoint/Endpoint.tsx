@@ -124,7 +124,12 @@ const Endpoint: React.FC = () => {
   ]);
 
   return (
-    <Box sx={wrapperBaseUrl} component="form" onSubmit={formik.handleSubmit}>
+    <Box
+      sx={wrapperBaseUrl}
+      component="form"
+      onSubmit={formik.handleSubmit}
+      data-testid="endpoint"
+    >
       <TextField
         sx={endpointField}
         margin="normal"
@@ -139,7 +144,12 @@ const Endpoint: React.FC = () => {
         helperText={formik.touched.baseUrl && formik.errors.baseUrl}
         autoFocus
       />
-      <Fab sx={submitButton} type="submit" disabled={!formik.isValid}>
+      <Fab
+        sx={submitButton}
+        type="submit"
+        disabled={!formik.isValid}
+        data-testid="submit-btn"
+      >
         <ReplayIcon />
       </Fab>
       {isLoadingSchema ? (
@@ -150,7 +160,7 @@ const Endpoint: React.FC = () => {
           onClick={handleDocsMenu}
           disabled={!formik.isValid || docsButtonDisabled}
         >
-          {UIContent.DOCS[language]}
+          {(UIContent.DOCS as { Ru: string; En: string })[language]}
         </Fab>
       )}
     </Box>
