@@ -22,6 +22,7 @@ import { ChangeOnScrollProps, HeaderProps } from './Header.types.ts';
 import Language from '../../enum/language.ts';
 import { useDataContext } from '../../DataContext/useDataContext.ts';
 import {
+  langMobileStyle,
   flexRowCenter,
   iconBtnStyle,
   langStyle,
@@ -172,12 +173,18 @@ const Header: React.FC<HeaderProps> = () => {
                   </MenuItem>
                 ))}
                 <MenuItem>
+                  <Typography sx={langMobileStyle}>
+                    {UIStrings.RuLanguage[language]}
+                  </Typography>
                   <Switch
                     checked={langChecked}
                     size="medium"
                     color="secondary"
                     onChange={changeLang}
                   />
+                  <Typography sx={langMobileStyle}>
+                    {UIStrings.EnLanguage[language]}
+                  </Typography>
                 </MenuItem>
               </Menu>
             </Box>

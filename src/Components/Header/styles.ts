@@ -95,3 +95,7 @@ export const langStyle: SxProps<Theme> = {
   color: theme.palette.text.primary,
   textAlign: 'center',
 };
+export const langMobileStyle: SxProps<Theme> = {
+  color: '#000000',
+  textAlign: 'center',
+};

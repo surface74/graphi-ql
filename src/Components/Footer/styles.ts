@@ -8,10 +8,10 @@ export const wrapperAppBar: SxProps<Theme> = {
 export const wrapperFooterBox: SxProps<Theme> = {
   display: 'flex',
   flexDirection: 'row',
-  gap: 2,
+  gap: 10,
   justifyContent: 'center',
   alignItems: 'center',
-  p: 1,
+  p: 10,
 };
 
 export const githubIcon: SxProps<Theme> = {
