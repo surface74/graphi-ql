@@ -36,20 +36,6 @@ test('renders CodeEditor component', () => {
   expect(editorElement).toBeInTheDocument();
 });
 
-// test('CodeEditor is read-only when readOnly prop is true', () => {
-//   const mockOnChange = vi.fn();
-//   render(
-//     <CodeEditor
-//       readOnly={false}
-//       onChange={mockOnChange}
-//       codeValue="Test code"
-//     />
-//   );
-
-//   const textarea = screen.getByTestId('code-editor');
-//   expect(textarea).toBeDisabled();
-// });
-
 test('onChange is called when CodeEditor content changes', () => {
   const mockOnChange = vi.fn();
   render(
