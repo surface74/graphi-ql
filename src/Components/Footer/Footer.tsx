@@ -17,7 +17,7 @@ const Footer: React.FC = () => {
       <AppBar position="static" sx={wrapperAppBar}>
         <Container maxWidth="xl" fixed>
           <Box sx={wrapperFooterBox}>
-            <Link href="https://rs.school/react/">
+            <Link href="https://rs.school/react/" data-testid="rs-link">
               <Icon sx={{ width: 80, height: 80 }}>
                 <img
                   alt="Rolling Scopes School Logo"
@@ -27,7 +27,10 @@ const Footer: React.FC = () => {
               </Icon>
             </Link>
             <Typography sx={yearTitle}>Up&GoTeam {actualYear}&copy;</Typography>
-            <Link href="https://github.com/MakaevaElena/graphiql-app">
+            <Link
+              href="https://github.com/MakaevaElena/graphiql-app"
+              data-testid="github-link"
+            >
               <GitHubIcon sx={githubIcon} />
             </Link>
           </Box>

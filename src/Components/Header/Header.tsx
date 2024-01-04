@@ -119,7 +119,12 @@ const Header: React.FC<HeaderProps> = () => {
           <Toolbar disableGutters>
             <AdbIcon sx={logoIcon} />
 
-            <Typography variant="h6" noWrap sx={logoTitle}>
+            <Typography
+              data-testid="main-heading"
+              variant="h6"
+              noWrap
+              sx={logoTitle}
+            >
               GraphiQL
             </Typography>
 
@@ -237,7 +242,11 @@ const Header: React.FC<HeaderProps> = () => {
                 </Typography>
               </Box>
 
-              <IconButton sx={iconBtnStyle} onClick={handleClickAuth}>
+              <IconButton
+                sx={iconBtnStyle}
+                onClick={handleClickAuth}
+                data-testid="auth-btn"
+              >
                 <AuthIcon sx={loginIcon} />
               </IconButton>
 
