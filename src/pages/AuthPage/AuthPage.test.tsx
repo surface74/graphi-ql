@@ -38,16 +38,23 @@ const TestComponent: FC<ITestCOmponentProps> = ({ startLanguage, action }) => {
 };
 
 describe('AuthPage', () => {
-  test('renders correct components for LogIn', () => {
-    render(
-      <TestComponent
-        startLanguage={Language.En}
-        action={AuthActionType.LOGIN}
-      />
-    );
+  test('renders correct components for LogIn in locale En', () => {
+    const language = Language.En;
+    const authType = AuthActionType.LOGIN;
+    render(<TestComponent startLanguage={language} action={authType} />);
 
     const title = screen.getByRole('heading', {
-      name: UIStrings.SignInPageTitle[Language.En],
+      name: UIStrings.SignInPageTitle[language],
+    });
+    expect(title).toBeInTheDocument();
+  });
+  test('renders correct components for LogIn in locale Ru', () => {
+    const language = Language.Ru;
+    const authType = AuthActionType.SIGNUP;
+    render(<TestComponent startLanguage={language} action={authType} />);
+
+    const title = screen.getByRole('heading', {
+      name: UIStrings.SignUpPageTitle[language],
     });
     expect(title).toBeInTheDocument();
   });
