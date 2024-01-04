@@ -8,6 +8,8 @@ import { Provider } from 'react-redux';
 import { AuthActionType } from './AuthPage.types';
 import AuthPage from './AuthPage';
 import UIStrings from '../../assets/UIStrings.json';
+import userEvent from '@testing-library/user-event';
+import errorMessages from '../../assets/errorMessages.json';
 
 interface ITestCOmponentProps {
   startLanguage: Language;
@@ -38,7 +40,7 @@ const TestComponent: FC<ITestCOmponentProps> = ({ startLanguage, action }) => {
 };
 
 describe('AuthPage', () => {
-  test('renders correct components for LogIn in locale En', () => {
+  test('renders correct components for LogIn in locale En', async () => {
     const language = Language.En;
     const authType = AuthActionType.LOGIN;
     render(<TestComponent startLanguage={language} action={authType} />);
@@ -47,6 +49,17 @@ describe('AuthPage', () => {
       name: UIStrings.SignInPageTitle[language],
     });
     expect(title).toBeInTheDocument();
+
+    const submit = screen.getByRole('button', {
+      name: UIStrings.ButtonOk[language],
+    });
+    expect(submit).toBeInTheDocument();
+
+    await userEvent.click(submit);
+    const errorEmail = await screen.findByText(
+      errorMessages.CHECK_EMAIL_REQUIRED[language]
+    );
+    expect(errorEmail).toBeInTheDocument();
   });
   test('renders correct components for LogIn in locale Ru', () => {
     const language = Language.Ru;
