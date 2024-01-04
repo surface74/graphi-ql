@@ -10,11 +10,10 @@ import UIStrings from '../../assets/UIStrings.json';
 import { useFormik } from 'formik';
 
 import { useDataContext } from '../../DataContext/useDataContext';
-import { IconButton } from '@mui/material';
+import { IconButton, TextField } from '@mui/material';
 import { pageName } from '../../common-types/common-types';
 import { getSchema } from '../../yup/schema';
 import { IAuthFormProps } from './AuthForm.types';
-import AuthFormTextField from './AuthFormTextField';
 import { useNavigate } from 'react-router-dom';
 import { AuthActionType } from '../../pages/AuthPage/AuthPage.types';
 
@@ -72,7 +71,7 @@ const AuthForm: FC<IAuthFormProps> = ({ title, onSubmitForm, type }) => {
           noValidate
           sx={{ mt: 1 }}
         >
-          <AuthFormTextField
+          <TextField
             fullWidth
             id="email"
             name="email"
@@ -86,7 +85,7 @@ const AuthForm: FC<IAuthFormProps> = ({ title, onSubmitForm, type }) => {
             error={formik.touched.email && Boolean(formik.errors.email)}
             helperText={formik.touched.email && formik.errors.email}
           />
-          <AuthFormTextField
+          <TextField
             fullWidth
             id="password"
             name="password"

@@ -32,6 +32,9 @@ theme = createTheme(theme, {
           paddingRight: '1rem',
           background: theme.palette.background.default,
         },
+        root: {
+          color: '#E0E3E7',
+        },
       },
     },
     MuiFormHelperText: {
