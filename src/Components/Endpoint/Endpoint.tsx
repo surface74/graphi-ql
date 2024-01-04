@@ -76,13 +76,6 @@ const Endpoint: React.FC = () => {
     dispatch(setDocsIsOpen(false));
     setUrlInputValue(event.target.value);
     dispatch(setBaseUrl(''));
-
-    // if (baseUrl.length > 0)
-    //   trigger(baseUrl).catch((error: Error) =>
-    //     enqueueSnackbar(error.message, {
-    //       variant: 'error',
-    //     })
-    //   );
   };
 
   useEffect(() => {
@@ -139,7 +132,12 @@ const Endpoint: React.FC = () => {
         helperText={formik.touched.baseUrl && formik.errors.baseUrl}
         autoFocus
       />
-      <Fab sx={submitButton} type="submit" disabled={!formik.isValid}>
+      <Fab
+        sx={submitButton}
+        type="submit"
+        disabled={!formik.isValid}
+        role="submitButton"
+      >
         <ReplayIcon />
       </Fab>
       {isLoadingSchema ? (

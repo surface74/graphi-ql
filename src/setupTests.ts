@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom';
 import { createRoot } from 'react-dom/client';
+import { vi } from 'vitest';
 
 let container: Element | null;
 beforeEach(() => {
@@ -14,4 +15,6 @@ afterEach(() => {
     container.remove();
     container = null;
   }
+
+  vi.clearAllMocks();
 });
