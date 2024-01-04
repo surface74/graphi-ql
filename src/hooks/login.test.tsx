@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { vi } from 'vitest';
 import { ICallback, useLogin } from './login';
 import { DataContextProvider } from '../DataContext/DataContextProvider';
@@ -10,7 +10,7 @@ interface ITestComponentProps {
 }
 
 const TestComponent: FC<ITestComponentProps> = ({ fn }) => {
-  const [login] = useLogin(fn);
+  const [login, , errorMessage] = useLogin(fn);
 
   useEffect(() => {
     const callLogin = async () => {
@@ -19,7 +19,7 @@ const TestComponent: FC<ITestComponentProps> = ({ fn }) => {
     callLogin().catch(() => {});
   }, [login]);
 
-  return null;
+  return <h1>{errorMessage}</h1>;
 };
 
 interface IWrapperComponentProps {
@@ -45,7 +45,7 @@ const WrapperComponent: FC<IWrapperComponentProps> = ({ children }) => {
 };
 
 describe('Hook useLogin()', () => {
-  test('calling hooked method', () => {
+  test('call hooked method', () => {
     const fakeFetch: ICallback = () => {
       return Promise.resolve();
     };
@@ -59,5 +59,24 @@ describe('Hook useLogin()', () => {
     );
 
     expect(fn).toHaveBeenCalled();
+  });
+
+  test('call hooked method throw error', () => {
+    const ERROR_TEXT = 'Boom!';
+    const fakeFetch: ICallback = () => {
+      throw new Error(ERROR_TEXT);
+      return Promise.resolve();
+    };
+
+    const fn = vi.fn(fakeFetch);
+
+    render(
+      <WrapperComponent>
+        <TestComponent fn={fn} />
+      </WrapperComponent>
+    );
+
+    const error = screen.getByRole('heading', { name: ERROR_TEXT });
+    expect(error).toBeInTheDocument();
   });
 });
