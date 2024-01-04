@@ -76,13 +76,6 @@ const Endpoint: React.FC = () => {
     dispatch(setDocsIsOpen(false));
     setUrlInputValue(event.target.value);
     dispatch(setBaseUrl(''));
-
-    // if (baseUrl.length > 0)
-    //   trigger(baseUrl).catch((error: Error) =>
-    //     enqueueSnackbar(error.message, {
-    //       variant: 'error',
-    //     })
-    //   );
   };
 
   useEffect(() => {
@@ -149,6 +142,7 @@ const Endpoint: React.FC = () => {
         type="submit"
         disabled={!formik.isValid}
         data-testid="submit-btn"
+        role="submitButton"
       >
         <ReplayIcon />
       </Fab>

@@ -4,7 +4,7 @@ import { useSnackbar } from 'notistack';
 import ErrorMessage from '../assets/errorMessages.json';
 import { useDataContext } from '../DataContext/useDataContext';
 
-type ICallback = (email: string, password: string) => Promise<void>;
+export type ICallback = (email: string, password: string) => Promise<void>;
 
 export const useLogin = (callback: ICallback): [ICallback, boolean, string] => {
   const { language } = useDataContext();
