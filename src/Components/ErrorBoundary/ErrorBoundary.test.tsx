@@ -6,15 +6,17 @@ import errorMessages from '../../assets/errorMessages.json';
 describe('ErrorBoundler: ', () => {
   test('- test error message render', () => {
     const ThrowError = () => {
-      throw new Error('test');
+      throw new Error();
     };
 
     render(
-      <ErrorBoundary>
+      <ErrorBoundary fallback={<h1>{errorMessages.ERROR_MESSAGE.En}</h1>}>
         <ThrowError />
       </ErrorBoundary>
     );
 
-    expect(screen.getByText(errorMessages.ERROR_MESSAGE.En)).toBeDefined();
+    expect(
+      screen.getByRole('heading', { name: errorMessages.ERROR_MESSAGE.En })
+    ).toBeDefined();
   });
 });

@@ -1,8 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { ApiRequest } from '../common-types/schema.types';
 import INTROSPECION_QUERY from '../Components/Endpoint/Introspection';
-import { IRequestData } from '../common-types/request-data';
-import { IRequestHeaders } from './rtk-api.types';
+import { IRequestHeaders, IRequestData } from './rtk-api.types';
 
 export const rtkqApi = createApi({
   reducerPath: 'graphiQl',
