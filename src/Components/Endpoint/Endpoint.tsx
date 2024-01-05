@@ -117,7 +117,12 @@ const Endpoint: React.FC = () => {
   ]);
 
   return (
-    <Box sx={wrapperBaseUrl} component="form" onSubmit={formik.handleSubmit}>
+    <Box
+      sx={wrapperBaseUrl}
+      component="form"
+      onSubmit={formik.handleSubmit}
+      data-testid="endpoint"
+    >
       <TextField
         sx={endpointField}
         margin="normal"
@@ -136,6 +141,7 @@ const Endpoint: React.FC = () => {
         sx={submitButton}
         type="submit"
         disabled={!formik.isValid}
+        data-testid="submit-btn"
         role="submitButton"
       >
         <ReplayIcon />

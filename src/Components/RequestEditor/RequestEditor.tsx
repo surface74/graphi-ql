@@ -35,7 +35,7 @@ const RequestEditor: FC = () => {
   }
 
   return (
-    <Box sx={sectionContainer} width="100%">
+    <Box sx={sectionContainer} width="100%" data-testid="request-editor">
       <CodeEditor readOnly={false} codeValue={codeValue} onChange={onChange} />
       <Box sx={btnsWrapper}>
         <CustomIconButton

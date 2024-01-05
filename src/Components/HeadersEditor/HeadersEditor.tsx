@@ -17,6 +17,7 @@ const HeadersEditor: FC = () => {
 
   return (
     <CodeEditor
+      data-testid="headers-editor"
       extensions={[json(), linter(jsonParseLinter())]}
       readOnly={false}
       codeValue={headers}
