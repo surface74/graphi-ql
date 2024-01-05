@@ -20,7 +20,7 @@ function formatGraphQLQuery(queryString: string) {
 
   let depth = 0;
   const formattedLines = lines.map((line, i, arr) => {
-    const trimmedLine = line.trim();
+    const trimmedLine = line.trim().replace(/\n\)/g, ')').replace(/\n\(/g, '(');
     if (trimmedLine === '{') {
       depth += 2;
       return ' {\n' + ' '.repeat(depth);
