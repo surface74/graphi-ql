@@ -17,6 +17,7 @@ export default defineConfig(() => ({
     coverage: {
       provider: 'v8',
       all: true,
+      exclude: ['**/*.types.*', '**/*.d.ts'],
     },
   },
   resolve: {
