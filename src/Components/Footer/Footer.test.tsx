@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 import Footer from './Footer';
 
 describe('Footer', () => {
-  it('renders without crashing', () => {
+  it('render correctly', () => {
     const { getByText } = render(<Footer />);
     const currentYear = new Date().getFullYear();
     expect(getByText(`Up&GoTeam ${currentYear}©`)).toBeInTheDocument();
