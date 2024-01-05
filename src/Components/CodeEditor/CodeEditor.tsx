@@ -21,7 +21,7 @@ const CodeEditor = ({
   minHeight,
 }: CodeEditorProps) => {
   return (
-    <Box sx={wrappwerTextEditor} id="editor">
+    <Box sx={wrappwerTextEditor} id="editor" data-testid="code-editor-box">
       <CodeMirror
         readOnly={readOnly}
         extensions={

@@ -79,7 +79,10 @@ const ResponseSection: React.FC = () => {
 
   return (
     <>
-      <Box sx={isMobileView ? buttonWrapperMobile : buttonWrapper}>
+      <Box
+        sx={isMobileView ? buttonWrapperMobile : buttonWrapper}
+        data-testid="response-section"
+      >
         <CustomIconButton
           sx={runBtn}
           onClick={getData}

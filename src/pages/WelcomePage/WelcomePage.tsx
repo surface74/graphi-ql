@@ -51,12 +51,16 @@ const WelcomePage: React.FC = () => {
   }
   return (
     <Container maxWidth="xl" sx={mainWrapper}>
-      <Typography variant="h4" sx={welcomeHeading}>
+      <Typography
+        data-testid="welcome-heading"
+        variant="h4"
+        sx={welcomeHeading}
+      >
         {UIContent.WelcomeHeading[language]}
       </Typography>
 
       <Box sx={wrapperAuth}>
-        <Typography variant="h5" sx={welcomeTitle}>
+        <Typography data-testid="welcome-title" variant="h5" sx={welcomeTitle}>
           {!isLogin
             ? UIContent.WelcomeTextNotAuth[language]
             : UIContent.WelcomeTextAuth[language]}
@@ -90,7 +94,7 @@ const WelcomePage: React.FC = () => {
         </Typography>
 
         {devCardsContent.map((dev, i) => (
-          <DevCard key={i} props={dev[language]} />
+          <DevCard data-testid="dev-card" key={i} props={dev[language]} />
         ))}
 
         <Link href="https://rs.school/react/">
