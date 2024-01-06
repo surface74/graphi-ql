@@ -7,57 +7,63 @@ export const rtkqApi = createApi({
   reducerPath: 'graphiQl',
   baseQuery: fetchBaseQuery(),
   endpoints: (builder) => ({
-    fetchSchema: builder.query<ApiRequest, string>({
-      query: (baseUrl) => ({
-        url: `${baseUrl}`,
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json',
-        },
-        body: {
-          operationName: 'IntrospectionQuery',
-          query: INTROSPECION_QUERY,
-          headers: {
-            'Content-type': 'application/json',
-          },
-        },
-      }),
-    }),
+    fetchSchema: builder.query<ApiRequest, IRequestData>({
+      query: ({ baseUrl, proxy }) => {
+        if (!proxy) {
+          return {
+            url: `${baseUrl}`,
+            method: 'POST',
+            headers: {
+              'Content-type': 'application/json',
+            },
+            body: {
+              operationName: 'IntrospectionQuery',
+              query: INTROSPECION_QUERY,
+            },
+          };
+        }
 
-    mutateGrathQl: builder.mutation<
-      ApiRequest,
-      { baseUrl: string; queryString: string }
-    >({
-      query: ({ baseUrl, queryString }) => ({
-        url: `${baseUrl}`,
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json',
-        },
-        body: queryString,
-      }),
+        return {
+          url: import.meta.env.VITE_PROXY,
+          method: 'POST',
+          body: {
+            endpoint: baseUrl,
+            operationName: 'IntrospectionQuery',
+            query: INTROSPECION_QUERY,
+          },
+        };
+      },
     }),
 
     fetchGrathQl: builder.query<ApiRequest, IRequestData>({
-      query: ({ baseUrl, query, variables, requestHeaders }) => {
-        const parsedHeaders = JSON.parse(
-          requestHeaders || '{}'
-        ) as IRequestHeaders;
+      query: ({ baseUrl, query, variables, requestHeaders, proxy }) => {
+        if (!proxy) {
+          const parsedHeaders = JSON.parse(
+            requestHeaders || '{}'
+          ) as IRequestHeaders;
 
-        const headers = {
-          'Content-Type': 'application/json',
-          ...parsedHeaders,
-        };
+          const headers = {
+            'Content-Type': 'application/json',
+            ...parsedHeaders,
+          };
+          console.log('headers: ', headers);
 
-        const parsedVariables = JSON.parse(
-          variables || '{}'
-        ) as IRequestHeaders;
+          const parsedVariables = JSON.parse(
+            variables || '{}'
+          ) as IRequestHeaders;
+
+          return {
+            url: `${baseUrl}`,
+            method: 'POST',
+            headers,
+            body: { query, variables: parsedVariables },
+          };
+        }
 
         return {
-          url: `${baseUrl}`,
+          url: import.meta.env.VITE_PROXY,
           method: 'POST',
-          headers,
-          body: { query, variables: parsedVariables, headers },
+          body: { endpoint: baseUrl, query, variables, requestHeaders },
         };
       },
     }),

@@ -67,7 +67,6 @@ const EditorPage: React.FC = () => {
         </Box>
         <Box sx={wrapperDocumentation}>
           {docsIsOpen && (
-            // todo вместе с useLazyFetchSchemaQuery перестал работать Suspense
             <Suspense fallback={<CircularProgress color="inherit" />}>
               <Documentation />
             </Suspense>

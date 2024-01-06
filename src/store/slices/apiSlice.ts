@@ -6,6 +6,7 @@ const initialState: ApiState = {
   baseUrl: Storage.recallEndpoint() || '',
   errorMessage: '',
   isSchema: false,
+  isProxy: false,
 };
 
 const ApiSlice = createSlice({
@@ -18,8 +19,11 @@ const ApiSlice = createSlice({
     hasSchema: (state, action: PayloadAction<boolean>) => {
       state.isSchema = action.payload;
     },
+    isProxyUsed: (state, action: PayloadAction<boolean>) => {
+      state.isProxy = action.payload;
+    },
   },
 });
 
-export const { setBaseUrl, hasSchema } = ApiSlice.actions;
+export const { setBaseUrl, hasSchema, isProxyUsed } = ApiSlice.actions;
 export default ApiSlice.reducer;

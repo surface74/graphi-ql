@@ -1,12 +1,23 @@
 import * as React from 'react';
-import { Box, CircularProgress, Fab, TextField } from '@mui/material';
+import {
+  Box,
+  Checkbox,
+  CircularProgress,
+  Fab,
+  FormControlLabel,
+  TextField,
+} from '@mui/material';
 import {
   endpointField,
   openDocsButton,
   submitButton,
   wrapperBaseUrl,
 } from './styles';
-import { hasSchema, setBaseUrl } from '../../store/slices/apiSlice';
+import {
+  hasSchema,
+  isProxyUsed,
+  setBaseUrl,
+} from '../../store/slices/apiSlice';
 import { useDispatch } from 'react-redux';
 import { useLazyFetchSchemaQuery } from '../../api/rtk-api';
 import ReplayIcon from '@mui/icons-material/Replay';
@@ -22,7 +33,8 @@ import Storage from '../../utils/Storage/Storage';
 import { parseQueryError } from '../../utils/parse-query-error';
 
 const Endpoint: React.FC = () => {
-  const { baseUrl } = useAppSelector((store) => store.ApiData);
+  const { baseUrl, isProxy } = useAppSelector((store) => store.ApiData);
+  const [useProxy, setUseProxy] = useState(isProxy);
   const [urlInputValue, setUrlInputValue] = useState(baseUrl);
   const [docsButtonDisabled, setDocsButtonDisabled] = useState(true);
   const [trigger, result] = useLazyFetchSchemaQuery();
@@ -37,6 +49,11 @@ const Endpoint: React.FC = () => {
   const { enqueueSnackbar } = useSnackbar();
   const baseUrlSchemaValidation = endpointSchema(language);
 
+  const handleUseProxy = () => {
+    setUseProxy(!useProxy);
+    dispatch(isProxyUsed(!useProxy));
+  };
+
   const formik = useFormik({
     initialValues: {
       baseUrl: baseUrl || '',
@@ -44,7 +61,7 @@ const Endpoint: React.FC = () => {
     validationSchema: baseUrlSchemaValidation,
     onSubmit: async ({ baseUrl }) => {
       handleSubmit();
-      await trigger(baseUrl);
+      await trigger({ baseUrl, proxy: isProxy });
     },
     validateOnChange: true,
   });
@@ -128,6 +145,11 @@ const Endpoint: React.FC = () => {
           {UIContent.DOCS[language]}
         </Fab>
       )}
+
+      <FormControlLabel
+        label={UIContent.UseProxy[language]}
+        control={<Checkbox checked={useProxy} onChange={handleUseProxy} />}
+      />
     </Box>
   );
 };
