@@ -18,19 +18,8 @@ import { useSnackbar } from 'notistack';
 import { useFormik } from 'formik';
 import { endpointSchema } from '../../yup/endpointSchema';
 import { useEffect, useState } from 'react';
-import ErrorMessages from '../../assets/errorMessages.json';
 import Storage from '../../utils/Storage/Storage';
-import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
-import { SerializedError } from '@reduxjs/toolkit';
-
-// const endpoints = [
-//   'https://graphql-pokemon2.vercel.app/',
-//   'https://graphqlzero.almansi.me/api/',
-//   'https://rickandmortyapi.com/graphql/',
-//   'https://www.universe.com/graphiql',
-//   'https://api.catalysis-hub.org/graphql',
-//   'https://countries.trevorblades.com/',
-// ];
+import { parseQueryError } from '../../utils/parse-query-error';
 
 const Endpoint: React.FC = () => {
   const { baseUrl } = useAppSelector((store) => store.ApiData);
@@ -54,14 +43,13 @@ const Endpoint: React.FC = () => {
     },
     validationSchema: baseUrlSchemaValidation,
     onSubmit: async ({ baseUrl }) => {
-      handleSubmit(baseUrl);
+      handleSubmit();
       await trigger(baseUrl);
     },
     validateOnChange: true,
   });
 
-  const handleSubmit = (baseUrl: string) => {
-    dispatch(setBaseUrl(baseUrl));
+  const handleSubmit = () => {
     dispatch(setDocsIsOpen(false));
   };
 
@@ -77,38 +65,26 @@ const Endpoint: React.FC = () => {
     dispatch(setDocsIsOpen(false));
     setUrlInputValue(event.target.value);
     dispatch(setBaseUrl(event.target.value));
+    setDocsButtonDisabled(true);
   };
 
   useEffect(() => {
-    const { isError, error, isLoading, isFetching } = result;
+    setDocsButtonDisabled(true);
+  }, []);
+
+  useEffect(() => {
+    const { data, isError, error, isLoading, isFetching } = result;
 
     if (isError) {
-      if (Object.hasOwn(error, 'status')) {
-        const status = (error as FetchBaseQueryError).status;
-        const errorMessage =
-          typeof status === 'number'
-            ? `${ErrorMessages.HTTP_STATUS_CODE[language]}: ${status}`
-            : `${ErrorMessages.ERROR_FETCH_DATA[language]}: ${status}`;
-
-        enqueueSnackbar(errorMessage, {
-          variant: 'error',
-        });
-      } else {
-        const serializedError = error as SerializedError;
-        console.log('serializedError: ', serializedError);
-        const status = `${serializedError?.code}: ${serializedError?.message}`;
-        enqueueSnackbar(
-          `${ErrorMessages.ERROR_FETCH_DATA[language]}: ${status}`,
-          {
-            variant: 'error',
-          }
-        );
-      }
+      const errorMessage = parseQueryError(error, language);
+      enqueueSnackbar(errorMessage, {
+        variant: 'error',
+      });
     }
 
-    const isButtonDisabled = isError || isFetching || isLoading;
+    const isButtonDisabled = !!!data || isError || isFetching || isLoading;
     setDocsButtonDisabled(isButtonDisabled);
-    dispatch(hasSchema(!docsButtonDisabled));
+    dispatch(hasSchema(!isButtonDisabled));
     dispatch(setIsLoadingSchema(isLoading || isFetching));
   }, [dispatch, enqueueSnackbar, language, result, docsButtonDisabled]);
 
@@ -136,7 +112,6 @@ const Endpoint: React.FC = () => {
       <Fab
         sx={submitButton}
         type="submit"
-        disabled={!formik.isValid}
         data-testid="submit-btn"
         role="submitButton"
       >
@@ -148,7 +123,7 @@ const Endpoint: React.FC = () => {
         <Fab
           sx={openDocsButton}
           onClick={handleDocsMenu}
-          disabled={!formik.isValid || docsButtonDisabled}
+          disabled={docsButtonDisabled}
         >
           {UIContent.DOCS[language]}
         </Fab>
