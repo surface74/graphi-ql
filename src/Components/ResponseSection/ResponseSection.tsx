@@ -15,8 +15,9 @@ import { useDataContext } from '../../DataContext/useDataContext';
 import FetchingStatus from '../../common-types/fetching-status';
 import ErrorMessages from '../../assets/errorMessages.json';
 import UIStrings from '../../assets/UIStrings.json';
-import { ErrorResponse } from '../../common-types/error-types';
 import CustomIconButton from '../CustomIconButton/CustomIconButton';
+import { SerializedError } from '@reduxjs/toolkit';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 
 const ResponseSection: React.FC = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -35,41 +36,65 @@ const ResponseSection: React.FC = () => {
 
   useEffect(() => {
     const { data, status, isError, error } = result;
+
     if (isError) {
-      const errorMessage =
-        (error as ErrorResponse)?.data?.errors[0]?.message ||
-        `${ErrorMessages.ERROR_FETCH_DATA[language]}: ${
-          (error as ErrorResponse).status
-        }`;
-      enqueueSnackbar(`${errorMessage}`, {
-        variant: 'error',
-      });
-      setResponseValue(`${errorMessage}`);
+      if (Object.hasOwn(error, 'status')) {
+        const status = (error as FetchBaseQueryError).status;
+        const errorMessage =
+          typeof status === 'number'
+            ? `${ErrorMessages.HTTP_STATUS_CODE[language]}: ${status}`
+            : `${ErrorMessages.ERROR_FETCH_DATA[language]}: ${status}`;
+
+        enqueueSnackbar(errorMessage, {
+          variant: 'error',
+        });
+        setResponseValue(`${errorMessage}`);
+      } else {
+        const serializedError = error as SerializedError;
+        const status = `${serializedError?.code}: ${serializedError?.message}`;
+        const errorMessage = `${ErrorMessages.ERROR_FETCH_DATA[language]}: ${status}`;
+        enqueueSnackbar(errorMessage, {
+          variant: 'error',
+        });
+        setResponseValue(`${errorMessage}`);
+      }
     } else if (status.toString() === FetchingStatus.FULFILLED) {
       setResponseValue(JSON.stringify(data, null, 2));
     }
   }, [result, language, enqueueSnackbar]);
 
   const getData = async () => {
-    if (isHeadersValid(headers)) {
-      await trigger({
-        baseUrl: baseUrl.baseUrl,
-        query,
-        variables,
-        requestHeaders: headers,
-      });
-    } else {
-      setResponseValue(ErrorMessages.ERROR_FETCH_DATA[language]);
+    if (!baseUrl.baseUrl) {
+      setResponseValue(ErrorMessages.CHECK_BASE_URL_REQUIRED[language]);
+      return;
     }
+    if (!isStringValidJSON(headers, UIStrings.Headers[language])) {
+      setResponseValue(ErrorMessages.CHECK_HEADERS_FORMAT[language]);
+      return;
+    }
+    if (!isStringValidJSON(variables, UIStrings.Variables[language])) {
+      setResponseValue(ErrorMessages.CHECK_VARIABLES_FORMAT[language]);
+      return;
+    }
+
+    await trigger({
+      baseUrl: baseUrl.baseUrl,
+      query,
+      variables,
+      requestHeaders: headers,
+    });
   };
 
-  const isHeadersValid = (headersString: string) => {
+  const isStringValidJSON = (
+    checkedString: string,
+    errorMessage: string
+  ): boolean => {
     try {
-      JSON.parse(headersString || '{}');
+      JSON.parse(checkedString || '{}');
       return true;
     } catch (error) {
       if (error instanceof Error) {
-        enqueueSnackbar(`${UIStrings.Headers[language]}: ${error.message}`, {
+        enqueueSnackbar(`${errorMessage}: ${error.message}`, {
           variant: 'error',
         });
       }

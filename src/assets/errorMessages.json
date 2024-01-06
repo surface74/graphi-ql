@@ -39,7 +39,6 @@
     "Ru": "почтовый адрес должен быть в формате xxx@xx.xx",
     "En": "email format need to be xxx@xx.xx"
   },
-
   "CHECK_BASE_URL_FORMAT": {
     "Ru": "Адрес API должен быть в формате http://host:port/endpoint/",
     "En": "BASE URL format need to be http://host:port/endpoint/"
@@ -70,7 +69,7 @@
   },
 
   "CHECK_BASE_URL_REQUIRED": {
-    "Ru": "введите адрес API",
+    "Ru": "Укажите адрес API",
     "En": "API URL is required"
   },
 
@@ -91,5 +90,20 @@
   "NO_ERROR_MESSAGE": {
     "Ru": "",
     "En": ""
+  },
+
+  "CHECK_HEADERS_FORMAT": {
+    "Ru": "Неверный формат заголовков",
+    "En": "Wrong format of headers"
+  },
+
+  "CHECK_VARIABLES_FORMAT": {
+    "Ru": "Неверный формат переменных",
+    "En": "Wrong format of variables"
+  },
+
+  "HTTP_STATUS_CODE": {
+    "Ru": "Код состояния HTTP",
+    "En": "HTTP status code"
   }
 }

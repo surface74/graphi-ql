@@ -19,8 +19,9 @@ import { useFormik } from 'formik';
 import { endpointSchema } from '../../yup/endpointSchema';
 import { useEffect, useState } from 'react';
 import ErrorMessages from '../../assets/errorMessages.json';
-import { ErrorResponse, ErrorFetch } from '../../common-types/error-types';
 import Storage from '../../utils/Storage/Storage';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
+import { SerializedError } from '@reduxjs/toolkit';
 
 // const endpoints = [
 //   'https://graphql-pokemon2.vercel.app/',
@@ -75,46 +76,40 @@ const Endpoint: React.FC = () => {
     formik.handleChange(event);
     dispatch(setDocsIsOpen(false));
     setUrlInputValue(event.target.value);
-    dispatch(setBaseUrl(''));
+    dispatch(setBaseUrl(event.target.value));
   };
 
   useEffect(() => {
-    const { data, isError, error, isLoading, isFetching } = result;
+    const { isError, error, isLoading, isFetching } = result;
 
     if (isError) {
       if (Object.hasOwn(error, 'status')) {
-        if ((error as ErrorResponse).status === 404) {
-          enqueueSnackbar(ErrorMessages.ERROR_404[language], {
+        const status = (error as FetchBaseQueryError).status;
+        const errorMessage =
+          typeof status === 'number'
+            ? `${ErrorMessages.HTTP_STATUS_CODE[language]}: ${status}`
+            : `${ErrorMessages.ERROR_FETCH_DATA[language]}: ${status}`;
+
+        enqueueSnackbar(errorMessage, {
+          variant: 'error',
+        });
+      } else {
+        const serializedError = error as SerializedError;
+        const status = `${serializedError?.code}: ${serializedError?.message}`;
+        enqueueSnackbar(
+          `${ErrorMessages.ERROR_FETCH_DATA[language]}: ${status}`,
+          {
             variant: 'error',
-          });
-        }
-        if ((error as ErrorFetch).status === 'FETCH_ERROR') {
-          enqueueSnackbar(ErrorMessages.ACCSESS_DENIED[language], {
-            variant: 'error',
-          });
-        } else {
-          enqueueSnackbar((error as ErrorFetch).error, {
-            variant: 'error',
-          });
-        }
+          }
+        );
       }
     }
 
-    const isButtonDisabled =
-      !!!data || isError || !!error || !baseUrl || isFetching || isLoading;
+    const isButtonDisabled = isError || isFetching || isLoading;
     setDocsButtonDisabled(isButtonDisabled);
     dispatch(hasSchema(!docsButtonDisabled));
     dispatch(setIsLoadingSchema(isLoading || isFetching));
-  }, [
-    dispatch,
-    enqueueSnackbar,
-    language,
-    result.data,
-    result,
-    baseUrl,
-    result.isLoading,
-    docsButtonDisabled,
-  ]);
+  }, [dispatch, enqueueSnackbar, language, result, docsButtonDisabled]);
 
   return (
     <Box

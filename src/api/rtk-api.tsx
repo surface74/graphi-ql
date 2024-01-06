@@ -17,6 +17,9 @@ export const rtkqApi = createApi({
         body: {
           operationName: 'IntrospectionQuery',
           query: INTROSPECION_QUERY,
+          headers: {
+            'Content-type': 'application/json',
+          },
         },
       }),
     }),
@@ -46,11 +49,15 @@ export const rtkqApi = createApi({
           ...parsedHeaders,
         };
 
+        const parsedVariables = JSON.parse(
+          variables || '{}'
+        ) as IRequestHeaders;
+
         return {
           url: `${baseUrl}`,
           method: 'POST',
           headers,
-          body: { query, variables },
+          body: { query, variables: parsedVariables, headers },
         };
       },
     }),
