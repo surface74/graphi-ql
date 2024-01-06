@@ -95,6 +95,7 @@ const Endpoint: React.FC = () => {
         });
       } else {
         const serializedError = error as SerializedError;
+        console.log('serializedError: ', serializedError);
         const status = `${serializedError?.code}: ${serializedError?.message}`;
         enqueueSnackbar(
           `${ErrorMessages.ERROR_FETCH_DATA[language]}: ${status}`,
@@ -127,7 +128,7 @@ const Endpoint: React.FC = () => {
         name="baseUrl"
         value={urlInputValue}
         onChange={handleChangeUrl}
-        onBlur={formik.handleBlur}
+        onBlur={urlInputValue ? formik.handleBlur : undefined}
         error={formik.touched.baseUrl && Boolean(formik.errors.baseUrl)}
         helperText={formik.touched.baseUrl && formik.errors.baseUrl}
         autoFocus
