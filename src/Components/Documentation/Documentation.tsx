@@ -30,8 +30,11 @@ const Documentation: FC = () => {
   const { language } = useDataContext();
   const [key, setKey] = useState(0);
   const docsIsOpen = useAppSelector((state) => state.UIData.docsIsOpen);
-  const baseUrl = useAppSelector((store) => store.ApiData.baseUrl);
-  const { data, isError, error } = useFetchSchemaQuery(baseUrl);
+  const { baseUrl, isProxy } = useAppSelector((store) => store.ApiData);
+  const { data, isError, error } = useFetchSchemaQuery({
+    baseUrl,
+    proxy: isProxy,
+  });
   const schema = data?.data.__schema;
   const mutationType = schema?.mutationType;
   const subscriptionType = schema?.subscriptionType;

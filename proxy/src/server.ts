@@ -3,6 +3,7 @@ import { Request } from 'express';
 import cors from 'cors';
 import request from 'request';
 import dotenv from 'dotenv';
+import { Message } from './message';
 
 dotenv.config();
 
@@ -11,6 +12,7 @@ interface IRequestData {
   query: string;
   variables?: string;
   requestHeaders?: string;
+  operationName?: string;
 }
 
 interface IRequestHeaders {
@@ -26,15 +28,12 @@ app.use(express.json());
 app.options('*', cors());
 
 app.get('/', (req, res) => {
-  console.log('[GET] root');
-  res.send({ message: 'Welcome to CORS proxy-server' });
+  res.send(Message.WELCOME);
 });
 
 app.get(
   '/proxy',
   (req: Request<unknown, unknown, unknown, IRequestData>, res) => {
-    console.log('[GET] /proxy');
-
     const params = req.query;
 
     const endpoint = decodeURIComponent(params.endpoint);
@@ -58,20 +57,45 @@ app.get(
 );
 
 app.post('/proxy', (req: Request<unknown, unknown, IRequestData>, res) => {
-  console.log('[POST] /proxy');
+  const { endpoint, query, variables, requestHeaders, operationName } =
+    req.body;
 
-  const { endpoint, query, variables, requestHeaders } = req.body;
-
-  const parsedHeaders = JSON.parse(requestHeaders ?? '{}') as IRequestHeaders;
+  let parsedHeaders: IRequestHeaders = {};
+  try {
+    parsedHeaders = JSON.parse(requestHeaders || '{}') as IRequestHeaders;
+  } catch (error) {
+    res.send({
+      errors: [{ message: Message.INVALID_HEADERS }],
+    });
+  }
 
   const headers = {
     'Content-Type': 'application/json',
     ...parsedHeaders,
   };
 
+  let parsedVariables: IRequestHeaders = {};
+  try {
+    parsedVariables = JSON.parse(variables || '{}') as IRequestHeaders;
+  } catch (error) {
+    res.send({
+      errors: [{ message: Message.INVALID_VARIABLES }],
+    });
+  }
+
+  if (operationName && typeof operationName !== 'string') {
+    res.send({
+      errors: [{ message: Message.INVALID_OPERATION_NAME }],
+    });
+  }
+
+  const bodyContent = operationName
+    ? JSON.stringify({ query, variables: parsedVariables, operationName })
+    : JSON.stringify({ query, variables: parsedVariables });
+
   request
     .post(endpoint, {
-      body: JSON.stringify({ query, variables }),
+      body: bodyContent,
       headers,
     })
     .on('error', function (err) {
@@ -80,6 +104,5 @@ app.post('/proxy', (req: Request<unknown, unknown, IRequestData>, res) => {
     .pipe(res);
 });
 
-app.listen(port, () =>
-  console.log(`CORS proxy-server is listening on port ${port}...`)
-);
+// Message about server has been started
+app.listen(port, () => console.log(`${Message.STARTED} ${port}...`));

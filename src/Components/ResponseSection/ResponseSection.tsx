@@ -19,6 +19,7 @@ import CustomIconButton from '../CustomIconButton/CustomIconButton';
 import { parseQueryError } from '../../utils/parse-query-error';
 
 const ResponseSection: React.FC = () => {
+  const { isProxy } = useAppSelector((store) => store.ApiData);
   const { enqueueSnackbar } = useSnackbar();
   const [responseValue, setResponseValue] = useState('');
   const { language } = useDataContext();
@@ -38,6 +39,7 @@ const ResponseSection: React.FC = () => {
 
     if (isError) {
       const errorMessage = parseQueryError(error, language);
+
       enqueueSnackbar(errorMessage, {
         variant: 'error',
       });
@@ -66,6 +68,7 @@ const ResponseSection: React.FC = () => {
       query,
       variables,
       requestHeaders: headers,
+      proxy: isProxy,
     });
   };
 

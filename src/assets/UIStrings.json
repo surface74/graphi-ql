@@ -117,44 +117,40 @@
     "Ru": "Заголовки",
     "En": "Headers"
   },
-
   "DOCS": {
     "Ru": "ДОКА",
     "En": "DOCS"
   },
-
   "ARGUMENTS": {
     "Ru": "АРГУМЕНТЫ",
     "En": "ARGUMENTS"
   },
-
   "TYPE DETAILS": {
     "Ru": "ТИПЫ ПОЛЕЙ",
     "En": "TYPE DETAILS"
   },
-
   "Queries:": {
     "Ru": "ЗАПРОСЫ:",
     "En": "QUERIES:"
   },
-
   "Mutation:": {
     "Ru": "ЗАПРОСЫ:",
     "En": "MUTATION:"
   },
-
   "Subscription:": {
     "Ru": "ПОДПИСКИ:",
     "En": "SUBSCRIPTIONS:"
   },
-
   "Documentation": {
     "Ru": "ДОКУМЕНТАЦИЯ:",
     "En": "DOCUMENTATION:"
   },
-
   "Back_to_queries": {
     "Ru": "В НАЧАЛО:",
     "En": "BACK TO QUERIES:"
+  },
+  "UseProxy": {
+    "Ru": "прокси",
+    "En": "proxy"
   }
 }

@@ -4,7 +4,9 @@ export interface IRequestHeaders {
 
 export interface IRequestData {
   baseUrl: string;
-  query: string;
+  query?: string;
   variables?: string;
   requestHeaders?: string;
+  operationName?: string;
+  proxy?: boolean;
 }
