@@ -74,7 +74,6 @@ const Endpoint: React.FC = () => {
 
   useEffect(() => {
     const { data, isError, error, isLoading, isFetching } = result;
-
     if (isError) {
       const errorMessage = parseQueryError(error, language);
       enqueueSnackbar(errorMessage, {
@@ -82,7 +81,9 @@ const Endpoint: React.FC = () => {
       });
     }
 
-    const isButtonDisabled = !!!data || isError || isFetching || isLoading;
+    const isButtonDisabled =
+      !!!data?.data || isError || isFetching || isLoading;
+
     setDocsButtonDisabled(isButtonDisabled);
     dispatch(hasSchema(!isButtonDisabled));
     dispatch(setIsLoadingSchema(isLoading || isFetching));
