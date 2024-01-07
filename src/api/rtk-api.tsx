@@ -13,9 +13,6 @@ export const rtkqApi = createApi({
           return {
             url: `${baseUrl}`,
             method: 'POST',
-            headers: {
-              'Content-type': 'application/json',
-            },
             body: {
               operationName: 'IntrospectionQuery',
               query: INTROSPECION_QUERY,
@@ -37,16 +34,15 @@ export const rtkqApi = createApi({
 
     fetchGrathQl: builder.query<ApiRequest, IRequestData>({
       query: ({ baseUrl, query, variables, requestHeaders, proxy }) => {
+        const parsedHeaders = JSON.parse(
+          requestHeaders || '{}'
+        ) as IRequestHeaders;
+
+        const headers = {
+          ...parsedHeaders,
+        };
+
         if (!proxy) {
-          const parsedHeaders = JSON.parse(
-            requestHeaders || '{}'
-          ) as IRequestHeaders;
-
-          const headers = {
-            'Content-Type': 'application/json',
-            ...parsedHeaders,
-          };
-
           const parsedVariables = JSON.parse(
             variables || '{}'
           ) as IRequestHeaders;
@@ -62,7 +58,12 @@ export const rtkqApi = createApi({
         return {
           url: import.meta.env.VITE_PROXY,
           method: 'POST',
-          body: { endpoint: baseUrl, query, variables, requestHeaders },
+          body: {
+            endpoint: baseUrl,
+            query,
+            variables,
+            requestHeaders: JSON.stringify(headers),
+          },
         };
       },
     }),

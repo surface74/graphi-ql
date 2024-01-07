@@ -9,16 +9,29 @@ export const parseQueryError = (
 ): string => {
   let errorMessage = '';
   if (Object.hasOwn(error, 'status')) {
-    const status = (error as FetchBaseQueryError).status;
+    const baseQueryError = error as FetchBaseQueryError;
+    const status = baseQueryError.status;
     errorMessage =
       typeof status === 'number'
-        ? `${ErrorMessages.HTTP_STATUS_CODE[language]}: ${status}`
-        : `${ErrorMessages.ERROR_FETCH_DATA[language]}: ${status}`;
+        ? parseStatus(baseQueryError.data as BaseErrors)
+        : baseQueryError.error;
   } else {
     const serializedError = error as SerializedError;
-    const status = `${serializedError?.code}: ${serializedError?.message}`;
-    errorMessage = `${ErrorMessages.ERROR_FETCH_DATA[language]}: ${status}`;
+    errorMessage = `${serializedError?.code || ''}: ${
+      serializedError?.message || ''
+    }`;
   }
+  return `${ErrorMessages.ERROR_FETCH_DATA[language]}: ${errorMessage}`;
+};
 
-  return errorMessage;
+const parseStatus = (data: BaseErrors): string => {
+  return data?.errors[0].message || '';
+};
+
+type BaseErrors = {
+  errors: BaseError[];
+};
+
+type BaseError = {
+  message: string;
 };
