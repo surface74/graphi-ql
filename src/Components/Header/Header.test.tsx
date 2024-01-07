@@ -1,5 +1,5 @@
 import { render, fireEvent } from '@testing-library/react';
-import { Provider } from 'react-redux'; // Import your store
+import { Provider } from 'react-redux';
 import { it, vi } from 'vitest';
 import Header from './Header';
 import { store } from '../../store/store';
@@ -81,18 +81,4 @@ describe('Header', () => {
     const switchButton = getByRole('checkbox');
     fireEvent.click(switchButton);
   });
-
-  // it('renders navigation links', () => {
-  //   const { getByText } = render(<HeaderTest />);
-  //   expect(getByText('welcome')).toBeInTheDocument();
-  //   expect(getByText('main')).toBeInTheDocument();
-  // });
-
-  // it('calls logOut and setBaseUrl when logout button is clicked', () => {
-  //   const { getByTestId } = render(<HeaderTest />);
-  //   const logoutButton = getByTestId('auth-btn');
-  //   fireEvent.click(logoutButton);
-  //   expect(logOut).toHaveBeenCalled();
-  //   expect(setBaseUrl).toHaveBeenCalled();
-  // });
 });
