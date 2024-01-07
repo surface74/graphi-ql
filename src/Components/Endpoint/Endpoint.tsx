@@ -91,7 +91,6 @@ const Endpoint: React.FC = () => {
 
   useEffect(() => {
     const { data, isError, error, isLoading, isFetching } = result;
-
     if (isError) {
       const errorMessage = parseQueryError(error, language);
       enqueueSnackbar(errorMessage, {
