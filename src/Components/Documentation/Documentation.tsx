@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { FC, useEffect } from 'react';
 import {
   Box,
   IconButton,
@@ -22,20 +22,23 @@ import { useDataContext } from '../../DataContext/useDataContext';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import UIContent from '../../assets/UIStrings.json';
 import { useState } from 'react';
+import { useSnackbar } from 'notistack';
+import { parseQueryError } from '../../utils/parse-query-error';
 
-const Documentation: React.FC = () => {
+const Documentation: FC = () => {
   const dispatch = useDispatch();
   const { language } = useDataContext();
   const [key, setKey] = useState(0);
   const docsIsOpen = useAppSelector((state) => state.UIData.docsIsOpen);
   const baseUrl = useAppSelector((store) => store.ApiData.baseUrl);
-  const { data, isError } = useFetchSchemaQuery(baseUrl);
+  const { data, isError, error } = useFetchSchemaQuery(baseUrl);
   const schema = data?.data.__schema;
   const mutationType = schema?.mutationType;
   const subscriptionType = schema?.subscriptionType;
   const types = schema?.types;
   const theme = useTheme();
   const isMobileView = useMediaQuery(theme.breakpoints.down('sm'));
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleDocsMenu = () => {
     dispatch(setDocsIsOpen(!docsIsOpen));
@@ -44,6 +47,16 @@ const Documentation: React.FC = () => {
   const handleBackToQueries = () => {
     setKey(key + 1);
   };
+
+  useEffect(() => {
+    if (isError) {
+      dispatch(setDocsIsOpen(false));
+      const errorMessage = parseQueryError(error, language);
+      enqueueSnackbar(errorMessage, {
+        variant: 'error',
+      });
+    }
+  }, [dispatch, enqueueSnackbar, isError, error, language]);
 
   return (
     isError || (

@@ -16,8 +16,7 @@ import FetchingStatus from '../../common-types/fetching-status';
 import ErrorMessages from '../../assets/errorMessages.json';
 import UIStrings from '../../assets/UIStrings.json';
 import CustomIconButton from '../CustomIconButton/CustomIconButton';
-import { SerializedError } from '@reduxjs/toolkit';
-import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
+import { parseQueryError } from '../../utils/parse-query-error';
 
 const ResponseSection: React.FC = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -38,26 +37,11 @@ const ResponseSection: React.FC = () => {
     const { data, status, isError, error } = result;
 
     if (isError) {
-      if (Object.hasOwn(error, 'status')) {
-        const status = (error as FetchBaseQueryError).status;
-        const errorMessage =
-          typeof status === 'number'
-            ? `${ErrorMessages.HTTP_STATUS_CODE[language]}: ${status}`
-            : `${ErrorMessages.ERROR_FETCH_DATA[language]}: ${status}`;
-
-        enqueueSnackbar(errorMessage, {
-          variant: 'error',
-        });
-        setResponseValue(`${errorMessage}`);
-      } else {
-        const serializedError = error as SerializedError;
-        const status = `${serializedError?.code}: ${serializedError?.message}`;
-        const errorMessage = `${ErrorMessages.ERROR_FETCH_DATA[language]}: ${status}`;
-        enqueueSnackbar(errorMessage, {
-          variant: 'error',
-        });
-        setResponseValue(`${errorMessage}`);
-      }
+      const errorMessage = parseQueryError(error, language);
+      enqueueSnackbar(errorMessage, {
+        variant: 'error',
+      });
+      setResponseValue(`${errorMessage}`);
     } else if (status.toString() === FetchingStatus.FULFILLED) {
       setResponseValue(JSON.stringify(data, null, 2));
     }

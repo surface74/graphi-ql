@@ -60,6 +60,7 @@ function App() {
 
   return (
     <SnackbarProvider
+      preventDuplicate={true}
       maxSnack={3}
       autoHideDuration={3000}
       anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
