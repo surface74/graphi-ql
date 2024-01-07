@@ -46,7 +46,6 @@ export const rtkqApi = createApi({
             'Content-Type': 'application/json',
             ...parsedHeaders,
           };
-          console.log('headers: ', headers);
 
           const parsedVariables = JSON.parse(
             variables || '{}'
