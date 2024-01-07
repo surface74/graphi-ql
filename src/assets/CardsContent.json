@@ -6,7 +6,7 @@
       "location": "Belarus, Novopolotsk",
       "imgSrc": "https://avatars.githubusercontent.com/u/52540855?v=4",
       "gitHub": "https://github.com/surface74",
-      "contribution": "Private routes, Firebase, Proxi"
+      "contribution": "Private routes, Firebase, Proxy, Localization"
     },
     "Ru": {
       "name": "Сергей",
@@ -14,7 +14,7 @@
       "location": "Беларусь, Новополоцк",
       "imgSrc": "https://avatars.githubusercontent.com/u/52540855?v=4",
       "gitHub": "https://github.com/surface74",
-      "contribution": "Приватные роуты, Firebase, Прокси"
+      "contribution": "Приватные роуты, Firebase, прокси-сервер, локализация"
     }
   },
   "Elena": {
