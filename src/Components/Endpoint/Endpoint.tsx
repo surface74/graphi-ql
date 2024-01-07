@@ -81,7 +81,7 @@ const Endpoint: React.FC = () => {
     formik.handleChange(event);
     dispatch(setDocsIsOpen(false));
     setUrlInputValue(event.target.value);
-    dispatch(setBaseUrl(event.target.value));
+    dispatch(setBaseUrl(event.target.value.trim()));
     setDocsButtonDisabled(true);
   };
 
@@ -99,11 +99,19 @@ const Endpoint: React.FC = () => {
       });
     }
 
-    const isButtonDisabled = !!!data || isError || isFetching || isLoading;
+    const isButtonDisabled =
+      !!!data || isError || isFetching || isLoading || !urlInputValue;
     setDocsButtonDisabled(isButtonDisabled);
     dispatch(hasSchema(!isButtonDisabled));
     dispatch(setIsLoadingSchema(isLoading || isFetching));
-  }, [dispatch, enqueueSnackbar, language, result, docsButtonDisabled]);
+  }, [
+    dispatch,
+    enqueueSnackbar,
+    language,
+    result,
+    docsButtonDisabled,
+    urlInputValue,
+  ]);
 
   return (
     <Box
