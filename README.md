@@ -47,3 +47,15 @@ In the project directory, you can run:
 - Run `npm run lint` launches Eslint for [ts,tsx] files
 - Run `npm run fix` runs prettier and shows warning in CLI.
 - Run `npm run build` for building project
+
+## Start proxy-server
+- Open another window Visual Studio Code
+- Set folder `/proxy` as current
+- Run `npm i`
+- Run `npm run build`
+- Run `npm start`
+- You'll see the message 'CORS proxy-server is listening on port 8080' in terminal
+- Don't close this window while testing
+
+To use proxy-server, set checkbox 'proxy' into page 'Main'
+
