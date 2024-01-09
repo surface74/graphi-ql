@@ -31,9 +31,7 @@ export default class ErrorBoundary extends React.Component<
       return this.props.fallback ? (
         this.props.fallback
       ) : (
-        <>
-          <h1>{errorMessages.ERROR_MESSAGE.En}</h1>
-        </>
+        <h1>{errorMessages.ERROR_MESSAGE.En}</h1>
       );
     }
 

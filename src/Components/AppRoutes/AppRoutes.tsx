@@ -17,33 +17,40 @@ export const AppRoutes: FC = () => {
     <Routes>
       <Route path="/" element={<WelcomePage />} />
       <Route path={`/${pageName.welcome.En}`} element={<WelcomePage />} />
+
       <Route
+        path={`/${pageName.login.En}`}
         element={
           <ProtectiveRoute
             condition={!isLogin}
-            redirectPath={`${pageName.main.En}`}
+            element={<AuthPage authActionType={AuthActionType.LOGIN} />}
+            redirectPath={`/${pageName.main.En}`}
           />
         }
-      >
-        <Route
-          path={`/${pageName.login.En}`}
-          element={<AuthPage authActionType={AuthActionType.LOGIN} />}
-        />
-        <Route
-          path={`/${pageName.signup.En}`}
-          element={<AuthPage authActionType={AuthActionType.SIGNUP} />}
-        />
-      </Route>
+      />
+
       <Route
+        path={`/${pageName.signup.En}`}
+        element={
+          <ProtectiveRoute
+            condition={!isLogin}
+            element={<AuthPage authActionType={AuthActionType.SIGNUP} />}
+            redirectPath={`/${pageName.main.En}`}
+          />
+        }
+      />
+
+      <Route
+        path={`/${pageName.main.En}`}
         element={
           <ProtectiveRoute
             condition={isLogin}
-            redirectPath={`${pageName.welcome.En}`}
+            element={<EditorPage />}
+            redirectPath={`/${pageName.welcome.En}`}
           />
         }
-      >
-        <Route path={`/${pageName.main.En}`} element={<EditorPage />} />
-      </Route>
+      />
+
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
