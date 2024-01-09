@@ -12,7 +12,6 @@ import { AuthActionType } from '../../pages/AuthPage/AuthPage.types';
 
 export const AppRoutes: FC = () => {
   const { isLogin } = useAuth();
-  console.log('isLogin: ', isLogin);
 
   return (
     <Routes>
